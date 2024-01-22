@@ -1,3 +1,4 @@
+import useApplicationData from "./hooks/useApplicationData";
 import BlogList from "./components/BlogList";
 
 import "./App.css";

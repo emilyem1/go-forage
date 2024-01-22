@@ -1,0 +1,37 @@
+.mushroom-list__item {
+  // width: 100px;
+  height: 100%;
+  margin: 12px auto;
+  padding: 8px;
+  border-width: 1px;
+  border-color: #E6E6E6;
+  border-style: solid;
+  border-radius: 8px;
+  width: 25%;
+  background-color: #FFFFFF;
+}
+
+.mushroom-list__image {
+  border-radius: 8px 8px 0px 0px;
+  user-select: none;
+  width: 100%;
+  height: auto;
+
+  object-fit: cover;
+}
+
+.mushroom-list__details {
+  display: flex;
+}
+
+.mushroom-list__info {
+  margin-top: 5px;
+  font-weight: 700;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.mushroom-list__description {
+  color: #838383;
+  font-weight: 400;
+}

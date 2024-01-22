@@ -1,0 +1,16 @@
+.mushroom-list {
+  display: flex;
+  flex-wrap: wrap;
+  // align-content: center;
+  // flex-direction: column;
+  // list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color:  #F5F5F5;
+}
+
+.mushroom-list:after {
+  content: "";
+  flex: 0 1 30%;
+  margin: 5px;
+}

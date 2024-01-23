@@ -8,7 +8,6 @@ export const ACTIONS = {
 
 function reducer(state, action) {
   switch (action.type) {
-
     case ACTIONS.SELECT_BLOG:
       return { ...state, selectedBlog: action.payload };
 
@@ -28,14 +27,15 @@ const useApplicationData = () => {
     blogData: [],
   });
 
-
   useEffect(() => {
     fetch("http://localhost:8001/api/blogs")
       .then((response) => response.json())
-      .then((data) =>
-        dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data })
-      );
+      .then((data) => dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data }));
   }, []);
+
+  const setMushroomSelected = (mushroom) => {
+    dispatch({ type: ACTIONS.SELECT_MUSHROOM, payload: mushroom });
+  };
 
   const setBlogSelected = (blog) => {
     dispatch({ type: ACTIONS.SELECT_BLOG, payload: blog });

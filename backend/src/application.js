@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const express = require("express");
 const bodyparser = require("body-parser");
+const cors = require("cors");
 
 // Creating an Express application
 const app = express();
@@ -29,6 +30,7 @@ function read(file) {
 }
 
 module.exports = function application() {
+  app.use(cors());
   // Middleware to parse JSON in the request body
   app.use(bodyparser.json());
   // Middleware to serve static image files from the 'public' directory

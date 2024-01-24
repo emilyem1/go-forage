@@ -1,5 +1,10 @@
 import React from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useLoadScript,
+  MarkerF,
+  MarkerClusterer,
+} from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
@@ -16,8 +21,8 @@ const center = {
 
 const options = {
   styles: mapStyles,
-  disableDefaultUI: true
-}
+  disableDefaultUI: true,
+};
 
 const Map = () => {
   const { isLoaded, loadError } = useLoadScript({
@@ -25,7 +30,7 @@ const Map = () => {
     libraries,
   });
 
-
+  const [markers, setMarkers] = React.useState([]);
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -42,8 +47,23 @@ const Map = () => {
         zoom={10}
         center={center}
         options={options}
+        onClick={(event) => {
+          setMarkers((prev) => [
+            ...prev,
+            {
+              lat: event.latLng.lat(),
+              lng: event.latLng.lng(),
+              time: new Date(),
+            },
+          ]);
+        }}
       >
-        <MarkerF position={center} />
+        {markers.map((marker) => (
+          <MarkerF
+            key={marker.time.toISOString()}
+            position={{ lat: marker.lat, lng: marker.lng }}
+          />
+        ))}
       </GoogleMap>
     </div>
   );

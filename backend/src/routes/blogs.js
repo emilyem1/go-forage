@@ -24,5 +24,20 @@ module.exports = (db) => {
       response.json(blogs);
     });
   });
+
+  router.post("/blogs", async (request, response) => {
+    console.log("Received POST request to /blogs");
+    const { title, content, latitude, longitude, user_id, mushroom_id } = request.body;
+    db.query(
+      `
+      INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID, MUSHROOM_ID)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *
+    `,
+      [title, content, latitude, longitude, user_id, mushroom_id]
+    ).then(({ rows }) => {
+      response.json(rows[0]);
+    });
+  });
   return router;
 };

@@ -6,7 +6,7 @@ const libraries = ["places"];
 
 const mapContainerStyle = {
   width: "100%",
-  height: "80vh",
+  height: "40vh",
 };
 
 const center = {
@@ -20,7 +20,9 @@ const options = {
   draggable: false,
 };
 
-const Map = () => {
+const Map = (props) => {
+  const { location } = props;
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyDd3aomdLp5AMlwBs9WgviK_ZqqHu9t87k",
     libraries,
@@ -56,8 +58,8 @@ const Map = () => {
     <div>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={6}
-        center={center}
+        zoom={10}
+        center={location}
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
@@ -65,7 +67,7 @@ const Map = () => {
         <MarkerF
           //marker at set location
           key={new Date().toISOString()}
-          position={center}
+          position={location}
           icon={{
             url: "/mushroom_marker.svg",
             scaledSize: new window.google.maps.Size(30, 30),

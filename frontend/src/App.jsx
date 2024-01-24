@@ -10,8 +10,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* <BlogList blogs={blogData} /> */}
-      <Map/>
+      <BlogList blogs={blogData} />
+      
     </div>
   );
 }

@@ -3,7 +3,6 @@ import {
   GoogleMap,
   useLoadScript,
   MarkerF,
-  MarkerClusterer,
 } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
@@ -62,6 +61,12 @@ const Map = () => {
           <MarkerF
             key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
+            icon = {{
+              url: '/mushroom_marker.svg',
+              scaledSize: new window.google.maps.Size(30,30),
+              origin: new window.google.maps.Point(0,0),
+              anchor: new window.google.maps.Point(15,15),
+            }}
           />
         ))}
       </GoogleMap>

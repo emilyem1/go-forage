@@ -1,5 +1,5 @@
 import React from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
@@ -15,7 +15,8 @@ const center = {
 };
 
 const options = {
-  styles: mapStyles
+  styles: mapStyles,
+  disableDefaultUI: true
 }
 
 const Map = () => {
@@ -23,6 +24,8 @@ const Map = () => {
     googleMapsApiKey: "AIzaSyDd3aomdLp5AMlwBs9WgviK_ZqqHu9t87k",
     libraries,
   });
+
+
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -40,7 +43,7 @@ const Map = () => {
         center={center}
         options={options}
       >
-        <Marker position={center} />
+        <MarkerF position={center} />
       </GoogleMap>
     </div>
   );

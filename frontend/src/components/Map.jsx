@@ -6,6 +6,20 @@ import {
   InfoWindowF,
 } from "@react-google-maps/api";
 
+import usePlacesAutocomplete, {
+  getGeocode,
+  getLatLng,
+} from "use-places-autocomplete";
+
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from "@reach/combobox";
+import "@reach/combobox/styles.css";
+
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
@@ -65,6 +79,8 @@ const Map = (props) => {
 
   return (
     <div>
+      <Search />
+
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
@@ -118,4 +134,38 @@ const Map = (props) => {
   );
 };
 
+function Search() {
+  const {
+    ready,
+    value,
+    suggestions: { status, data },
+    setValue,
+    clearSuggestions,
+  } = usePlacesAutocomplete({
+    requestOptions: {
+      location: { lat: () => 53.7267, lng: () => -127.6476 },
+      radius: 200 * 1000,
+    },
+  });
+
+  return (
+    <Combobox
+      onSelect={(address) => {
+        console.log(address);
+      }}
+    >
+      <ComboboxInput
+        value={value}
+        onChange={(event) => {
+          setValue(event.target.value);
+        }}
+        disabled={!ready}
+        placeholder="Enter an Address"
+      />
+      <ComboboxPopover>
+        {status === "OK" && data.map(({id, description})=><ComboboxOption key = {id} value = {description}/>)}
+      </ComboboxPopover>
+    </Combobox>
+  );
+}
 export default Map;

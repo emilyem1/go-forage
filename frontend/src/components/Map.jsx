@@ -1,12 +1,18 @@
 import React from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useLoadScript,
+  MarkerF,
+  InfoWindowF,
+} from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
 
 const mapContainerStyle = {
   width: "100%",
-  height: "40vh",
+  // height: "40vh", //height for blog cards
+  height: "80vh",
 };
 
 const center = {
@@ -17,7 +23,7 @@ const center = {
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
-  draggable: false,
+  // draggable: false,
 };
 
 const Map = (props) => {
@@ -29,6 +35,7 @@ const Map = (props) => {
   });
 
   const [markers, setMarkers] = React.useState([]);
+  const [selected, setSelected] = React.useState(null);
 
   const onMapClick = React.useCallback((event) => {
     setMarkers((prev) => [
@@ -42,6 +49,7 @@ const Map = (props) => {
   }, []);
 
   const mapRef = React.useRef();
+
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
   }, []);
@@ -59,7 +67,8 @@ const Map = (props) => {
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
-        center={location}
+        // center={location} // blog card coordinates
+        center={center}
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
@@ -86,8 +95,23 @@ const Map = (props) => {
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
             }}
+            onClick={() => {
+              setSelected(marker);
+            }}
           />
         ))}
+        {selected ? (
+          <InfoWindowF
+            position={{ lat: selected.lat, lng: selected.lng }}
+            onCloseClick={() => {
+              setSelected(null);
+            }}
+          >
+            <div>
+              <h2>Mushrooms Here!</h2>
+            </div>
+          </InfoWindowF>
+        ) : null}
       </GoogleMap>
     </div>
   );

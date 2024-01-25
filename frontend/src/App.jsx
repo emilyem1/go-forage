@@ -4,6 +4,7 @@ import BlogForm from "./components/BlogForm";
 import PublicMap from "./components/PublicMap";
 
 import "./App.css";
+import TopNavigation from "./components/TopNavigationBar";
 
 function App() {
   const { state, setBlogSelected, setSelectedRoute } = useApplicationData();
@@ -11,23 +12,9 @@ function App() {
 
   return (
     <div className="App">
-      <BlogForm />
-      <div>
-        <button
-          onClick={() => {
-            setSelectedRoute("PUBLIC");
-          }}
-        >
-          Public Map
-        </button>
-        <button
-          onClick={() => {
-            setSelectedRoute("BLOGLIST");
-          }}
-        >
-          Home Feed
-        </button>
-      </div>
+      <TopNavigation 
+        route={setSelectedRoute}
+      />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap blogData={blogData} /> // Pass updateMapConfig as a prop
       ) : (

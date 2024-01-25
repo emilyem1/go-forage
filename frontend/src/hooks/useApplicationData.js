@@ -1,9 +1,10 @@
 import { useReducer, useEffect } from "react";
+import { mapStyles } from "../styles/Map";
 
 export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
   SELECT_BLOG: "SELECT_BLOG",
-  DISPLAY_BLOG_DETAILS: "DISPLAY_BLOG_DETAILS",
+  SET_ROUTE: "SET_ROUTE",
 };
 
 function reducer(state, action) {
@@ -13,6 +14,9 @@ function reducer(state, action) {
 
     case ACTIONS.SET_BLOG_DATA:
       return { ...state, blogData: action.payload };
+
+    case ACTIONS.SET_ROUTE:
+      return { ...state, selectedRoute: action.payload };
 
     default:
       throw new Error(
@@ -25,6 +29,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     selectedBlog: false,
     blogData: [],
+    selectedRoute: "PUBLIC"
   });
 
   useEffect(() => {
@@ -33,17 +38,18 @@ const useApplicationData = () => {
       .then((data) => dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data }));
   }, []);
 
-  const setMushroomSelected = (mushroom) => {
-    dispatch({ type: ACTIONS.SELECT_MUSHROOM, payload: mushroom });
-  };
-
   const setBlogSelected = (blog) => {
     dispatch({ type: ACTIONS.SELECT_BLOG, payload: blog });
+  };
+
+  const setSelectedRoute = (route) => {
+    dispatch({ type: ACTIONS.SET_ROUTE, payload: route });
   };
 
   return {
     state,
     setBlogSelected,
+    setSelectedRoute,
   };
 };
 

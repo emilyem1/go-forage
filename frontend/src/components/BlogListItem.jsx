@@ -1,5 +1,5 @@
 import "../styles/MushroomListItem.scss";
-import Map from "./Map";
+import BlogListMap from "./BlogListMap";
 
 const BlogListItem = (props) => {
   const { blog } = props;
@@ -7,7 +7,7 @@ const BlogListItem = (props) => {
   return (
     <section className="mushroom-list__item">
       <div>
-        <Map location={{ lat: blog.lat, lng: blog.long }} />
+        <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
       </div>
       <div>{blog.title}</div>
       <div>By: {blog.username}</div>

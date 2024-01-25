@@ -6,14 +6,29 @@ import Map from "./components/Map";
 import "./App.css";
 
 function App() {
-  const { state, setBlogSelected } = useApplicationData();
-  const { selectedBlog, blogData } = state;
+  const { state, setBlogSelected, setMapConfig } = useApplicationData();
+  const { selectedBlog, blogData, mapConfig } = state;
+  const { mode } = mapConfig;
+
+  const updateMapConfig = () => {
+    setMapConfig({
+      mode: "BLOGLIST",
+      mapContainerStyle: {
+        ...mapConfig.mapContainerStyle,
+        height: "60vh",
+      },
+      options: {
+        ...mapConfig.options,
+        draggable: false,
+      },
+    });
+  };
 
   return (
     <div className="App">
-      <Map/>
+      {mode === "PUBLIC" ? <Map /> : <BlogList blogs={blogData} />}
+
       {/* <BlogForm /> */}
-      {/* <BlogList blogs={blogData} /> */}
     </div>
   );
 }

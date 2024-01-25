@@ -1,6 +1,6 @@
 import useApplicationData from "./hooks/useApplicationData";
 import BlogList from "./components/BlogList";
-import Map from "./components/Map";
+import BlogForm from "./components/BlogForm";
 
 import "./App.css";
 
@@ -10,8 +10,8 @@ function App() {
 
   return (
     <div className="App">
+      <BlogForm />
       <BlogList blogs={blogData} />
-      
     </div>
   );
 }

@@ -5,6 +5,7 @@ export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
   SELECT_BLOG: "SELECT_BLOG",
   SET_ROUTE: "SET_ROUTE",
+  SET_MUSHROOM_DATA: "SET_MUSHROOM_DATA"
 };
 
 function reducer(state, action) {
@@ -18,6 +19,9 @@ function reducer(state, action) {
     case ACTIONS.SET_ROUTE:
       return { ...state, selectedRoute: action.payload };
 
+    case ACTIONS.SET_MUSHROOM_DATA:
+      return { ...state, mushroomData: action.payload };
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -29,13 +33,21 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     selectedBlog: false,
     blogData: [],
-    selectedRoute: "PUBLIC"
+    selectedRoute: "PUBLIC",
+    mushroomData: [],
   });
 
   useEffect(() => {
     fetch("http://localhost:8001/api/blogs")
       .then((response) => response.json())
-      .then((data) => dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data }));
+      .then((data) => dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data }))
+      .catch((error) => { console.error('Error fetching blogs:', error); 
+      });
+    fetch("http://localhost:8001/api/mushrooms")
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_MUSHROOM_DATA, payload: data }))
+      .catch((error) => { console.error('Error fetching mushrooms:', error); 
+      });
   }, []);
 
   const setBlogSelected = (blog) => {

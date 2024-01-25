@@ -5,10 +5,11 @@ import PublicMap from "./components/PublicMap";
 
 import "./App.css";
 import TopNavigation from "./components/TopNavigationBar";
+import MushroomList from "./components/MushroomList";
 
 function App() {
   const { state, setBlogSelected, setSelectedRoute } = useApplicationData();
-  const { selectedBlog, blogData, selectedRoute } = state;
+  const { selectedBlog, blogData, selectedRoute, mushroomData } = state;
 
   return (
     <div className="App">
@@ -16,9 +17,11 @@ function App() {
         route={setSelectedRoute}
       />
       {selectedRoute === "PUBLIC" ? (
-        <PublicMap blogData={blogData} /> // Pass updateMapConfig as a prop
-      ) : (
+        <PublicMap blogData={blogData} />
+      ) : selectedRoute === "BLOGLIST" ? (
         <BlogList blogs={blogData} />
+      ) : (
+        <MushroomList mushrooms={mushroomData} />
       )}
     </div>
   );

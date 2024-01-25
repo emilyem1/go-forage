@@ -4,7 +4,7 @@ import { mapStyles } from "../styles/Map";
 export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
   SELECT_BLOG: "SELECT_BLOG",
-  SET_MAP_CONFIG: "SET_MAP_CONFIG",
+  SET_ROUTE: "SET_ROUTE",
 };
 
 function reducer(state, action) {
@@ -15,8 +15,8 @@ function reducer(state, action) {
     case ACTIONS.SET_BLOG_DATA:
       return { ...state, blogData: action.payload };
 
-    case ACTIONS.SET_MAP_CONFIG:
-      return { ...state, mapConfig: action.payload };
+    case ACTIONS.SET_ROUTE:
+      return { ...state, selectedRoute: action.payload };
 
     default:
       throw new Error(
@@ -29,22 +29,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     selectedBlog: false,
     blogData: [],
-    mapConfig: {
-      mode: "PUBLIC",
-      mapContainerStyle: {
-        width: "100%",
-        height: "40vh",
-      },
-      center: {
-        lat: 53.7267,
-        lng: -127.6476,
-      },
-      options: {
-        styles: mapStyles,
-        disableDefaultUI: true,
-        draggable: true,
-      },
-    },
+    selectedRoute: "PUBLIC"
   });
 
   useEffect(() => {
@@ -57,14 +42,14 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SELECT_BLOG, payload: blog });
   };
 
-  const setMapConfig = (configUpdates) => {
-    dispatch({ type: ACTIONS.SET_MAP_CONFIG, payload: { ...state.mapConfig, ...configUpdates } });
+  const setSelectedRoute = (route) => {
+    dispatch({ type: ACTIONS.SET_ROUTE, payload: route });
   };
 
   return {
     state,
     setBlogSelected,
-    setMapConfig,
+    setSelectedRoute,
   };
 };
 

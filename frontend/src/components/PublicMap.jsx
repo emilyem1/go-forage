@@ -32,19 +32,7 @@ const PublicMap = (props) => {
     libraries,
   });
 
-  const [markers, setMarkers] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
-
-  const onMapClick = React.useCallback((event) => {
-    setMarkers((prev) => [
-      ...prev,
-      {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-  }, []);
 
   const mapRef = React.useRef();
 
@@ -67,7 +55,6 @@ const PublicMap = (props) => {
         zoom={1}
         center={center}
         options={options}
-        onClick={onMapClick}
         onLoad={onMapLoad}
       >
         {blogData.map((blog) => (

@@ -49,17 +49,14 @@ const Map = (props) => {
     libraries,
   });
 
-  const [markers, setMarkers] = React.useState([]);
+  const [marker, setMarker] = React.useState([]);
   const [selected, setSelected] = React.useState(null);
 
   const onMapClick = React.useCallback((event) => {
-    setMarkers((prev) => [
-      ...prev,
-      {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-      },
-    ]);
+    setMarker({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    });
   }, []);
 
   const mapRef = React.useRef();
@@ -95,45 +92,19 @@ const Map = (props) => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {/* <MarkerF
-          //marker at set location
-          key={new Date().toISOString()}
-          position={location}
+        <MarkerF
+          key={`${marker.lat}-${marker.lng}`}
+          position={{ lat: marker.lat, lng: marker.lng }}
           icon={{
             url: "/mushroom_marker.svg",
             scaledSize: new window.google.maps.Size(30, 30),
             origin: new window.google.maps.Point(0, 0),
             anchor: new window.google.maps.Point(15, 15),
           }}
-        /> */}
-        {markers.map((marker) => (
-          //marker on cursor click location
-          <MarkerF
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            icon={{
-              url: "/mushroom_marker.svg",
-              scaledSize: new window.google.maps.Size(30, 30),
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-            }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-          />
-        ))}
-        {selected ? (
-          <InfoWindowF
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
-          >
-            <div>
-              <h2>Mushrooms Here!</h2>
-            </div>
-          </InfoWindowF>
-        ) : null}
+          onClick={() => {
+            setSelected(marker);
+          }}
+        />
       </GoogleMap>
     </div>
   );

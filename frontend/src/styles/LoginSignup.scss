@@ -1,0 +1,23 @@
+.formContainer {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 2rem;
+  height: 50vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem;
+  border: 1px solid black;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.form button {
+  align-self: center;
+}

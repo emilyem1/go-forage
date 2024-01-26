@@ -156,6 +156,8 @@ function Search({ panTo }) {
   return (
     <Combobox
       onSelect={async (address) => {
+        setValue(address, false);
+        clearSuggestions();
         try {
           const results = await getGeocode({ address });
           const { lat, lng } = await getLatLng(results[0]);

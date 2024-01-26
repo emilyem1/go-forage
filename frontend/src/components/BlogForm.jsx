@@ -1,9 +1,10 @@
+import BlogFormMap from "./BlogFormMap";
 import "../styles/MushroomList.scss";
 import { useState } from 'react';
 
 const BlogForm = () => {
 
-  const [blogData, setBlogData] = useState({
+  const [formData, setFormData] = useState({
     title: '',
     content: '',
     latitude: '',
@@ -12,13 +13,14 @@ const BlogForm = () => {
     mushroom_id: ''
   });
 
+
   const handleChange = (event) => {
     const { name: input, value } = event.target;
-    setBlogData((prevData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [input]: value
     }));
-    console.log('Updated blog data:', blogData);
+    console.log('Updated blog data:', formData);
   };
 
   const handleSubmit = async (event) => {
@@ -31,7 +33,7 @@ const BlogForm = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(blogData),
+        body: JSON.stringify(formData),
       });
       if (!response.ok) {
         throw new Error(`Failed to post blog. Status: ${response.status}`);
@@ -39,7 +41,7 @@ const BlogForm = () => {
       const responseData = await response.json();
       console.log('Blog posted:', responseData);
       // Reset the form after submission
-      setBlogData({
+      setFormData({
         title: '',
         content: '',
         latitude: '',
@@ -56,23 +58,24 @@ const BlogForm = () => {
   return (
       <form onSubmit={handleSubmit}>
         <label>Title:
-          <input type="text" name="title" value={blogData.title} onChange={handleChange} />
+          <input type="text" name="title" value={formData.title} onChange={handleChange} />
         </label>
         <label>User ID (Put in 1-10):
-          <input type="text" name="user_id" value={blogData.user_id} onChange={handleChange} />
+          <input type="text" name="user_id" value={formData.user_id} onChange={handleChange} />
         </label>
         <label>Latitude:
-          <input type="text" name="latitude" value={blogData.latitude} onChange={handleChange} />
+          <input type="text" name="latitude" value={formData.latitude} onChange={handleChange} />
         </label>
         <label>Longitude:
-          <input type="text" name="longitude" value={blogData.longitude} onChange={handleChange} />
+          <input type="text" name="longitude" value={formData.longitude} onChange={handleChange} />
         </label>
         <label>Mushroom (Put in 1-10):
-          <input type="text" name="mushroom_id" value={blogData.mushroom_id} onChange={handleChange} />
+          <input type="text" name="mushroom_id" value={formData.mushroom_id} onChange={handleChange} />
         </label>
         <label>Content:
-          <input type="text" name="content" value={blogData.content} onChange={handleChange} />
+          <input type="text" name="content" value={formData.content} onChange={handleChange} />
         </label>
+        <BlogFormMap/>
         <button type="submit">Submit</button>
       </form>
   );

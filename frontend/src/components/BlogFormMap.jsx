@@ -3,7 +3,6 @@ import {
   GoogleMap,
   useLoadScript,
   MarkerF,
-  InfoWindowF,
 } from "@react-google-maps/api";
 
 import usePlacesAutocomplete, {
@@ -26,8 +25,7 @@ const libraries = ["places"];
 
 const mapContainerStyle = {
   width: "100%",
-  // height: "40vh", //height for blog cards
-  height: "80vh",
+  height: "50vh",
 };
 
 const centerDefault = {
@@ -38,10 +36,9 @@ const centerDefault = {
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
-  // draggable: false,
 };
 
-const Map = (props) => {
+const BlogFormMap = (props) => {
   // const { location } = props;
 
   const { isLoaded, loadError } = useLoadScript({
@@ -50,7 +47,6 @@ const Map = (props) => {
   });
 
   const [marker, setMarker] = React.useState(null);
-  const [selected, setSelected] = React.useState(null);
   const [center, setCenter] = React.useState(centerDefault);
 
   const onMapClick = React.useCallback((event) => {
@@ -113,9 +109,6 @@ const Map = (props) => {
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
-            }}
-            onClick={() => {
-              setSelected(marker);
             }}
           />
         )}
@@ -194,4 +187,4 @@ function Search({ panTo }) {
     </Combobox>
   );
 }
-export default Map;
+export default BlogFormMap;

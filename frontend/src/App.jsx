@@ -2,7 +2,7 @@ import useApplicationData from "./hooks/useApplicationData";
 import BlogList from "./components/BlogList";
 import BlogForm from "./components/BlogForm";
 import PublicMap from "./components/PublicMap";
-import Map from "./components/Map";
+import BlogFormMap from "./components/BlogFormMap";
 
 import "./App.css";
 
@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <Map/>
+      <BlogFormMap/>
       <BlogForm />
       <div>
         <button

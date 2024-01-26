@@ -85,7 +85,7 @@ const Map = (props) => {
   return (
     <div>
       <Search panTo={panTo} />
-<Locate panTo={panTo}/>
+      <Locate panTo={panTo} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
@@ -141,15 +141,19 @@ const Map = (props) => {
 
 function Locate({ panTo }) {
   return (
-    <button onClick={() =>{
-      navigator.geolocation.getCurrentPosition(
-        (position)=>{
-        panTo({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        })
-      },() => null);
-    }}>
+    <button
+      onClick={() => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          () => null
+        );
+      }}
+    >
       <img src="compass.svg" alt="Locate Me" />
     </button>
   );
@@ -194,11 +198,11 @@ function Search({ panTo }) {
       />
       <ComboboxPopover>
         <ComboboxList>
-        {status === "OK" &&
-          data.map(({ id, description }) => (
-            <ComboboxOption key={id} value={description} />
-          ))}
-          </ComboboxList>
+          {status === "OK" &&
+            data.map(({ id, description }) => (
+              <ComboboxOption key={id} value={description} />
+            ))}
+        </ComboboxList>
       </ComboboxPopover>
     </Combobox>
   );

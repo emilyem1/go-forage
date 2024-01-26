@@ -4,8 +4,7 @@ import "./App.css";
 
 import BlogList from "./components/BlogList";
 import PublicMap from "./components/PublicMap";
-import BlogFormMap from "./components/BlogFormMap";
-import TopNavigation from "./components/TopNavigationBar";
+import Header from "./components/Header";
 import MushroomList from "./components/MushroomList";
 import FieldJournal from "./components/FieldJournal";
 import LoginSignup from "./components/LoginSignup";
@@ -18,7 +17,7 @@ function App() {
 
   return (
     <div className="App">
-      <TopNavigation route={setSelectedRoute} />
+      <Header route={setSelectedRoute} />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}

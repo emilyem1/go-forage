@@ -69,6 +69,11 @@ const Map = (props) => {
     mapRef.current = map;
   }, []);
 
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
+  }, []);
+
   if (loadError) {
     return <div>Error loading maps</div>;
   }
@@ -79,7 +84,7 @@ const Map = (props) => {
 
   return (
     <div>
-      <Search />
+      <Search panTo={panTo} />
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -134,7 +139,7 @@ const Map = (props) => {
   );
 };
 
-function Search() {
+function Search({ panTo }) {
   const {
     ready,
     value,
@@ -152,8 +157,9 @@ function Search() {
     <Combobox
       onSelect={async (address) => {
         try {
-          const results = await getGeocode ({address});
-          const {lat,lng} = await getLatLng(results[0])
+          const results = await getGeocode({ address });
+          const { lat, lng } = await getLatLng(results[0]);
+          panTo({ lat, lng });
         } catch (error) {
           console.log(error);
         }

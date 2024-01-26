@@ -1,6 +1,7 @@
 import useApplicationData from "./hooks/useApplicationData";
 import BlogList from "./components/BlogList";
 import PublicMap from "./components/PublicMap";
+import BlogFormMap from "./components/BlogFormMap";
 
 import "./App.css";
 import TopNavigation from "./components/TopNavigationBar";

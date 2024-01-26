@@ -1,12 +1,11 @@
 import useApplicationData from "./hooks/useApplicationData";
 import BlogList from "./components/BlogList";
-import BlogForm from "./components/BlogForm";
 import PublicMap from "./components/PublicMap";
 
 import "./App.css";
 import TopNavigation from "./components/TopNavigationBar";
 import MushroomList from "./components/MushroomList";
-
+import FieldJournal from "./components/FieldJournal";
 import LoginSignup from "./components/LoginSignup";
 
 function App() {
@@ -22,6 +21,8 @@ function App() {
         <BlogList blogs={blogData} />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
+      ) : selectedRoute === "FIELDJOURNAL" ? (
+        <FieldJournal />
       ) : (
         <LoginSignup />
       )}

@@ -30,7 +30,7 @@ const mapContainerStyle = {
   height: "80vh",
 };
 
-const center = {
+const centerDefault = {
   lat: 53.7267,
   lng: -127.6476,
 };
@@ -49,8 +49,9 @@ const Map = (props) => {
     libraries,
   });
 
-  const [marker, setMarker] = React.useState([]);
+  const [marker, setMarker] = React.useState(null);
   const [selected, setSelected] = React.useState(null);
+  const [center, setCenter] = React.useState(centerDefault);
 
   const onMapClick = React.useCallback((event) => {
     setMarker({
@@ -63,6 +64,17 @@ const Map = (props) => {
 
   const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      () => {
+        setCenter(centerDefault);
+      }
+    );
   }, []);
 
   const panTo = React.useCallback(({ lat, lng }) => {
@@ -92,19 +104,21 @@ const Map = (props) => {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <MarkerF
-          key={`${marker.lat}-${marker.lng}`}
-          position={{ lat: marker.lat, lng: marker.lng }}
-          icon={{
-            url: "/mushroom_marker.svg",
-            scaledSize: new window.google.maps.Size(30, 30),
-            origin: new window.google.maps.Point(0, 0),
-            anchor: new window.google.maps.Point(15, 15),
-          }}
-          onClick={() => {
-            setSelected(marker);
-          }}
-        />
+        {marker && (
+          <MarkerF
+            key={`${marker.lat}-${marker.lng}`}
+            position={{ lat: marker.lat, lng: marker.lng }}
+            icon={{
+              url: "/mushroom_marker.svg",
+              scaledSize: new window.google.maps.Size(30, 30),
+              origin: new window.google.maps.Point(0, 0),
+              anchor: new window.google.maps.Point(15, 15),
+            }}
+            onClick={() => {
+              setSelected(marker);
+            }}
+          />
+        )}
       </GoogleMap>
     </div>
   );

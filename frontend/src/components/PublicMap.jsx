@@ -25,14 +25,14 @@ const options = {
 };
 
 const PublicMap = (props) => {
-  const { blogData } = props;
+  const { blogData, setBlogSelected, setSelectedRoute } = props;
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyDd3aomdLp5AMlwBs9WgviK_ZqqHu9t87k",
     libraries,
   });
 
-  const [selected, setSelected] = React.useState(null);
+  const [markerSelected, setMarkerSelected] = React.useState(null);
 
   const mapRef = React.useRef();
 
@@ -68,21 +68,26 @@ const PublicMap = (props) => {
               anchor: new window.google.maps.Point(15, 15),
             }}
             onClick={() => {
-              setSelected(blog);
+              setMarkerSelected(blog);
             }}
           />
         ))}
 
-        {selected ? (
+        {markerSelected ? (
           <InfoWindowF
-            position={{ lat: selected.lat, lng: selected.long }}
+            position={{ lat: markerSelected.lat, lng: markerSelected.long }}
             onCloseClick={() => {
-              setSelected(null);
+              setMarkerSelected(null);
             }}
           >
-            <div>
-              <h3>{selected.title}</h3>
-              <p>{selected.username}</p>
+            <div
+              onClick={() => {
+                setBlogSelected(markerSelected);
+                setSelectedRoute("BLOGDETAILS");
+              }}
+            >
+              <h3>{markerSelected.title}</h3>
+              <p>{markerSelected.username}</p>
             </div>
           </InfoWindowF>
         ) : null}

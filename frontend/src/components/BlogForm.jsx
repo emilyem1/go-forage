@@ -75,7 +75,7 @@ const BlogForm = () => {
         <label>Content:
           <input type="text" name="content" value={formData.content} onChange={handleChange} />
         </label>
-        <BlogFormMap/>
+        <BlogFormMap setFormData={setFormData}/>
         <button type="submit">Submit</button>
       </form>
   );

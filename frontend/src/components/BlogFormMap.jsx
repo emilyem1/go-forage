@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  GoogleMap,
-  useLoadScript,
-  MarkerF,
-} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -39,7 +35,7 @@ const options = {
 };
 
 const BlogFormMap = (props) => {
-  // const { location } = props;
+  const { setFormData } = props;
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -54,6 +50,11 @@ const BlogFormMap = (props) => {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
     });
+    setFormData((prevData) => ({
+      ...prevData,
+      latitude: event.latLng.lat(),
+      longitude: event.latLng.lng(),
+    }));
   }, []);
 
   const mapRef = React.useRef();

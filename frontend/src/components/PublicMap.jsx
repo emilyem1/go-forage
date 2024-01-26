@@ -25,7 +25,7 @@ const options = {
 };
 
 const PublicMap = (props) => {
-  const { blogData } = props;
+  const { blogData, setBlogSelected, setSelectedRoute } = props;
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyDd3aomdLp5AMlwBs9WgviK_ZqqHu9t87k",
@@ -33,7 +33,6 @@ const PublicMap = (props) => {
   });
 
   const [markerSelected, setMarkerSelected] = React.useState(null);
-  const [blogSelected, setBlogSelected] = React.useState(null);
 
   const mapRef = React.useRef();
 
@@ -84,7 +83,7 @@ const PublicMap = (props) => {
             <div
               onClick={() => {
                 setBlogSelected(markerSelected);
-                console.log(markerSelected.title);
+                setSelectedRoute("BLOGDETAILS");
               }}
             >
               <h3>{markerSelected.title}</h3>

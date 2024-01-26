@@ -3,7 +3,6 @@ import BlogListMap from "./BlogListMap";
 
 const BlogDetails = (props) => {
   const { blog } = props;
-
   return (
     <section className="mushroom-list__item">
       <div>

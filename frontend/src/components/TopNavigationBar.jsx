@@ -11,6 +11,7 @@ const TopNavigation = (props) => {
           <li style={{ cursor: "pointer", padding: "2em" }} onClick={() => {route("PUBLIC");}}> Public Map</li>
           <li style={{ cursor: "pointer", padding: "2em"  }} onClick={() => {route("BLOGLIST");}}> Blogs</li>
           <li style={{ cursor: "pointer", padding: "2em"  }} onClick={() => {route("MUSHROOMS");}}> Mushrooms</li>
+          <li style={{ cursor: "pointer", padding: "2em"  }} onClick={() => {route("LOGINSIGNUP");}}> Login/Signup</li>
         </ul>
       </nav>
     </div>

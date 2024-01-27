@@ -1,5 +1,5 @@
 import BlogFormMap from "./BlogFormMap";
-import "../styles/MushroomList.scss";
+import "../styles/BlogForm.scss";
 import { useState } from "react";
 
 const BlogForm = (props) => {
@@ -55,67 +55,73 @@ const BlogForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Enter Blog Title"
-        />
-      </label>
-      {/* <label>
+    <form onSubmit={handleSubmit} className="blog-form">
+      <div className="form-content">
+        <section className="form-input">
+          <label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              placeholder="Enter Blog Title"
+            />
+          </label>
+          {/* <label>
         User ID (Put in 1-10):
         <input
-          type="text"
+        type="text"
           name="user_id"
           value={formData.user_id}
           onChange={handleChange}
-        />
-      </label> */}
-      {/* <label>
+          />
+        </label> */}
+          {/* <label>
         Latitude:
         <input
-          type="text"
-          name="latitude"
-          value={formData.latitude}
-          onChange={handleChange}
+        type="text"
+        name="latitude"
+        value={formData.latitude}
+        onChange={handleChange}
         />
-      </label>
-      <label>
+        </label>
+        <label>
         Longitude:
         <input
-          type="text"
-          name="longitude"
-          value={formData.longitude}
-          onChange={handleChange}
+        type="text"
+        name="longitude"
+        value={formData.longitude}
+        onChange={handleChange}
         />
       </label> */}
-      <label>
-        <select
-          name="mushroom_id"
-          value={formData.mushroom_id}
-          onChange={handleChange}
-        >
-          <option value="">Select Mushroom</option>
-          {mushrooms.map((mushroom) => (
-            <option key={mushroom.id} value={mushroom.id}>
-              {mushroom.name}
-            </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        <input
-          type="text"
-          name="content"
-          value={formData.content}
-          onChange={handleChange}
-          placeholder="Enter Blog Content"
-        />
-      </label>
-      <BlogFormMap setFormData={setFormData} />
+          <label>
+            <select
+              name="mushroom_id"
+              value={formData.mushroom_id}
+              onChange={handleChange}
+            >
+              <option value="">Select Mushroom</option>
+              {mushrooms.map((mushroom) => (
+                <option key={mushroom.id} value={mushroom.id}>
+                  {mushroom.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <br />
+
+          <input
+            type="text"
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
+            placeholder="Enter Blog Content"
+          />
+        </section>
+        <section className="map">
+          <BlogFormMap setFormData={setFormData} />
+        </section>
+      </div>
       <button type="submit">Submit</button>
     </form>
   );

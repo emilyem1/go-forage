@@ -27,7 +27,22 @@ module.exports = (db) => {
     if (action === "login") {
       // Login logic
       // Check user credentials in the database
-      response.json({ message: "Login logic to be implemented" });
+      db.query(
+        `
+        SELECT * FROM USER_ACCOUNT WHERE EMAIL = $1;
+        `,
+        [email]
+      ).then(({ rows }) => {
+        // response.json(rows[0]);
+        if (rows.length > 0) {
+          // User found
+          console.log(rows[0]);
+        } else {
+          // User not found, send an appropriate response
+          console.log("User Not Found");
+          response.status(404).json({ error: "User not found" });
+        }
+      });
     } else if (action === "signup") {
       // Signup logic
       // Create a new user in the database

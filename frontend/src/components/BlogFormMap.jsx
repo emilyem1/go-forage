@@ -1,5 +1,5 @@
 import React from "react";
-import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
+import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
 
 import usePlacesAutocomplete, {
   getGeocode,
@@ -39,7 +39,7 @@ const options = {
 const BlogFormMap = (props) => {
   const { setFormData } = props;
 
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });

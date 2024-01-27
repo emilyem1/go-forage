@@ -1,7 +1,7 @@
 import React from "react";
 import {
   GoogleMap,
-  useLoadScript,
+  useJsApiLoader,
   MarkerF,
   InfoWindowF,
 } from "@react-google-maps/api";
@@ -27,7 +27,7 @@ const options = {
 const PublicMap = (props) => {
   const { blogData, setBlogSelected, setSelectedRoute } = props;
 
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });

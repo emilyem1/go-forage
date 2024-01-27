@@ -74,7 +74,7 @@ const BlogForm = (props) => {
           onChange={handleChange}
         />
       </label>
-      <label>
+      {/* <label>
         Latitude:
         <input
           type="text"
@@ -91,7 +91,7 @@ const BlogForm = (props) => {
           value={formData.longitude}
           onChange={handleChange}
         />
-      </label>
+      </label> */}
       <label>
         Mushroom:
         <select

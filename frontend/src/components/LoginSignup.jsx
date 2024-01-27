@@ -2,6 +2,8 @@ import "../styles/LoginSignup.scss";
 import { useState } from "react";
 
 const LoginSignup = (props) => {
+  const setSelectedRoute = props.setSelectedRoute;
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -46,10 +48,9 @@ const LoginSignup = (props) => {
         // Check the response for login success or failure
         if (data.success) {
           console.log("Login successful");
-          // successful login
+          setSelectedRoute("BLOGLIST");
         } else {
           console.log("Login failed");
-          // Handle login failure
         }
       }
 
@@ -57,6 +58,7 @@ const LoginSignup = (props) => {
         // Check the response for signup success or failure
         if (data.success) {
           console.log("Signup successful");
+          setSelectedRoute("BLOGLIST");
           //  successful signup
         } else {
           console.log("Signup failed");

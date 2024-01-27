@@ -12,6 +12,7 @@ const LoginSignup = (props) => {
     email: "",
     password: "",
     fullname: "", // for signup only
+    profilePhoto: "", // for signup only
     action: "signup", // default to signup
   });
 
@@ -40,6 +41,28 @@ const LoginSignup = (props) => {
 
       const data = await response.json();
       console.log(data);
+
+      if (formData.action === "login") {
+        // Check the response for login success or failure
+        if (data.success) {
+          console.log("Login successful");
+          // successful login
+        } else {
+          console.log("Login failed");
+          // Handle login failure
+        }
+      }
+
+      if (formData.action === "signup") {
+        // Check the response for signup success or failure
+        if (data.success) {
+          console.log("Signup successful");
+          //  successful signup
+        } else {
+          console.log("Signup failed");
+          // Handle signup failure
+        }
+      }
     } catch (error) {
       console.error("Error:", error);
     }

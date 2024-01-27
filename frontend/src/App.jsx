@@ -1,4 +1,4 @@
-import { useState, React } from "react";
+import React, { useState } from "react";
 import useApplicationData from "./hooks/useApplicationData";
 import "./App.css";
 
@@ -34,7 +34,7 @@ function App() {
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal />
       ) : (
-        <LoginSignup />
+        <LoginSignup setSelectedRoute={setSelectedRoute} />
       )}
     </div>
   );

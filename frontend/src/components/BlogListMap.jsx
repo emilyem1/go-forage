@@ -18,6 +18,7 @@ const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   draggable: false,
+  draggableCursor: "pointer",
 };
 
 const Map = (props) => {

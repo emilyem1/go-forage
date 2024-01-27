@@ -30,6 +30,7 @@ function App() {
           blogs={blogData}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
+          mushrooms={mushroomData}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} />

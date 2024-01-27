@@ -2,15 +2,29 @@ import BlogListItem from "./BlogListItem";
 import "../styles/MushroomList.scss";
 import BlogForm from "./BlogForm";
 
-// <br/> just temporary spaces before styling
+import { useState } from "react";
+import Switch from "@mui/material/Switch";
+import Collapse from "@mui/material/Collapse";
+
 const BlogList = (props) => {
-  const { blogs, setSelectedRoute, setBlogSelected } = props;
+  const { blogs, mushrooms, setSelectedRoute, setBlogSelected } = props;
+
+  const [checked, setChecked] = useState(false);
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
+
   return (
     <main>
-      <br />
-      <br />
-      <BlogForm />
-      <br />
+      Add a Blog:{<Switch checked={checked} onChange={handleChange} />}
+
+      <div>
+        <Collapse in={checked}>
+          <BlogForm mushrooms={mushrooms} />
+          <br />
+        </Collapse>
+      </div>
+
       <ul className="mushroom-list">
         {blogs.map((blog) => (
           <BlogListItem

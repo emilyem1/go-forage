@@ -13,8 +13,9 @@ import {
   ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
-import "@reach/combobox/styles.css";
 
+import "@reach/combobox/styles.css";
+import "../styles/Map.scss";
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
@@ -22,6 +23,7 @@ const libraries = ["places"];
 const mapContainerStyle = {
   width: "100%",
   height: "50vh",
+  borderRadius: "15px",
 };
 
 const centerDefault = {
@@ -88,14 +90,13 @@ const BlogFormMap = (props) => {
   }
 
   return (
-    <div>
+    <div className="map-container">
       <Locate panTo={panTo} />
       <Search panTo={panTo} />
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={10}
-        // center={location} // blog card coordinates
         center={center}
         options={options}
         onClick={onMapClick}
@@ -121,6 +122,8 @@ const BlogFormMap = (props) => {
 function Locate({ panTo }) {
   return (
     <button
+      type="button"
+      className="locate"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -170,22 +173,24 @@ function Search({ panTo }) {
   };
 
   return (
-    <Combobox onSelect={handleSelect}>
-      <ComboboxInput
-        value={value}
-        onChange={handleInput}
-        disabled={!ready}
-        placeholder="Search your location"
-      />
-      <ComboboxPopover>
-        <ComboboxList>
-          {status === "OK" &&
-            data.map(({ id, description }) => (
-              <ComboboxOption key={id} value={description} />
-            ))}
-        </ComboboxList>
-      </ComboboxPopover>
-    </Combobox>
+    <div className="search">
+      <Combobox onSelect={handleSelect}>
+        <ComboboxInput
+          value={value}
+          onChange={handleInput}
+          disabled={!ready}
+          placeholder="Search your location"
+        />
+        <ComboboxPopover>
+          <ComboboxList>
+            {status === "OK" &&
+              data.map(({ id, description }) => (
+                <ComboboxOption key={id} value={description} />
+              ))}
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
+    </div>
   );
 }
 export default BlogFormMap;

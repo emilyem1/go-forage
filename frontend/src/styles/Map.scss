@@ -1,0 +1,28 @@
+/* BlogFormMap.css */
+
+.map-container {
+  position: relative;
+}
+
+.search {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.locate {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.locate img {
+  width: 30px;
+  height: 30px;
+}

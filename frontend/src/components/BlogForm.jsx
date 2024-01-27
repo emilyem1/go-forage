@@ -93,13 +93,19 @@ const BlogForm = (props) => {
         />
       </label>
       <label>
-        Mushroom (Put in 1-10):
-        <input
-          type="text"
+        Mushroom:
+        <select
           name="mushroom_id"
           value={formData.mushroom_id}
           onChange={handleChange}
-        />
+        >
+          <option value="">Select Mushroom</option>
+          {mushrooms.map((mushroom) => (
+            <option key={mushroom.id} value={mushroom.id}>
+              {mushroom.name}
+            </option>
+          ))}
+        </select>
       </label>
       <label>
         Content:

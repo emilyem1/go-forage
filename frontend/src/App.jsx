@@ -28,7 +28,7 @@ function App() {
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} />
       ) : selectedRoute === "BLOGLIST" ? (
-        <BlogList blogs={blogData} />
+        <BlogList blogs={blogData} mushrooms={mushroomData} />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (

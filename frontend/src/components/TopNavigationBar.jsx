@@ -35,13 +35,6 @@ const TopNavigation = (props) => {
             <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
           </Tabs>
         </Box>
-        <div>
-          {value === 0 && <div>Map</div>}
-          {value === 1 && <div>Blogs</div>}
-          {value === 2 && <div>Mushrooms</div>}
-          {value === 3 && <div>Field Journal</div>}
-          {value === 4 && <div>Login/Signup</div>}
-        </div>
       </Box>
     </ThemeProvider>
   );

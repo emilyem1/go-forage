@@ -18,13 +18,14 @@ const options = {
   styles: mapStyles,
   disableDefaultUI: true,
   draggable: false,
+  draggableCursor: "pointer",
 };
 
 const Map = (props) => {
   const { location } = props;
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDd3aomdLp5AMlwBs9WgviK_ZqqHu9t87k",
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
@@ -48,7 +49,7 @@ const Map = (props) => {
           key={new Date().toISOString()}
           position={location}
           icon={{
-            url: "/mushroom_marker.svg",
+            url: "./assets/mushroom_marker.svg",
             scaledSize: new window.google.maps.Size(30, 30),
             origin: new window.google.maps.Point(0, 0),
             anchor: new window.google.maps.Point(15, 15),

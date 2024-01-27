@@ -25,6 +25,12 @@ function App() {
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
         />
+      ) : selectedRoute === "BLOGLIST" ? (
+        <BlogList
+          blogs={blogData}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+        />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} />
       ) : selectedRoute === "BLOGLIST" ? (

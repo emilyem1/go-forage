@@ -7,7 +7,7 @@ import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
 
 const BlogList = (props) => {
-  const { blogs, mushrooms } = props;
+  const { blogs, mushrooms, setSelectedRoute, setBlogSelected } = props;
 
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
@@ -27,7 +27,13 @@ const BlogList = (props) => {
 
       <ul className="mushroom-list">
         {blogs.map((blog) => (
-          <BlogListItem className="mushroom-list" key={blog.id} blog={blog} />
+          <BlogListItem
+            className="mushroom-list"
+            key={blog.id}
+            blog={blog}
+            setSelectedRoute={setSelectedRoute}
+            setBlogSelected={setBlogSelected}
+          />
         ))}
       </ul>
     </main>

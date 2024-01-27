@@ -100,7 +100,7 @@ const Map = (props) => {
           key={new Date().toISOString()}
           position={location}
           icon={{
-            url: "/mushroom_marker.svg",
+            url: "./assets/mushroom_marker.svg",
             scaledSize: new window.google.maps.Size(30, 30),
             origin: new window.google.maps.Point(0, 0),
             anchor: new window.google.maps.Point(15, 15),
@@ -112,7 +112,7 @@ const Map = (props) => {
             key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
-              url: "/mushroom_marker.svg",
+              url: "./assets/mushroom_marker.svg",
               scaledSize: new window.google.maps.Size(30, 30),
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
@@ -154,7 +154,7 @@ function Locate({ panTo }) {
         );
       }}
     >
-      <img src="compass.svg" alt="Locate Me" />
+      <img src="./assets/compass.svg" alt="Locate Me" />
     </button>
   );
 }

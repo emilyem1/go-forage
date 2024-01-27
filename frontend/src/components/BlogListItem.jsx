@@ -2,10 +2,15 @@ import "../styles/MushroomListItem.scss";
 import BlogListMap from "./BlogListMap";
 
 const BlogListItem = (props) => {
-  const { blog } = props;
+  const { blog, setSelectedRoute, setBlogSelected } = props;
+
+  const handleClick = () => {
+    setBlogSelected(blog);
+    setSelectedRoute("BLOGDETAILS");
+  };
 
   return (
-    <section className="mushroom-list__item">
+    <section onClick={handleClick} className="mushroom-list__item">
       <div>
         <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
       </div>

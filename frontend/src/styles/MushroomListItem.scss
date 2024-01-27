@@ -3,12 +3,16 @@
   height: 100%;
   margin: 12px auto;
   padding: 8px;
-  border-width: 1px;
+  border-width: 3px;
   border-color: #E6E6E6;
   border-style: solid;
   border-radius: 8px;
   width: 25%;
   background-color: #FFFFFF;
+  cursor: pointer;
+  &:hover {
+    border-color: rgb(11, 180, 129);
+  }
 }
 
 .mushroom-list__image {

@@ -39,7 +39,9 @@ module.exports = (db) => {
           console.log(rows[0]);
           if (password === rows[0].password) {
             console.log("Successful login");
-            response.json({ success: true, user: rows[0] }); // Include a success message
+            request.session.user = rows[0]; // Store user data in the session
+            console.log("Session data:", request.session);
+            response.json({ success: true, user: rows[0], redirect: "/" }); // Include a success message
           } else {
             console.log("Invalid password");
             response.status(404).json({ error: "Invalid password" });
@@ -61,7 +63,9 @@ module.exports = (db) => {
       `,
         [fullname, email, password, profilePhoto]
       ).then(({ rows }) => {
-        response.json(rows[0]);
+        request.session.user = rows[0]; // Store user data in the session
+        console.log("Session data:", request.session);
+        response.json({ success: true, user: rows[0], redirect: "/" });
       });
     } else {
       response.status(400).json({ error: "Invalid action" });

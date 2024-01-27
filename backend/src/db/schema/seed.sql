@@ -1,15 +1,15 @@
-INSERT INTO USER_ACCOUNT (ID, FULLNAME, USERNAME)
+INSERT INTO USER_ACCOUNT (FULLNAME, EMAIL, PASSWORD, PHOTO_URL)
 VALUES 
-  (1, 'John Doe', 'jdoe'),
-  (2, 'Alice Wonderland', 'awond'),
-  (3, 'Sita Dennis', 'sitad'),
-  (4, 'Sasha Mateo', 'matte'),
-  (5, 'Anita Austi', 'anita'),
-  (6, 'Lukas Souza', 'lsouza'),
-  (7, 'Jose Alejandro', 'josea'),
-  (8, 'Dwayne Jacob', 'jdwayne'),
-  (9, 'Allison Saeng', 'saeng'),
-  (10, 'Adrea Santos', 'santa');
+  ('John Doe', 'jdoe@test.com', 'asd', 'https://avatar.iran.liara.run/public/30'),
+  ('Alice Wonderland', 'awond@test.com', 'asd', 'https://avatar.iran.liara.run/public/58'),
+  ('Sita Dennis', 'sitad@test.com', 'asd', 'https://avatar.iran.liara.run/public/100'),
+  ('Sasha Mateo', 'matte@test.com', 'asd', 'https://avatar.iran.liara.run/public/67'),
+  ('Anita Austi', 'anita@test.com', 'asd', 'https://avatar.iran.liara.run/public/98'),
+  ('Lukas Souza', 'lsouza@test.com', 'asd', 'https://avatar.iran.liara.run/public/5'),
+  ('Jose Alejandro', 'josea@test.com', 'asd', 'https://avatar.iran.liara.run/public/49'),
+  ('Dwayne Jacob', 'jdwayne@test.com', 'asd', 'https://avatar.iran.liara.run/public/20'),
+  ('Allison Saeng', 'saeng@test.com', 'asd', 'https://avatar.iran.liara.run/public/64'),
+  ('Adrea Santos', 'santa@test.com', 'asd', 'https://avatar.iran.liara.run/public/86');
 
   -- 10 Inserts for MUSHROOM table
 INSERT INTO MUSHROOM (TITLE,IMAGE_URL, INFO, EDIBLE) VALUES

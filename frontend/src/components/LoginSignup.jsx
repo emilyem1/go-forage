@@ -2,6 +2,8 @@ import "../styles/LoginSignup.scss";
 import { useState } from "react";
 
 const LoginSignup = (props) => {
+  const setSelectedRoute = props.setSelectedRoute;
+
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
@@ -12,6 +14,7 @@ const LoginSignup = (props) => {
     email: "",
     password: "",
     fullname: "", // for signup only
+    profilePhoto: "", // for signup only
     action: "signup", // default to signup
   });
 
@@ -40,6 +43,28 @@ const LoginSignup = (props) => {
 
       const data = await response.json();
       console.log(data);
+
+      if (formData.action === "login") {
+        // Check the response for login success or failure
+        if (data.success) {
+          console.log("Login successful");
+          setSelectedRoute("BLOGLIST");
+        } else {
+          console.log("Login failed");
+        }
+      }
+
+      if (formData.action === "signup") {
+        // Check the response for signup success or failure
+        if (data.success) {
+          console.log("Signup successful");
+          setSelectedRoute("BLOGLIST");
+          //  successful signup
+        } else {
+          console.log("Signup failed");
+          // Handle signup failure
+        }
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -78,7 +103,7 @@ const LoginSignup = (props) => {
             Login
           </button>
           <p>
-            Don't have an account? <a>Sign Up</a>
+            Don't have an account? <button>Sign Up</button>
           </p>
         </form>
 
@@ -107,7 +132,7 @@ const LoginSignup = (props) => {
             name="fullname"
             required
           />
-          <label htmlFor="email">Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             onChange={(e) => handleInputChange("signup", e)}
             type="password"
@@ -116,12 +141,20 @@ const LoginSignup = (props) => {
             name="password"
             required
           />
+          <label htmlFor="profilePhoto">Profile Photo: (Optional)</label>
+          <input
+            onChange={(e) => handleInputChange("signup", e)}
+            type="text"
+            className="input-field"
+            placeholder="Link..."
+            name="profilePhoto"
+          />
           <input type="hidden" name="action" value="signup" />
           <button type="submit" className="submit-btn">
             Sign Up
           </button>
           <p>
-            Already have an account? <a>Log In</a>
+            Already have an account? <button>Log In</button>
           </p>
         </form>
       </div>

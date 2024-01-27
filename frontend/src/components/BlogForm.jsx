@@ -57,12 +57,12 @@ const BlogForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Title:
         <input
           type="text"
           name="title"
           value={formData.title}
           onChange={handleChange}
+          placeholder="Enter Blog Title"
         />
       </label>
       {/* <label>
@@ -93,7 +93,6 @@ const BlogForm = (props) => {
         />
       </label> */}
       <label>
-        Mushroom:
         <select
           name="mushroom_id"
           value={formData.mushroom_id}
@@ -108,12 +107,12 @@ const BlogForm = (props) => {
         </select>
       </label>
       <label>
-        Content:
         <input
           type="text"
           name="content"
           value={formData.content}
           onChange={handleChange}
+          placeholder="Enter Blog Content"
         />
       </label>
       <BlogFormMap setFormData={setFormData} />

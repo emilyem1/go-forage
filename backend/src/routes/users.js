@@ -37,6 +37,13 @@ module.exports = (db) => {
         if (rows.length > 0) {
           // User found
           console.log(rows[0]);
+          if (password === rows[0].password) {
+            console.log("Successful login");
+            response.json({ success: true, user: rows[0] }); // Include a success message
+          } else {
+            console.log("Invalid password");
+            response.status(404).json({ error: "Invalid password" });
+          }
         } else {
           // User not found, send an appropriate response
           console.log("User Not Found");

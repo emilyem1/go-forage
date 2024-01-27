@@ -78,7 +78,7 @@ const LoginSignup = (props) => {
             Login
           </button>
           <p>
-            Don't have an account? <a>Sign Up</a>
+            Don't have an account? <button>Sign Up</button>
           </p>
         </form>
 
@@ -107,7 +107,7 @@ const LoginSignup = (props) => {
             name="fullname"
             required
           />
-          <label htmlFor="email">Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             onChange={(e) => handleInputChange("signup", e)}
             type="password"
@@ -116,12 +116,20 @@ const LoginSignup = (props) => {
             name="password"
             required
           />
+          <label htmlFor="profilePhoto">Profile Photo: (Optional)</label>
+          <input
+            onChange={(e) => handleInputChange("signup", e)}
+            type="text"
+            className="input-field"
+            placeholder="Link..."
+            name="profilePhoto"
+          />
           <input type="hidden" name="action" value="signup" />
           <button type="submit" className="submit-btn">
             Sign Up
           </button>
           <p>
-            Already have an account? <a>Log In</a>
+            Already have an account? <button>Log In</button>
           </p>
         </form>
       </div>

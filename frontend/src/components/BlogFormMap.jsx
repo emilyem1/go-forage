@@ -122,6 +122,7 @@ const BlogFormMap = (props) => {
 function Locate({ panTo }) {
   return (
     <button
+      type="button"
       className="locate"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(

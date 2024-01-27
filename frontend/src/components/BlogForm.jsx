@@ -10,7 +10,7 @@ const BlogForm = (props) => {
     content: "",
     latitude: "",
     longitude: "",
-    user_id: "",
+    user_id: "1",
     mushroom_id: "",
   });
 
@@ -65,7 +65,7 @@ const BlogForm = (props) => {
           onChange={handleChange}
         />
       </label>
-      <label>
+      {/* <label>
         User ID (Put in 1-10):
         <input
           type="text"
@@ -73,7 +73,7 @@ const BlogForm = (props) => {
           value={formData.user_id}
           onChange={handleChange}
         />
-      </label>
+      </label> */}
       {/* <label>
         Latitude:
         <input

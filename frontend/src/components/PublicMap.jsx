@@ -48,7 +48,6 @@ const PublicMap = (props) => {
   const [markerSelected, setMarkerSelected] = useState(null);
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
-  const [selectedPlace, setSelectedPlace] = useState(centerBC);
   const searchInputRef = useRef();
 
   const onSearchBarLoad = async (autocomplete) => {
@@ -88,7 +87,10 @@ const PublicMap = (props) => {
   return (
     <div>
       <Autocomplete
-        options={{ types: ["geocode"] }}
+        options={{
+          types: ["geocode"],
+          componentRestrictions: { country: "CA" },
+        }}
         // onPlaceChanged={onPlaceChanged}
         onLoad={onSearchBarLoad}
       >

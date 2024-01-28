@@ -23,10 +23,10 @@ const centerBC = {
 };
 
 const boundsBC = {
-  north: 60, 
-  south: 48, 
-  west: -139, 
-  east: -114, 
+  north: 60,
+  south: 48,
+  west: -139,
+  east: -114,
 };
 
 const options = {
@@ -36,7 +36,7 @@ const options = {
     latLngBounds: boundsBC,
     strictBounds: false,
   },
-  minZoom:5
+  minZoom: 5,
 };
 
 const BlogFormMap = (props) => {
@@ -50,7 +50,6 @@ const BlogFormMap = (props) => {
   const [marker, setMarker] = useState(null);
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
-  const [selectedPlace, setSelectedPlace] = useState(null);
   const searchInputRef = useRef();
 
   const onSearchBarLoad = async (autocomplete) => {
@@ -118,21 +117,24 @@ const BlogFormMap = (props) => {
     <div className="map-container">
       <Locate panTo={panTo} />
       <div className="search">
-      <Autocomplete
-        options={{ types: ["geocode"] }}
-        // onPlaceChanged={onPlaceChanged}
-        onLoad={onSearchBarLoad}
-      >
-        <input
-          type="text"
-          placeholder="Search Your Location"
-          ref={searchInputRef}
-        />
-      </Autocomplete>
-      <button type="button" onClick={onPlaceChanged}>
-        Search
-      </button>
-    </div>
+        <Autocomplete
+          options={{
+            types: ["geocode"],
+            componentRestrictions: { country: "CA" },
+          }}
+          // onPlaceChanged={onPlaceChanged}
+          onLoad={onSearchBarLoad}
+        >
+          <input
+            type="text"
+            placeholder="Search Your Location"
+            ref={searchInputRef}
+          />
+        </Autocomplete>
+        <button type="button" onClick={onPlaceChanged}>
+          Search
+        </button>
+      </div>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}

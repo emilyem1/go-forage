@@ -71,7 +71,7 @@ const PublicMap = (props) => {
   return (
     <div>
       <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
-        <input type="text" placeholder="Destination" ref={searchInputRef} />
+        <input type="text" placeholder="Search Your Location" ref={searchInputRef} />
       </Autocomplete>
       <button
         type="submit"

@@ -20,9 +20,21 @@ const centerBC = {
   lng: -127.6476,
 };
 
+const boundsBC = {
+  north: 60, 
+  south: 48, 
+  west: -139, 
+  east: -114, 
+};
+
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
+  restriction: {
+    latLngBounds: boundsBC,
+    strictBounds: false,
+  },
+  minZoom:5
 };
 
 const PublicMap = (props) => {

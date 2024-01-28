@@ -28,7 +28,6 @@ const options = {
 const PublicMap = (props) => {
   const { blogData, setBlogSelected, setSelectedRoute } = props;
 
-
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
@@ -36,17 +35,25 @@ const PublicMap = (props) => {
 
   const [markerSelected, setMarkerSelected] = useState(null);
   const [mapCenter, setMapCenter] = useState(centerBC);
-
-
+  const [searchResult, setSearchResult] = useState(null);
+  const onSearchBarLoad = async (autocomplete) => {
+    setSearchResult(autocomplete);
+  };
+  function onPlaceChanged() {
+    if (searchResult != null) {
+      const place = searchResult.getPlace();
+      const searchLat = place.geometry.location.lat();
+      const searchLng = place.geometry.location.lng();
+      return { lat: searchLat, lng: searchLng };
+    } else {
+      alert("Please enter text");
+    }
+  }
   const mapRef = useRef();
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
-
-
-
-
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -58,7 +65,12 @@ const PublicMap = (props) => {
 
   return (
     <div>
-      <Autocomplete  >
+      <Autocomplete
+        onPlaceChanged={() => {
+          setMapCenter(onPlaceChanged());
+        }}
+        onLoad={onSearchBarLoad}
+      >
         <input type="text" placeholder="Destination" />
       </Autocomplete>
 

@@ -1,20 +1,11 @@
-import React from "react";
-import { GoogleMap, useJsApiLoader, MarkerF } from "@react-google-maps/api";
-
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-
+import { React, useRef, useState, useCallback } from "react";
 import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
+  GoogleMap,
+  useJsApiLoader,
+  MarkerF,
+  Autocomplete,
+} from "@react-google-maps/api";
 
-import "@reach/combobox/styles.css";
 import "../styles/Map.scss";
 import { mapStyles } from "../styles/Map";
 
@@ -26,7 +17,7 @@ const mapContainerStyle = {
   borderRadius: "15px",
 };
 
-const centerDefault = {
+const centerBC = {
   lat: 53.7267,
   lng: -127.6476,
 };
@@ -44,10 +35,27 @@ const BlogFormMap = (props) => {
     libraries,
   });
 
-  const [marker, setMarker] = React.useState(null);
-  const [center, setCenter] = React.useState(centerDefault);
+  const [marker, setMarker] = useState(null);
+  const [mapCenter, setMapCenter] = useState(centerBC);
+  const [searchResult, setSearchResult] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const searchInputRef = useRef("");
 
-  const onMapClick = React.useCallback((event) => {
+  const onSearchBarLoad = async (autocomplete) => {
+    setSearchResult(autocomplete);
+  };
+
+  function onPlaceChanged() {
+    if (searchResult != null) {
+      const place = searchResult.getPlace();
+      const searchLat = place.geometry.location.lat();
+      const searchLng = place.geometry.location.lng();
+      setSelectedPlace({ lat: searchLat, lng: searchLng });
+    } else {
+      alert("Please enter text");
+    }
+  }
+  const onMapClick = useCallback((event) => {
     setMarker({
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
@@ -59,24 +67,24 @@ const BlogFormMap = (props) => {
     }));
   }, []);
 
-  const mapRef = React.useRef();
+  const mapRef = useRef();
 
-  const onMapLoad = React.useCallback((map) => {
+  const onMapLoad = useCallback((map) => {
     mapRef.current = map;
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setCenter({
+        setMapCenter({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
       },
       () => {
-        setCenter(centerDefault);
+        setMapCenter(centerBC);
       }
     );
   }, []);
 
-  const panTo = React.useCallback(({ lat, lng }) => {
+  const panTo = useCallback(({ lat, lng }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
   }, []);
@@ -92,12 +100,31 @@ const BlogFormMap = (props) => {
   return (
     <div className="map-container">
       <Locate panTo={panTo} />
-      <Search panTo={panTo} />
+      <div className="search">
+      <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
+        <input
+          type="text"
+          placeholder="Search Your Location"
+          ref={searchInputRef}
+        />
+      </Autocomplete>
+      <button
+        type="button"
+        onClick={() => {
+          if (searchResult) {
+            setMapCenter({ lat: selectedPlace.lat, lng: selectedPlace.lng });
+            searchInputRef.current.value = "";
+          }
+        }}
+      >
+        Search
+      </button>
+    </div>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={10}
-        center={center}
+        center={mapCenter}
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
@@ -141,56 +168,4 @@ function Locate({ panTo }) {
   );
 }
 
-function Search({ panTo }) {
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      location: { lat: () => 53.7267, lng: () => -127.6476 },
-      radius: 200 * 1000,
-    },
-  });
-
-  const handleInput = (e) => {
-    setValue(e.target.value);
-  };
-
-  const handleSelect = async (address) => {
-    setValue(address, false);
-    clearSuggestions();
-
-    try {
-      const results = await getGeocode({ address });
-      const { lat, lng } = await getLatLng(results[0]);
-      panTo({ lat, lng });
-    } catch (error) {
-      console.log("😱 Error: ", error);
-    }
-  };
-
-  return (
-    <div className="search">
-      <Combobox onSelect={handleSelect}>
-        <ComboboxInput
-          value={value}
-          onChange={handleInput}
-          disabled={!ready}
-          placeholder="Search your location"
-        />
-        <ComboboxPopover>
-          <ComboboxList>
-            {status === "OK" &&
-              data.map(({ id, description }) => (
-                <ComboboxOption key={id} value={description} />
-              ))}
-          </ComboboxList>
-        </ComboboxPopover>
-      </Combobox>
-    </div>
-  );
-}
 export default BlogFormMap;

@@ -1,9 +1,10 @@
-import React from "react";
+import { React, useRef, useState, useCallback } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   MarkerF,
   InfoWindowF,
+  Autocomplete,
 } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
@@ -14,7 +15,7 @@ const mapContainerStyle = {
   height: "80vh",
 };
 
-const center = {
+const centerBC = {
   lat: 53.7267,
   lng: -127.6476,
 };
@@ -27,18 +28,25 @@ const options = {
 const PublicMap = (props) => {
   const { blogData, setBlogSelected, setSelectedRoute } = props;
 
+
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
-  const [markerSelected, setMarkerSelected] = React.useState(null);
+  const [markerSelected, setMarkerSelected] = useState(null);
+  const [mapCenter, setMapCenter] = useState(centerBC);
 
-  const mapRef = React.useRef();
 
-  const onMapLoad = React.useCallback((map) => {
+  const mapRef = useRef();
+
+  const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
+
+
+
+
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -50,10 +58,14 @@ const PublicMap = (props) => {
 
   return (
     <div>
+      <Autocomplete  >
+        <input type="text" placeholder="Destination" />
+      </Autocomplete>
+
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={1}
-        center={center}
+        zoom={5}
+        center={mapCenter}
         options={options}
         onLoad={onMapLoad}
       >

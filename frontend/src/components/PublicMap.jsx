@@ -36,19 +36,23 @@ const PublicMap = (props) => {
   const [markerSelected, setMarkerSelected] = useState(null);
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
   const onSearchBarLoad = async (autocomplete) => {
     setSearchResult(autocomplete);
   };
+
   function onPlaceChanged() {
     if (searchResult != null) {
       const place = searchResult.getPlace();
       const searchLat = place.geometry.location.lat();
       const searchLng = place.geometry.location.lng();
-      return { lat: searchLat, lng: searchLng };
+      setSelectedPlace({ lat: searchLat, lng: searchLng });
     } else {
       alert("Please enter text");
     }
   }
+
   const mapRef = useRef();
 
   const onMapLoad = useCallback((map) => {
@@ -65,14 +69,19 @@ const PublicMap = (props) => {
 
   return (
     <div>
-      <Autocomplete
-        onPlaceChanged={() => {
-          setMapCenter(onPlaceChanged());
-        }}
-        onLoad={onSearchBarLoad}
-      >
+      <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
         <input type="text" placeholder="Destination" />
       </Autocomplete>
+      <button
+        type="submit"
+        onClick={() => {
+          if (searchResult) {
+            setMapCenter({ lat: selectedPlace.lat, lng: selectedPlace.lng });
+          }
+        }}
+      >
+        Search
+      </button>
 
       <GoogleMap
         mapContainerStyle={mapContainerStyle}

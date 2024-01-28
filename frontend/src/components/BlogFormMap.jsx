@@ -51,18 +51,22 @@ const BlogFormMap = (props) => {
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const searchInputRef = useRef("");
+  const searchInputRef = useRef();
 
   const onSearchBarLoad = async (autocomplete) => {
     setSearchResult(autocomplete);
   };
 
-  function onPlaceChanged() {
+  async function onPlaceChanged() {
     if (searchResult != null) {
       const place = searchResult.getPlace();
-      const searchLat = place.geometry.location.lat();
-      const searchLng = place.geometry.location.lng();
-      setSelectedPlace({ lat: searchLat, lng: searchLng });
+      console.log(place);
+      if (place && place.geometry) {
+        const searchLat = place.geometry.location.lat();
+        const searchLng = place.geometry.location.lng();
+        setMapCenter({ lat: searchLat, lng: searchLng });
+        searchInputRef.current.value = "";
+      }
     } else {
       alert("Please enter text");
     }
@@ -113,22 +117,18 @@ const BlogFormMap = (props) => {
     <div className="map-container">
       <Locate panTo={panTo} />
       <div className="search">
-      <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
+      <Autocomplete
+        options={{ types: ["geocode"] }}
+        // onPlaceChanged={onPlaceChanged}
+        onLoad={onSearchBarLoad}
+      >
         <input
           type="text"
           placeholder="Search Your Location"
           ref={searchInputRef}
         />
       </Autocomplete>
-      <button
-        type="button"
-        onClick={() => {
-          if (searchResult) {
-            setMapCenter({ lat: selectedPlace.lat, lng: selectedPlace.lng });
-            searchInputRef.current.value = "";
-          }
-        }}
-      >
+      <button type="button" onClick={onPlaceChanged}>
         Search
       </button>
     </div>

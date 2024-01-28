@@ -37,6 +37,7 @@ const PublicMap = (props) => {
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const searchInputRef = useRef("");
 
   const onSearchBarLoad = async (autocomplete) => {
     setSearchResult(autocomplete);
@@ -70,13 +71,14 @@ const PublicMap = (props) => {
   return (
     <div>
       <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
-        <input type="text" placeholder="Destination" />
+        <input type="text" placeholder="Destination" ref={searchInputRef} />
       </Autocomplete>
       <button
         type="submit"
         onClick={() => {
           if (searchResult) {
             setMapCenter({ lat: selectedPlace.lat, lng: selectedPlace.lng });
+            searchInputRef.current.value = "";
           }
         }}
       >

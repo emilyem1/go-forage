@@ -1,9 +1,8 @@
 import React from "react";
 import {
   GoogleMap,
-  useLoadScript,
+  useJsApiLoader,
   MarkerF,
-  InfoWindowF,
 } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
@@ -24,7 +23,7 @@ const options = {
 const Map = (props) => {
   const { location } = props;
 
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });

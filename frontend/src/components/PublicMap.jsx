@@ -1,9 +1,10 @@
-import React from "react";
+import { React, useRef, useState, useCallback } from "react";
 import {
   GoogleMap,
-  useLoadScript,
+  useJsApiLoader,
   MarkerF,
   InfoWindowF,
+  Autocomplete,
 } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
@@ -14,29 +15,60 @@ const mapContainerStyle = {
   height: "80vh",
 };
 
-const center = {
+const centerBC = {
   lat: 53.7267,
   lng: -127.6476,
+};
+
+const boundsBC = {
+  north: 60, 
+  south: 48, 
+  west: -139, 
+  east: -114, 
 };
 
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
+  restriction: {
+    latLngBounds: boundsBC,
+    strictBounds: false,
+  },
+  minZoom:5
 };
 
 const PublicMap = (props) => {
   const { blogData, setBlogSelected, setSelectedRoute } = props;
 
-  const { isLoaded, loadError } = useLoadScript({
+  const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
-  const [markerSelected, setMarkerSelected] = React.useState(null);
+  const [markerSelected, setMarkerSelected] = useState(null);
+  const [mapCenter, setMapCenter] = useState(centerBC);
+  const [searchResult, setSearchResult] = useState(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const searchInputRef = useRef("");
 
-  const mapRef = React.useRef();
+  const onSearchBarLoad = async (autocomplete) => {
+    setSearchResult(autocomplete);
+  };
 
-  const onMapLoad = React.useCallback((map) => {
+  function onPlaceChanged() {
+    if (searchResult != null) {
+      const place = searchResult.getPlace();
+      const searchLat = place.geometry.location.lat();
+      const searchLng = place.geometry.location.lng();
+      setSelectedPlace({ lat: searchLat, lng: searchLng });
+    } else {
+      alert("Please enter text");
+    }
+  }
+
+  const mapRef = useRef();
+
+  const onMapLoad = useCallback((map) => {
     mapRef.current = map;
   }, []);
 
@@ -50,10 +82,25 @@ const PublicMap = (props) => {
 
   return (
     <div>
+      <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
+        <input type="text" placeholder="Search Your Location" ref={searchInputRef} />
+      </Autocomplete>
+      <button
+        type="submit"
+        onClick={() => {
+          if (searchResult) {
+            setMapCenter({ lat: selectedPlace.lat, lng: selectedPlace.lng });
+            searchInputRef.current.value = "";
+          }
+        }}
+      >
+        Search
+      </button>
+
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
-        zoom={1}
-        center={center}
+        zoom={5}
+        center={mapCenter}
         options={options}
         onLoad={onMapLoad}
       >

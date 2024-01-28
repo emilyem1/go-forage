@@ -26,16 +26,16 @@ INSERT INTO MUSHROOM (TITLE,IMAGE_URL, INFO, EDIBLE) VALUES
 
 -- 10 Inserts for BLOG table
 INSERT INTO BLOG (TITLE, content, publication_date, latitude, longitude, USER_ID, MUSHROOM_ID) VALUES
-  ('Exploring Chanterelles', 'Today, I went on a hike and found some delicious Chanterelles.', '2022-01-15', 37.7749, -122.4194, 1, 1),
-  ('The Mystery of the Death Cap', 'Beware of the Death Cap mushroom; it can be lethal if consumed.', '2022-02-02', 40.7128, -74.0060, 2, 6),
-  ('Truffle Hunting Adventure', 'Embarked on a truffle hunting adventure and discovered the magic of these rare fungi.', '2022-02-20', 51.5074, -0.1278, 3, 10),
-  ('Magical Amanita Muscaria', 'The Amanita Muscaria is beautiful but toxic. Learn about its fascinating history.', '2022-03-10', 48.8566, 2.3522, 4, 8),
-  ('Culinary Delight with Shiitake', 'Experimented with Shiitake mushrooms in the kitchen and created a delicious dish.', '2022-03-25', 34.0522, -118.2437, 5, 4),
-  ('Morel Mushroom Foraging', 'Ventured into the woods and discovered the unique honeycomb pattern of Morel mushrooms.', '2022-04-05', 45.4215, -75.6993, 6, 2),
-  ('A Fungus Among Us: Oyster Mushroom', 'Explored the versatility of Oyster mushrooms in various culinary delights.', '2022-04-20', 55.7558, 37.6176, 7, 5),
-  ('Lions Mane Beauty', 'Encountered the fascinating Lions Mane mushroom and marveled at its unusual appearance.', '2022-05-10', -33.8688, 151.2093, 8, 9),
-  ('Porcini Adventure', 'Went on a Porcini foraging expedition and relished the robust and nutty flavor in a risotto.', '2022-05-25', 40.4168, -3.7038, 9, 7),
-  ('Mushroom Spotting with the Truffle Hounds', 'Joined a truffle hunting party and witnessed the skilled truffle hounds at work.', '2022-06-05', 52.5200, 13.4050, 1, 3);
+  ('Exploring Chanterelles', 'Today, I went on a hike and found some delicious Chanterelles.', '2022-01-15', 50.15839605653889, -126.6635744422674, 1, 1),
+  ('The Mystery of the Death Cap', 'Beware of the Death Cap mushroom; it can be lethal if consumed.', '2022-02-02', 49.960909365760074, -115.8530275672674, 2, 6),
+  ('Truffle Hunting Adventure', 'Embarked on a truffle hunting adventure and discovered the magic of these rare fungi.', '2022-02-20', 50.99557859676613, -121.3461916297674, 3, 10),
+  ('Magical Amanita Muscaria', 'The Amanita Muscaria is beautiful but toxic. Learn about its fascinating history.', '2022-03-10', 52.08876065107938, -126.2680666297674, 4, 8),
+  ('Culinary Delight with Shiitake', 'Experimented with Shiitake mushrooms in the kitchen and created a delicious dish.', '2022-03-25', 53.12944258841553, -121.3022463172674, 5, 4),
+  ('Morel Mushroom Foraging', 'Ventured into the woods and discovered the unique honeycomb pattern of Morel mushrooms.', '2022-04-05', 53.182145421239646, -128.02099631726742, 6, 2),
+  ('A Fungus Among Us: Oyster Mushroom', 'Explored the versatility of Oyster mushrooms in various culinary delights.', '2022-04-20', 53.60144255177566, -132.15185569226742, 7, 5),
+  ('Lions Mane Beauty', 'Encountered the fascinating Lions Mane mushroom and marveled at its unusual appearance.', '2022-05-10', 57.446040559523546, -120.98632945503736, 8, 9),
+  ('Porcini Adventure', 'Went on a Porcini foraging expedition and relished the robust and nutty flavor in a risotto.', '2022-05-25', 59.154442775922355, -122.26074351753736, 9, 7),
+  ('Mushroom Spotting with the Truffle Hounds', 'Joined a truffle hunting party and witnessed the skilled truffle hounds at work.', '2022-06-05', 58.009172065877394, -129.995118517537386, 1, 3);
 
 -- 10 Inserts for FRIENDS table
 INSERT INTO FRIENDS (USER_ID, FRIEND_USER_ID, FRIENDSHIP_STATUS) VALUES

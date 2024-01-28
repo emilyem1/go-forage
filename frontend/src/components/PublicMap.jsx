@@ -21,10 +21,10 @@ const centerBC = {
 };
 
 const boundsBC = {
-  north: 60, 
-  south: 48, 
-  west: -139, 
-  east: -114, 
+  north: 60,
+  south: 48,
+  west: -139,
+  east: -114,
 };
 
 const options = {
@@ -34,7 +34,7 @@ const options = {
     latLngBounds: boundsBC,
     strictBounds: false,
   },
-  minZoom:5
+  minZoom: 5,
 };
 
 const PublicMap = (props) => {
@@ -48,19 +48,23 @@ const PublicMap = (props) => {
   const [markerSelected, setMarkerSelected] = useState(null);
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
-  const [selectedPlace, setSelectedPlace] = useState(null);
-  const searchInputRef = useRef("");
+  const searchInputRef = useRef();
 
   const onSearchBarLoad = async (autocomplete) => {
     setSearchResult(autocomplete);
   };
 
-  function onPlaceChanged() {
+  async function onPlaceChanged() {
     if (searchResult != null) {
       const place = searchResult.getPlace();
-      const searchLat = place.geometry.location.lat();
-      const searchLng = place.geometry.location.lng();
-      setSelectedPlace({ lat: searchLat, lng: searchLng });
+      console.log(place);
+      if (place && place.geometry) {
+        const searchLat = place.geometry.location.lat();
+        const searchLng = place.geometry.location.lng();
+        setMapCenter({ lat: searchLat, lng: searchLng });
+        searchInputRef.current.value = "";
+        mapRef.current.setZoom(14);
+      }
     } else {
       alert("Please enter text");
     }
@@ -82,18 +86,21 @@ const PublicMap = (props) => {
 
   return (
     <div>
-      <Autocomplete onPlaceChanged={onPlaceChanged} onLoad={onSearchBarLoad}>
-        <input type="text" placeholder="Search Your Location" ref={searchInputRef} />
-      </Autocomplete>
-      <button
-        type="submit"
-        onClick={() => {
-          if (searchResult) {
-            setMapCenter({ lat: selectedPlace.lat, lng: selectedPlace.lng });
-            searchInputRef.current.value = "";
-          }
+      <Autocomplete
+        options={{
+          types: ["geocode"],
+          componentRestrictions: { country: "CA" },
         }}
+        // onPlaceChanged={onPlaceChanged}
+        onLoad={onSearchBarLoad}
       >
+        <input
+          type="text"
+          placeholder="Search Your Location"
+          ref={searchInputRef}
+        />
+      </Autocomplete>
+      <button type="submit" onClick={onPlaceChanged}>
         Search
       </button>
 

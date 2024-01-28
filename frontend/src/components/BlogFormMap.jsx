@@ -66,6 +66,7 @@ const BlogFormMap = (props) => {
         const searchLng = place.geometry.location.lng();
         setMapCenter({ lat: searchLat, lng: searchLng });
         searchInputRef.current.value = "";
+        mapRef.current.setZoom(14);
       }
     } else {
       alert("Please enter text");

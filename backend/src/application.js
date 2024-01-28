@@ -3,7 +3,6 @@ const path = require("path");
 const express = require("express");
 const bodyparser = require("body-parser");
 const cors = require("cors");
-const session = require("express-session");
 
 // Creating an Express application
 const app = express();
@@ -36,15 +35,6 @@ module.exports = function application() {
   app.use(bodyparser.json());
   // Middleware to serve static image files from the 'public' directory
   app.use(express.static(path.join(__dirname, "public")));
-
-  // Use session middleware
-  app.use(
-    session({
-      secret: "super-secret-key-of-destiny",
-      resave: false,
-      saveUninitialized: true,
-    })
-  );
 
   // Mounting route handlers for different resources
   app.use("/api", users(db));

@@ -39,8 +39,10 @@ module.exports = (db) => {
           console.log(rows[0]);
           if (password === rows[0].password) {
             console.log("Successful login");
-            request.session.user = rows[0]; // Store user data in the session
-            console.log("Session data:", request.session);
+            response.cookie("email", rows[0].email);
+            response.cookie("fullname", rows[0].fullname);
+            response.cookie("profilePhoto", rows[0].profilePhoto);
+            response.cookie("isLoggedIn", true);
             response.json({ success: true, user: rows[0], redirect: "/" }); // Include a success message
           } else {
             console.log("Invalid password");
@@ -63,8 +65,10 @@ module.exports = (db) => {
       `,
         [fullname, email, password, profilePhoto]
       ).then(({ rows }) => {
-        request.session.user = rows[0]; // Store user data in the session
-        console.log("Session data:", request.session);
+        response.cookie("email", rows[0].email);
+        response.cookie("fullname", rows[0].fullname);
+        response.cookie("profilePhoto", rows[0].profilePhoto);
+        response.cookie("isLoggedIn", true);
         response.json({ success: true, user: rows[0], redirect: "/" });
       });
     } else {

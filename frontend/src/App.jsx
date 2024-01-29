@@ -33,7 +33,7 @@ function App() {
           mushrooms={mushroomData}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
-        <BlogDetails blog={blogSelected} commentData={commentData} />
+        <BlogDetails blog={blogSelected} comments={commentData} />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (

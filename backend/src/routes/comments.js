@@ -1,40 +1,32 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.get("/blogs", (request, response) => {
+  router.get("/comments", (request, response) => {
     db.query(
       `
       SELECT
-      BLOG.ID AS id,
-      BLOG.TITLE AS title,
-      USER_ACCOUNT.FULLNAME AS username,
-      BLOG.PUBLICATION_DATE AS date,
-      MUSHROOM.IMAGE_URL AS mushroom_image,
-      MUSHROOM.TITLE AS mushroom,
-      BLOG.CONTENT AS content,
-      BLOG.LATITUDE AS lat,
-      BLOG.LONGITUDE AS long
+      COMMENTS.ID as id,
+      COMMENTS.BLOG_ID as blog_id, 
+      COMMENTS.COMMENTER_ID as user_id, 
+      COMMENTS.MESSAGE as message
       FROM
-      BLOG
-      JOIN USER_ACCOUNT ON BLOG.USER_ID = USER_ACCOUNT.ID
-      JOIN MUSHROOM ON BLOG.MUSHROOM_ID = MUSHROOM.ID
-    
+      COMMENTS    
     `
     ).then(({ rows: blogs }) => {
       response.json(blogs);
     });
   });
 
-  router.post("/blogs", async (request, response) => {
-    console.log("Received POST request to /blogs");
-    const { title, content, latitude, longitude, user_id, mushroom_id } = request.body;
+  router.post("/comments", async (request, response) => {
+    console.log("Received POST request to /comments");
+    const { blogId, userId,content } = request.body;
     db.query(
       `
-      INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID, MUSHROOM_ID)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO COMMENTS (BLOG_ID, COMMENTER_ID, MESSAGE)
+      VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [title, content, latitude, longitude, user_id, mushroom_id]
+      [blogId, userId,content]
     ).then(({ rows }) => {
       response.json(rows[0]);
     });

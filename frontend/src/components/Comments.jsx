@@ -1,10 +1,11 @@
-import "../styles/BlogDetails.scss";
+import "../styles/Comments.scss";
 
 const Comments = (props) => {
   const { comment } = props;
   return (
     <main>
-      <section className="blog-container">
+      <section className="comments-container">
+        <div>{comment.username}</div>
         {comment.message}
       </section>
     </main>

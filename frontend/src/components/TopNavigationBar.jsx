@@ -55,6 +55,7 @@ const TopNavigation = (props) => {
             <Tab label="Mushrooms" onClick={() => {route("MUSHROOMS");}}/>
             <Tab label="Field Journal" onClick={() => {route("FIELDJOURNAL");}}/>
             <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
+            <Tab label="Account" onClick={() => {route("ACCOUNT");}}/>
             <Tab label="Logout" onClick={()=> {handleLogout()}}/>
           </Tabs>
         </Box>

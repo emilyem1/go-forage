@@ -11,18 +11,36 @@ VALUES
   ('Allison Saeng', 'saeng@test.com', 'asd', 'https://avatar.iran.liara.run/public/64'),
   ('Adrea Santos', 'santa@test.com', 'asd', 'https://avatar.iran.liara.run/public/86');
 
-  -- 10 Inserts for MUSHROOM table
-INSERT INTO MUSHROOM (TITLE,IMAGE_URL, INFO, EDIBLE) VALUES
-  ('Chanterelle', 'mushrooms/Chanterelle.jpg', 'Golden and delicious', true),
-  ('Morel', 'mushrooms/Morel.jpg', 'Distinct honeycomb appearance', true),
-  ('Fly Agaric', 'mushrooms/Fly_Agaric.jpg', 'Red with white spots', false),
-  ('Shiitake', 'mushrooms/Shiitake.jpg', 'Popular in Asian cuisine', true),
-  ('Oyster Mushroom', 'mushrooms/Oyster.jpg', 'Oyster-shaped cap', true),
-  ('Death Cap', 'mushrooms/Death_Cap.jpg', 'Extremely poisonous', false),
-  ('Porcini', 'mushrooms/Porcini.jpg', 'Robust and nutty flavor', true),
-  ('Amanita Muscaria', 'mushrooms/Amanita_Muscaria.jpg', 'Bright red with white warts', false),
-  ('Lions Mane', 'mushrooms/Lions_Mane.jpg', 'Looks like a white waterfall', true),
-  ('Truffle', 'mushrooms/Truffle.jpg', 'Highly prized in gourmet cuisine', true);
+NSERT INTO MUSHROOM (TITLE, IMAGE_URL, INFO, EDIBLE) VALUES
+  ('Shaggy Mane', 'shaggy_mane.png', 'Description for Shaggy Mane', true),
+  ('Oyster Mushroom', 'oyster_mushroom.png', 'Description for Oyster Mushroom', true),
+  ('King Bolete', 'king_bolete.png', 'Description for King Bolete', true),
+  ('Saffron Milk Cap', 'saffron_milk_cap.png', 'Description for Saffron Milk Cap', true),
+  ('Gem-Studded Puffball', 'gem_studded_puffball.png', 'Description for Gem-Studded Puffball', true),
+  ('Rosy Gomphidius', 'rosy_gomphidius.png', 'Description for Rosy Gomphidius', true),
+  ('Winter Chanterelle', 'winter_chanterelle.png', 'Description for Winter Chanterelle', true),
+  ('Pacific Golden Chanterelle', 'pacific_golden_chanterelle.png', 'Description for Pacific Golden Chanterelle', true),
+  ('Orange Peel Fungus', 'orange_peel_fungus.png', 'Description for Orange Peel Fungus', true),
+  ('Apricot Jelly', 'apricot_jelly.png', 'Description for Apricot Jelly', true),
+  ('Crab Brittlegill', 'crab_brittlegill.png', 'Description for Crab Brittlegill', true),
+  ('Lobster Mushroom', 'lobster_mushroom.png', 'Description for Lobster Mushroom', true),
+  ('Inky Cap', 'inky_cap.png', 'Description for Inky Cap', true),
+  ('Toothed Jelly Fungus', 'toothed_jelly_fungus.png', 'Description for Toothed Jelly Fungus', true),
+  ('Horse Mushroom', 'horse_mushroom.png', 'Description for Horse Mushroom', true),
+  ('Meadow Mushroom', 'meadow_mushroom.png', 'Description for Meadow Mushroom', true),
+  ('Cauliflower Mushroom', 'cauliflower_mushroom.png', 'Description for Cauliflower Mushroom', true),
+  ('Hedgehog Mushroom', 'hedgehog_mushroom.png', 'Description for Hedgehog Mushroom', true),
+  ('Chicken of the Woods', 'chicken_of_the_woods.png', 'Description for Chicken of the Woods', true),
+  ('Bear''s Head', 'bears_head.png', 'Description for Bear''s Head', true),
+  ('Lion''s Mane', 'lions_mane.png', 'Description for Lion''s Mane', true),
+  ('Western Giant Puffball', 'western_giant_puffball.png', 'Description for Western Giant Puffball', true);
+  -- Non-edible:
+  ('Death Cap', 'death_cap.png', 'Description for Death Cap', false),
+  ('Pholiotina rugosa', 'pholiotina_rugosa.png', 'Description for Pholiotina rugosa', false),
+  ('Smith''s Amanita', 'smiths_amanita.png', 'Description for Smith''s Amanita', false),
+  ('Deadly Galerina', 'deadly_galerina.png', 'Description for Deadly Galerina', false),
+  ('Deadly Parasol', 'deadly_parasol.png', 'Description for Deadly Parasol', false),
+  ('Fly Agaric', 'fly_agaric.png', 'Description for Fly Agaric', false);
 
 -- 10 Inserts for BLOG table
 INSERT INTO BLOG (TITLE, content, publication_date, latitude, longitude, USER_ID, MUSHROOM_ID) VALUES

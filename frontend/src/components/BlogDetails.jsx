@@ -1,27 +1,31 @@
-import "../styles/MushroomListItem.scss";
+import "../styles/BlogDetails.scss";
 import BlogListMap from "./BlogListMap";
 
 const BlogDetails = (props) => {
   const { blog, comments } = props;
   return (
     <main>
-      <section className="mushroom-list__item">
-        <div>
+      <section className="blog-container">
+        <div className="map">
           <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
         </div>
-        <div>{blog.title}</div>
-        <div>By: {blog.username}</div>
-        <img
-          className="mushroom-list__image"
-          src={`images/${blog.mushroom_image}`}
-          alt={blog.mushroom}
-        />
-        <div className="mushroom-list__details">
-          <footer className="mushroom-list__info">
+        <header className="blog-header">
+          <div className="blog-info">
+            <h1>{blog.title}</h1>
+            <div>By: {blog.username}</div>
+          </div>
+          <div className="mushrooms-info">
             <div>{blog.mushroom}</div>
-            <div className="mushroom-list__description">{blog.content}</div>
-          </footer>
-        </div>
+            <img
+              className="mushroom-image"
+              src={`images/${blog.mushroom_image}`}
+              alt={blog.mushroom}
+            />
+          </div>
+        </header>
+        <section>
+          <p >{blog.content}</p>
+        </section>
       </section>
       <section>
         {comments.map(

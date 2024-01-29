@@ -5,7 +5,8 @@ export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
   SELECT_BLOG: "SELECT_BLOG",
   SET_ROUTE: "SET_ROUTE",
-  SET_MUSHROOM_DATA: "SET_MUSHROOM_DATA"
+  SET_MUSHROOM_DATA: "SET_MUSHROOM_DATA",
+  SET_COMMENT_DATA: "SET_COMMENT_DATA",
 };
 
 function reducer(state, action) {
@@ -22,6 +23,9 @@ function reducer(state, action) {
     case ACTIONS.SET_MUSHROOM_DATA:
       return { ...state, mushroomData: action.payload };
 
+    case ACTIONS.SET_COMMENT_DATA:
+      return { ...state, commentData: action.payload };
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -35,18 +39,31 @@ const useApplicationData = () => {
     blogData: [],
     selectedRoute: "PUBLIC",
     mushroomData: [],
+    commentData: [],
   });
 
   useEffect(() => {
     fetch("http://localhost:8001/api/blogs")
       .then((response) => response.json())
       .then((data) => dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data }))
-      .catch((error) => { console.error('Error fetching blogs:', error); 
+      .catch((error) => {
+        console.error("Error fetching blogs:", error);
       });
     fetch("http://localhost:8001/api/mushrooms")
       .then((response) => response.json())
-      .then((data) => dispatch({ type: ACTIONS.SET_MUSHROOM_DATA, payload: data }))
-      .catch((error) => { console.error('Error fetching mushrooms:', error); 
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_MUSHROOM_DATA, payload: data })
+      )
+      .catch((error) => {
+        console.error("Error fetching mushrooms:", error);
+      });
+    fetch("http://localhost:8001/api/comments")
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_COMMENT_DATA, payload: data })
+      )
+      .catch((error) => {
+        console.error("Error fetching comments:", error);
       });
   }, []);
 

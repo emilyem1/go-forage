@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useApplicationData from "./hooks/useApplicationData";
 import "./App.css";
 
+import Account from "./components/Account";
 import BlogList from "./components/BlogList";
 import PublicMap from "./components/PublicMap";
 import Header from "./components/Header";
@@ -38,6 +39,8 @@ function App() {
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal />
+      ) : selectedRoute === "ACCOUNT" ?(
+          <Account />
       ) : (
         <LoginSignup setSelectedRoute={setSelectedRoute} />
       )}

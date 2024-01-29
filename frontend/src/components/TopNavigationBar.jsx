@@ -22,6 +22,28 @@ const TopNavigation = (props) => {
     setValue(newValue);
   };
 
+  const handleLogout = () => {
+    return fetch("http://localhost:8001/api/logout", {
+      method: "POST",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        console.log(response)
+        if (response.ok) {
+          console.log("Logout successful");
+          route("LOGINSIGNUP");
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Error during logout:", error);
+      });
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%' }}>
@@ -33,6 +55,7 @@ const TopNavigation = (props) => {
             <Tab label="Mushrooms" onClick={() => {route("MUSHROOMS");}}/>
             <Tab label="Field Journal" onClick={() => {route("FIELDJOURNAL");}}/>
             <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
+            <Tab label="Logout" onClick={()=> {handleLogout()}}/>
           </Tabs>
         </Box>
       </Box>

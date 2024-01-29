@@ -1,3 +1,4 @@
+import MushroomCard from "./MushroomCard";
 
 const Account = () => {
   const cookies = document.cookie; // Just a string, must turn into object:
@@ -13,7 +14,7 @@ const Account = () => {
 
   return (
     <main>
-
+      <MushroomCard fullname={fullname} email={email} profilePhoto={profilePhoto}/>
     </main>
   );
 };

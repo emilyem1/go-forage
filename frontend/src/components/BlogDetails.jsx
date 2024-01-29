@@ -1,5 +1,6 @@
 import "../styles/BlogDetails.scss";
 import BlogListMap from "./BlogListMap";
+import Comments from "./Comments";
 
 const BlogDetails = (props) => {
   const { blog, comments } = props;
@@ -24,14 +25,14 @@ const BlogDetails = (props) => {
           </div>
         </header>
         <section>
-          <p >{blog.content}</p>
+          <p>{blog.content}</p>
         </section>
       </section>
-      <section>
-        {comments.map(
-          (comment) => comment.blog_id === blog.id && <p>{comment.message}</p>
-        )}
-      </section>
+
+      {comments.map(
+        (comment) =>
+          comment.blog_id === blog.id && <p>{<Comments comment={comment} />}</p>
+      )}
     </main>
   );
 };

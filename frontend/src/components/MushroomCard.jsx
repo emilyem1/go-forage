@@ -19,7 +19,7 @@ const MushroomCard = (props) => {
       }
     };
     fetchData();
-  }, []);
+  }, [email]);
 
   return (
     <Card>
@@ -51,13 +51,3 @@ const MushroomCard = (props) => {
 };
 
 export default MushroomCard;
-  // <article>
-  //     <ul>
-  //       {icons.map((icon) => (
-  //         <img
-  //          style={{ width: '22px' }}
-  //          src={`images/${icon.icon}`}
-  //         />
-  //       ))}
-  //     </ul>
-  //   </article>

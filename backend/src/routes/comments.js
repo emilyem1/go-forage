@@ -21,14 +21,14 @@ module.exports = (db) => {
 
   router.post("/comments", async (request, response) => {
     console.log("Received POST request to /comments");
-    const { blogId, userId,content } = request.body;
+    const { blog_Id, commenter_Id,message } = request.body;
     db.query(
       `
       INSERT INTO COMMENTS (BLOG_ID, COMMENTER_ID, MESSAGE)
       VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [blogId, userId,content]
+      [blog_Id, commenter_Id,message]
     ).then(({ rows }) => {
       response.json(rows[0]);
     });

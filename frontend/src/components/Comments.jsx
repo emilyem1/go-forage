@@ -4,7 +4,7 @@ const Comments = (props) => {
   const { comment } = props;
   return (
     <main>
-      <section className="comments-container">
+      <section className="comments">
         <div>{comment.username}</div>
         {comment.message}
       </section>

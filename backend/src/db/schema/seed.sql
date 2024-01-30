@@ -79,7 +79,7 @@ INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID) VALUES
 -- 10 Inserts for COMMENTS table
 INSERT INTO COMMENTS (BLOG_ID, COMMENTER_ID, MESSAGE) VALUES
   (1, 2, 'Great find! Chanterelles are delicious.'),
-  (1, 1, 'Woo-hoo! Chanterelles are RULE!.'),
+  (1, 1, 'Woo-hoo! Chanterelles RULE!.'),
   (1, 5, 'The (Lorem ipsum dolor sit amet) part really makes a good point!'),
   (1, 1, 'MUSHROOMS!'),
   (2, 3, 'Thanks for the warning about the Death Cap. Stay safe!'),

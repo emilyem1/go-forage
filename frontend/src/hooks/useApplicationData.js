@@ -28,9 +28,9 @@ function reducer(state, action) {
       return {
         ...state,
         userData: {
-          fullname: action.payload.fullname,
-          email: action.payload.email,
-          profilePhoto: action.payload.profilePhoto,
+          fullname: decodeURIComponent(action.payload.fullname),
+          email: decodeURIComponent(action.payload.email),
+          profilePhoto: decodeURIComponent(action.payload.profilePhoto),
         },
       };
 

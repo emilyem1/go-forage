@@ -15,7 +15,7 @@ const MushroomListItem = (props) => {
       <p>Edible? {mushroom.edible ? "Yes" : "No"}</p>
       <img
         className="mushroom-list__image"
-        src={`/mushrooms/${mushroom.icon}`}
+        src={`images/${mushroom.icon}`}
       />
     </section>
   );

@@ -41,7 +41,7 @@ module.exports = (db) => {
             console.log("Successful login");
             response.cookie("email", rows[0].email);
             response.cookie("fullname", rows[0].fullname);
-            response.cookie("profilePhoto", rows[0].profilePhoto);
+            response.cookie("profilePhoto", rows[0].photo_url);
             response.cookie("isLoggedIn", true);
             response.json({ success: true, user: rows[0], redirect: "/" }); // Include a success message
           } else {

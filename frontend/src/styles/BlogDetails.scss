@@ -1,0 +1,40 @@
+
+.blog-container {
+  padding: 10px;
+  padding-top: 0;
+  margin: 10px;
+  border-radius: 15px;
+  border: solid;
+}
+
+.map {
+width: 98%;
+
+}
+
+.blog-header {
+display: flex ;
+border-bottom:outset;
+padding-bottom: 10px;
+}
+
+.blog-info {
+  width: 800vw;
+}
+.mushrooms-info{
+display: flex;
+align-items: center;
+}
+
+.mushroom-image{
+  width:100px;
+  height: 100px;
+  border-radius: 100%;
+  padding: 10px;
+}
+
+.comments-container{
+  border: solid;
+  border-radius: 5px;
+  margin: 10px;
+}

@@ -13,7 +13,7 @@ import BlogDetails from "./components/BlogDetails";
 
 function App() {
   const { state, setSelectedRoute } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData, userData } = state;
+  const { blogData, selectedRoute, mushroomData, userData, commentData } = state;
   const [blogSelected, setBlogSelected] = useState(null);
 
   return (
@@ -34,7 +34,7 @@ function App() {
           mushrooms={mushroomData}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
-        <BlogDetails blog={blogSelected} />
+        <BlogDetails blog={blogSelected} comments={commentData} />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (

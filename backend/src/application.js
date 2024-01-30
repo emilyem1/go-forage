@@ -15,6 +15,7 @@ const users = require("./routes/users");
 const mushrooms = require("./routes/mushrooms");
 const logout = require("./routes/logout");
 const icons = require("./routes/icons");
+const comments = require("./routes/comments");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -44,7 +45,8 @@ module.exports = function application() {
   app.use("/api", blogs(db));
   app.use("/api", logout(db));
   app.use("/api", icons(db));
-
+  app.use("/api", comments(db));
+  
   // Reading SQL files for database schema creation and seeding
   Promise.all([
     read(path.resolve(__dirname, `db/schema/create.sql`)),

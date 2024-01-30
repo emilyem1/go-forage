@@ -11,7 +11,7 @@ const MushroomCard = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8001/api/icons`);
+        const response = await fetch(`http://localhost:8001/api/icons?email=${email}`);
         const data = await response.json();
         setIcons(data);
       } catch (error) {

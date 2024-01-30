@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 module.exports = (db) => {
   router.get("/icons", (request, response) => {
-    const userEmail = request.query.userEmail;
+    const email = request.query.email;
     db.query(
       `
       SELECT DISTINCT MUSHROOM.ICON
@@ -11,7 +11,7 @@ module.exports = (db) => {
       JOIN MUSHROOM ON BLOG.MUSHROOM_ID = MUSHROOM.ID
       WHERE USER_ACCOUNT.EMAIL = $1;
     `,
-    [userEmail]
+    [email]
     ).then(({ rows: icons }) => {
       response.json(icons);
     });

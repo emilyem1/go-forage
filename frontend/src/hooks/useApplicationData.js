@@ -6,6 +6,7 @@ export const ACTIONS = {
   SELECT_BLOG: "SELECT_BLOG",
   SET_ROUTE: "SET_ROUTE",
   SET_MUSHROOM_DATA: "SET_MUSHROOM_DATA",
+  SET_USER_DATA: "SET_USER_DATA",
   SET_COMMENT_DATA: "SET_COMMENT_DATA",
 };
 
@@ -23,6 +24,16 @@ function reducer(state, action) {
     case ACTIONS.SET_MUSHROOM_DATA:
       return { ...state, mushroomData: action.payload };
 
+    case ACTIONS.SET_USER_DATA:
+      return {
+        ...state,
+        userData: {
+          fullname: action.payload.fullname,
+          email: action.payload.email,
+          profilePhoto: action.payload.profilePhoto,
+        },
+      };
+
     case ACTIONS.SET_COMMENT_DATA:
       return { ...state, commentData: action.payload };
 
@@ -39,6 +50,11 @@ const useApplicationData = () => {
     blogData: [],
     selectedRoute: "PUBLIC",
     mushroomData: [],
+    userData: {
+      fullname: '',
+      email: '',
+      profilePhoto: '',
+    },
     commentData: [],
   });
 
@@ -74,6 +90,27 @@ const useApplicationData = () => {
   const setSelectedRoute = (route) => {
     dispatch({ type: ACTIONS.SET_ROUTE, payload: route });
   };
+
+  useEffect(() => {
+    const cookies = document.cookie;
+    const cookieObject = cookies
+      .split(";")
+      .reduce((acc, cookie) => {
+        const [key, value] = cookie.trim().split("=");
+        acc[key] = value;
+        return acc;
+      }, {});
+
+    dispatch({
+      type: ACTIONS.SET_USER_DATA,
+      payload: {
+        fullname: cookieObject.fullname,
+        email: cookieObject.email,
+        profilePhoto: cookieObject.profilePhoto,
+      },
+    });
+  }, []);
+
 
   return {
     state,

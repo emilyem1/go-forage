@@ -13,6 +13,8 @@ const db = require("./db");
 const blogs = require("./routes/blogs");
 const users = require("./routes/users");
 const mushrooms = require("./routes/mushrooms");
+const logout = require("./routes/logout");
+const icons = require("./routes/icons");
 const comments = require("./routes/comments");
 
 function read(file) {
@@ -31,7 +33,7 @@ function read(file) {
 }
 
 module.exports = function application() {
-  app.use(cors());
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
   // Middleware to parse JSON in the request body
   app.use(bodyparser.json());
   // Middleware to serve static image files from the 'public' directory
@@ -41,6 +43,8 @@ module.exports = function application() {
   app.use("/api", users(db));
   app.use("/api", mushrooms(db));
   app.use("/api", blogs(db));
+  app.use("/api", logout(db));
+  app.use("/api", icons(db));
   app.use("/api", comments(db));
   
   // Reading SQL files for database schema creation and seeding

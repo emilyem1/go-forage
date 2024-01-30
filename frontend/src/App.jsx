@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useApplicationData from "./hooks/useApplicationData";
 import "./App.css";
 
+import Account from "./components/Account";
 import BlogList from "./components/BlogList";
 import PublicMap from "./components/PublicMap";
 import Header from "./components/Header";
@@ -12,7 +13,7 @@ import BlogDetails from "./components/BlogDetails";
 
 function App() {
   const { state, setSelectedRoute } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData, commentData } = state;
+  const { blogData, selectedRoute, mushroomData, userData, commentData } = state;
   const [blogSelected, setBlogSelected] = useState(null);
 
   return (
@@ -38,6 +39,8 @@ function App() {
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal />
+      ) : selectedRoute === "ACCOUNT" ?(
+          <Account users={userData}/>
       ) : (
         <LoginSignup setSelectedRoute={setSelectedRoute} />
       )}

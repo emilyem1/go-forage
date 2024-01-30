@@ -8,6 +8,7 @@ module.exports = (db) => {
     MUSHROOM.TITLE AS name,
     MUSHROOM.ID AS id,
     MUSHROOM.IMAGE_URL AS image,
+    MUSHROOM.ICON AS icon,
     MUSHROOM.INFO AS info,
     MUSHROOM.EDIBLE AS edible
     FROM

@@ -11,10 +11,9 @@ const Account = () => {
   const fullname = cookieObject.fullname;
   const email = cookieObject.email;
   const profilePhoto = cookieObject.profilePhoto;
-
   return (
-    <main>
-      <MushroomCard fullname={fullname} email={email} profilePhoto={profilePhoto}/>
+    <main style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+      <MushroomCard fullname={fullname} email={email} profilePhoto={profilePhoto} />
     </main>
   );
 };

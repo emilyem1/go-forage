@@ -13,7 +13,7 @@ import BlogDetails from "./components/BlogDetails";
 
 function App() {
   const { state, setSelectedRoute } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData } = state;
+  const { blogData, selectedRoute, mushroomData, userData } = state;
   const [blogSelected, setBlogSelected] = useState(null);
 
   return (
@@ -40,7 +40,7 @@ function App() {
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal />
       ) : selectedRoute === "ACCOUNT" ?(
-          <Account />
+          <Account users={userData}/>
       ) : (
         <LoginSignup setSelectedRoute={setSelectedRoute} />
       )}

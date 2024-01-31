@@ -31,6 +31,7 @@ function reducer(state, action) {
           fullname: decodeURIComponent(action.payload.fullname),
           email: decodeURIComponent(action.payload.email),
           profilePhoto: decodeURIComponent(action.payload.profilePhoto),
+          isLoggedIn: action.payload.isLoggedIn === "true",
         },
       };
 
@@ -54,6 +55,7 @@ const useApplicationData = () => {
       fullname: '',
       email: '',
       profilePhoto: '',
+      isLoggedIn: false,
     },
     commentData: [],
   });
@@ -107,9 +109,10 @@ const useApplicationData = () => {
         fullname: cookieObject.fullname,
         email: cookieObject.email,
         profilePhoto: cookieObject.profilePhoto,
+        isLoggedIn : cookieObject.isLoggedIn,
       },
     });
-  }, []);
+  }, [document.cookie]);
 
 
   return {

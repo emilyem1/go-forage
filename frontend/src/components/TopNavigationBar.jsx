@@ -15,8 +15,7 @@ const theme = createTheme({
 });
 
 const TopNavigation = (props) => {
-  const { route } = props;
-  const [value, setValue] = useState(0);
+  const { route, userData, value, setValue } = props;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -34,6 +33,7 @@ const TopNavigation = (props) => {
         console.log(response)
         if (response.ok) {
           console.log("Logout successful");
+          setValue(3);
           route("LOGINSIGNUP");
         } else {
           console.error("Logout failed");
@@ -53,10 +53,18 @@ const TopNavigation = (props) => {
             <Tab label="Map" onClick={() => {route("PUBLIC");}}  />
             <Tab label="Blogs" onClick={() => {route("BLOGLIST");}}/>
             <Tab label="Mushrooms" onClick={() => {route("MUSHROOMS");}}/>
-            <Tab label="Field Journal" onClick={() => {route("FIELDJOURNAL");}}/>
-            <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
-            <Tab label="Account" onClick={() => {route("ACCOUNT");}}/>
-            <Tab label="Logout" onClick={()=> {handleLogout()}}/>
+            {userData.isLoggedIn && (
+              <Tab label="Field Journal" onClick={() => {route("FIELDJOURNAL");}}/>
+            )}
+            {userData.isLoggedIn && (
+              <Tab label="Account" onClick={() => {route("ACCOUNT");}}/>
+            )}
+            {userData.isLoggedIn && (
+              <Tab label="Logout" onClick={() => {handleLogout()}}/>
+            )}
+            {!userData.isLoggedIn && (
+              <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
+            )}
           </Tabs>
         </Box>
       </Box>

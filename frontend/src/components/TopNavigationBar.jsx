@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import SearchBar from './SearchBar';
 
 // Overiding the default colour of MUI
 const custom = {
@@ -66,6 +67,7 @@ const TopNavigation = (props) => {
               <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
             )}
           </Tabs>
+          <Box sx={{}}><SearchBar/></Box>
         </Box>
       </Box>
     </ThemeProvider>

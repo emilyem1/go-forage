@@ -9,8 +9,8 @@ module.exports = (db) => {
       BLOG.TITLE AS title,
       USER_ACCOUNT.FULLNAME AS username,
       BLOG.PUBLICATION_DATE AS date,
-      ARRAY_AGG(MUSHROOM.IMAGE_URL) AS mushroom_images,
-      ARRAY_AGG(MUSHROOM.TITLE) AS mushrooms,
+      STRING_AGG(MUSHROOM.IMAGE_URL, ', ') AS mushroom_images,
+      STRING_AGG(MUSHROOM.TITLE, ', ') AS mushrooms,
       BLOG.CONTENT AS content,
       BLOG.LATITUDE AS lat,
       BLOG.LONGITUDE AS long

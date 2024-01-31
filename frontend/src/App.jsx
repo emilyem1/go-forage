@@ -15,10 +15,12 @@ function App() {
   const { state, setSelectedRoute } = useApplicationData();
   const { blogData, selectedRoute, mushroomData, userData, commentData } = state;
   const [blogSelected, setBlogSelected] = useState(null);
+  // Currently selected tab = value
+  const [value, setValue] = useState(0);
 
   return (
     <div className="App">
-      <Header route={setSelectedRoute} userData={userData} />
+      <Header route={setSelectedRoute} userData={userData} value = {value} setValue = {setValue} />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
@@ -48,7 +50,7 @@ function App() {
       ) : selectedRoute === "ACCOUNT" ?(
           <Account users={userData}/>
       ) : (
-        <LoginSignup setSelectedRoute={setSelectedRoute} />
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
       )}
     </div>
   );

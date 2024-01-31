@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const LoginSignup = (props) => {
   const setSelectedRoute = props.setSelectedRoute;
+  const setValue = props.setValue;
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -49,6 +50,7 @@ const LoginSignup = (props) => {
         if (data.success) {
           console.log("Login successful");
           setSelectedRoute("ACCOUNT");
+          setValue(4);
         } else {
           console.log("Login failed");
         }
@@ -59,6 +61,7 @@ const LoginSignup = (props) => {
         if (data.success) {
           console.log("Signup successful");
           setSelectedRoute("ACCOUNT");
+          setValue(4);
           //  successful signup
         } else {
           console.log("Signup failed");

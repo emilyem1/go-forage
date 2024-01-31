@@ -26,7 +26,7 @@ const BlogForm = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("handleSubmit has been called");
-  
+
     try {
       const response = await fetch("http://localhost:8001/api/blogs", {
         method: "POST",
@@ -35,14 +35,14 @@ const BlogForm = (props) => {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Failed to post blog. Status: ${response.status}`);
       }
-  
+
       const responseData = await response.json();
       console.log("Blog posted:", responseData);
-  
+
       // Reset the form after submission
       setFormData({
         title: "",
@@ -56,7 +56,6 @@ const BlogForm = (props) => {
       console.error("Error when posting:", error.message);
     }
   };
-  
 
   return (
     <form className="blog-form">
@@ -71,35 +70,8 @@ const BlogForm = (props) => {
               placeholder="Enter Blog Title"
             />
           </label>
-          {/* <label>
-        User ID (Put in 1-10):
-        <input
-        type="text"
-          name="user_id"
-          value={formData.user_id}
-          onChange={handleChange}
-          />
-        </label> */}
-          {/* <label>
-        Latitude:
-        <input
-        type="text"
-        name="latitude"
-        value={formData.latitude}
-        onChange={handleChange}
-        />
-        </label>
-        <label>
-        Longitude:
-        <input
-        type="text"
-        name="longitude"
-        value={formData.longitude}
-        onChange={handleChange}
-        />
-      </label> */}
-          <label>
-            <select
+
+          <button type="button" onClick={()=><select
               name="mushroom_id"
               value={formData.mushroom_id}
               onChange={handleChange}
@@ -110,8 +82,9 @@ const BlogForm = (props) => {
                   {mushroom.name}
                 </option>
               ))}
-            </select>
-          </label>
+            </select>}>
+            Add Mushroom
+          </button>
           <br />
 
           <input
@@ -126,7 +99,9 @@ const BlogForm = (props) => {
           <BlogFormMap setFormData={setFormData} />
         </section>
       </div>
-      <button type="button" onClick={handleSubmit}>Submit</button>
+      <button type="button" onClick={handleSubmit}>
+        Submit
+      </button>
     </form>
   );
 };

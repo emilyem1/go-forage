@@ -9,16 +9,19 @@ module.exports = (db) => {
       BLOG.TITLE AS title,
       USER_ACCOUNT.FULLNAME AS username,
       BLOG.PUBLICATION_DATE AS date,
-      MUSHROOM.IMAGE_URL AS mushroom_image,
-      MUSHROOM.TITLE AS mushroom,
+      STRING_AGG(MUSHROOM.IMAGE_URL, ', ') AS mushroom_images,
+      STRING_AGG(MUSHROOM.TITLE, ', ') AS mushrooms,
       BLOG.CONTENT AS content,
       BLOG.LATITUDE AS lat,
       BLOG.LONGITUDE AS long
-      FROM
+    FROM
       BLOG
       JOIN USER_ACCOUNT ON BLOG.USER_ID = USER_ACCOUNT.ID
-      JOIN MUSHROOM ON BLOG.MUSHROOM_ID = MUSHROOM.ID
-    
+      LEFT JOIN MUSHROOM_POST ON BLOG.ID = MUSHROOM_POST.BLOG_ID
+      LEFT JOIN MUSHROOM ON MUSHROOM_POST.MUSHROOM_ID = MUSHROOM.ID
+    GROUP BY
+      BLOG.ID, BLOG.TITLE, USER_ACCOUNT.FULLNAME, BLOG.PUBLICATION_DATE,
+      BLOG.CONTENT, BLOG.LATITUDE, BLOG.LONGITUDE
     `
     ).then(({ rows: blogs }) => {
       response.json(blogs);

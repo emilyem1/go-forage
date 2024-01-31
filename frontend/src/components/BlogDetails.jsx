@@ -6,6 +6,9 @@ import Comments from "./Comments";
 
 const BlogDetails = (props) => {
   const { blog, comments } = props;
+  const mushrooms = blog.mushrooms.split(",");
+  const mushroom_images = blog.mushroom_images.split(",");
+
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
@@ -16,7 +19,7 @@ const BlogDetails = (props) => {
     const { name: input, value } = event.target;
     setNewComment((prevData) => ({
       ...prevData,
-      [input]: value,     
+      [input]: value,
     }));
     console.log("Updated comment", newComment);
   };
@@ -66,14 +69,19 @@ const BlogDetails = (props) => {
             <h1>{blog.title}</h1>
             <div>By: {blog.username}</div>
           </div>
-          <div className="mushrooms-info">
-            <div>{blog.mushroom}</div>
-            <img
-              className="mushroom-image"
-              src={`images/${blog.mushroom_image}`}
-              alt={blog.mushroom}
-            />
-          </div>
+
+          {mushrooms.map((mushroom, index) => (
+            <div key={index} className="mushrooms-info">
+              {mushroom}
+              <img
+                className="mushroom-image"
+                src={`images/${mushroom_images[index].trim()}`}
+                alt={mushroom}
+              />
+            </div>
+          ))}
+
+
         </header>
         <section>
           <p>{blog.content}</p>

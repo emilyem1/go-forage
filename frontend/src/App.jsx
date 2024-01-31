@@ -18,7 +18,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header route={setSelectedRoute} />
+      <Header route={setSelectedRoute} userData={userData} />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
@@ -39,8 +39,8 @@ function App() {
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal />
-      ) : selectedRoute === "ACCOUNT" ?(
-          <Account users={userData}/>
+      ) : selectedRoute === "ACCOUNT" ? (
+        <Account users={userData} />
       ) : (
         <LoginSignup setSelectedRoute={setSelectedRoute} />
       )}

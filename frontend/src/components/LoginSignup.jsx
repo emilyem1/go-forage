@@ -48,7 +48,7 @@ const LoginSignup = (props) => {
         // Check the response for login success or failure
         if (data.success) {
           console.log("Login successful");
-          setSelectedRoute("BLOGLIST");
+          setSelectedRoute("ACCOUNT");
         } else {
           console.log("Login failed");
         }
@@ -58,7 +58,7 @@ const LoginSignup = (props) => {
         // Check the response for signup success or failure
         if (data.success) {
           console.log("Signup successful");
-          setSelectedRoute("BLOGLIST");
+          setSelectedRoute("ACCOUNT");
           //  successful signup
         } else {
           console.log("Signup failed");

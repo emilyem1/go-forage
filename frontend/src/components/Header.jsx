@@ -5,11 +5,11 @@ const headerStyle = {
 };
 
 const Header = (props) => {
-  const { route } = props;
+  const { route, userData } = props;
   return (
     <header style={headerStyle}>
       <img src="./images/goForage.png" alt="logo" />
-      <TopNavigationBar route={route} />
+      <TopNavigationBar route={route} userData={userData}/>
     </header>
   );
 };

@@ -84,15 +84,19 @@ INSERT INTO FAVOURITES (USER_ID, BLOG_ID) VALUES
 -- 10 Inserts for MUSHROOM_POST table
 INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID) VALUES
   (1, 1),
-  (1, 6),
+  (2, 6),
   (3, 10),
   (4, 8),
   (5, 4),
-  (1, 2),
+  (6, 2),
   (7, 5),
   (8, 9),
   (9, 7),
-  (10, 3);
+  (10, 3),
+  (1, 2),
+  (1, 3),
+  (1, 4),
+  (1, 5);
 
 -- 10 Inserts for COMMENTS table
 INSERT INTO COMMENTS (BLOG_ID, COMMENTER_ID, MESSAGE) VALUES

@@ -84,11 +84,11 @@ INSERT INTO FAVOURITES (USER_ID, BLOG_ID) VALUES
 -- 10 Inserts for MUSHROOM_POST table
 INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID) VALUES
   (1, 1),
-  (2, 6),
+  (1, 6),
   (3, 10),
   (4, 8),
   (5, 4),
-  (6, 2),
+  (1, 2),
   (7, 5),
   (8, 9),
   (9, 7),

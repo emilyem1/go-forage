@@ -1,9 +1,16 @@
 import FieldJournalItem from "./FieldJournalItem";
+import BlogForm from "./BlogForm";
 import { useState, useEffect } from "react";
+import Switch from "@mui/material/Switch";
+import Collapse from "@mui/material/Collapse";
 
 const FieldJournal = (props) => {
-  const { email, setBlogSelected, setSelectedRoute } = props;
+  const { email, setBlogSelected, setSelectedRoute, mushrooms } = props;
   const [blogs, setBlogs] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const handleChange = () => {
+    setChecked((prev) => !prev);
+  };
 
   useEffect(() => {
     console.log('Current email:', email);
@@ -21,6 +28,14 @@ const FieldJournal = (props) => {
 
   return (
     <div className="field-journal">
+      <br />
+        Add a Blog:{<Switch checked={checked} onChange={handleChange} />}
+      <div>
+        <Collapse in={checked}>
+          <BlogForm mushrooms={mushrooms} />
+          <br />
+        </Collapse>
+      </div>
       {blogs.map(blog => (
         <FieldJournalItem
           key={blog.id}

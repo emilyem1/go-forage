@@ -38,7 +38,13 @@ function App() {
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
-        <FieldJournal />
+        <FieldJournal 
+          email={userData.email}
+          blogs={blogData}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          mushrooms={mushroomData}
+        />
       ) : selectedRoute === "ACCOUNT" ?(
           <Account users={userData}/>
       ) : (

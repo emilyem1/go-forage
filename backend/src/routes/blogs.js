@@ -32,17 +32,33 @@ module.exports = (db) => {
 
   router.post("/blogs", async (request, response) => {
     console.log("Received POST request to /blogs");
-    const { title, content, latitude, longitude, user_id, mushroom_id } = request.body;
+    const { title, content, latitude, longitude, user_id} = request.body;
     db.query(
       `
-      INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID, MUSHROOM_ID)
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID)
+      VALUES ($1, $2, $3, $4, $5)
       RETURNING *
     `,
-      [title, content, latitude, longitude, user_id, mushroom_id]
+      [title, content, latitude, longitude, user_id]
     ).then(({ rows }) => {
       response.json(rows[0]);
     });
   });
+
+  router.post("/mushroom-posts", async (request, response) => {
+    console.log("Received POST request to /mushroom-posts");
+    const { blog_id, mushroom_id} = request.body;
+    db.query(
+      `
+      INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID)
+      VALUES ($1, $2)
+      RETURNING *
+    `,
+      [blog_id, mushroom_id]
+    ).then(({ rows }) => {
+      response.json(rows[0]);
+    });
+  });
+
   return router;
 };

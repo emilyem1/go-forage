@@ -11,38 +11,76 @@ const BlogForm = (props) => {
     latitude: 1,
     longitude: 1,
     user_id: 1,
-    mushroom_id: 1,
+    mushrooms: [],
   });
 
   const handleChange = (event) => {
-    const { name: input, value } = event.target;
+    const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [input]: value,
+      [name]: value,
     }));
-    console.log("Updated blog data:", formData);
+  };
+
+  const handleMushroomSelection = (event) => {
+    const selectedMushroomId = event.target.value;
+    setFormData((prevData) => ({
+      ...prevData,
+      mushrooms: [...prevData.mushrooms, { mushroom_id: selectedMushroomId }],
+    }));
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("handleSubmit has been called");
 
     try {
-      const response = await fetch("http://localhost:8001/api/blogs", {
+      //post to blog api
+      const blogResponse = await fetch("http://localhost:8001/api/blogs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          title: formData.title,
+          content: formData.content,
+          latitude: formData.latitude,
+          longitude: formData.longitude,
+          user_id: formData.user_id,
+        }),
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to post blog. Status: ${response.status}`);
+      if (!blogResponse.ok) {
+        throw new Error(`Failed to post blog. Status: ${blogResponse.status}`);
       }
 
-      const responseData = await response.json();
-      console.log("Blog posted:", responseData);
+      const blogData = await blogResponse.json();
+      console.log("Blog posted:", blogData);
 
+      // post to MUSHROOM_POST api for each selected mushroom
+      for (const mushroom of formData.mushrooms) {
+        const mushroomPostResponse = await fetch(
+          "http://localhost:8001/api/mushroom-posts",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              blog_id: blogData.id,
+              mushroom_id: mushroom.mushroom_id,
+            }),
+          }
+        );
+
+        if (!mushroomPostResponse.ok) {
+          throw new Error(
+            `Failed to post mushroom post. Status: ${mushroomPostResponse.status}`
+          );
+        }
+
+        const mushroomPostData = await mushroomPostResponse.json();
+        console.log("Mushroom post created:", mushroomPostData);
+      }
       // Reset the form after submission
       setFormData({
         title: "",
@@ -50,7 +88,7 @@ const BlogForm = (props) => {
         latitude: null,
         longitude: null,
         user_id: "1",
-        mushroom_id: 1,
+        mushrooms: [],
       });
     } catch (error) {
       console.error("Error when posting:", error.message);
@@ -71,21 +109,18 @@ const BlogForm = (props) => {
             />
           </label>
 
-          <button type="button" onClick={()=><select
-              name="mushroom_id"
-              value={formData.mushroom_id}
-              onChange={handleChange}
-            >
-              <option value="">Select Mushroom</option>
-              {mushrooms.map((mushroom) => (
-                <option key={mushroom.id} value={mushroom.id}>
-                  {mushroom.name}
-                </option>
-              ))}
-            </select>}>
-            Add Mushroom
-          </button>
-          <br />
+          <select
+            name="mushroom_id"
+            value={formData.mushroom_id}
+            onChange={handleMushroomSelection}
+          >
+            <option value="">Select Mushroom</option>
+            {mushrooms.map((mushroom) => (
+              <option key={mushroom.id} value={mushroom.id}>
+                {mushroom.name}
+              </option>
+            ))}
+          </select>
 
           <input
             type="text"

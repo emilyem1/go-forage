@@ -100,12 +100,13 @@ const BlogDetails = (props) => {
           </button>
         </form>
         <div>
-          {comments.map(
-            (comment) =>
-              comment.blog_id === blog.id && (
-                <p>{<Comments comment={comment} />}</p>
-              )
-          )}
+          {comments
+            .filter((comment) => comment.blog_id === blog.id)
+            .map((comment) => (
+              <div key={comment.id}>
+                <Comments comment={comment} />
+              </div>
+            ))}
         </div>
       </section>
     </main>

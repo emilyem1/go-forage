@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -16,7 +16,7 @@ const theme = createTheme({
 });
 
 const TopNavigation = (props) => {
-  const { route, userData, value, setValue } = props;
+  const { route, userData, value, setValue, setSearchTerm } = props;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -48,9 +48,9 @@ const TopNavigation = (props) => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ width: '100%' }}>
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Tabs value={value} onChange={handleChange} textColor="primary"
-            indicatorColor="primary">
+            indicatorColor="primary" sx = {{alignSelf: 'center'}}>
             <Tab label="Map" onClick={() => {route("PUBLIC");}}  />
             <Tab label="Blogs" onClick={() => {route("BLOGLIST");}}/>
             <Tab label="Mushrooms" onClick={() => {route("MUSHROOMS");}}/>
@@ -67,7 +67,7 @@ const TopNavigation = (props) => {
               <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
             )}
           </Tabs>
-          <Box sx={{}}><SearchBar/></Box>
+          <Box sx={{alignSelf: 'flex-end', marginTop: '-3.5rem'}}><SearchBar route={route} setValue={setValue} setSearchTerm={setSearchTerm}/></Box>
         </Box>
       </Box>
     </ThemeProvider>

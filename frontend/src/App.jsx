@@ -10,6 +10,7 @@ import MushroomList from "./components/MushroomList";
 import FieldJournal from "./components/FieldJournal";
 import LoginSignup from "./components/LoginSignup";
 import BlogDetails from "./components/BlogDetails";
+import SearchResults from "./components/SearchResults";
 
 function App() {
   const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
@@ -18,15 +19,11 @@ function App() {
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
   const [value, setValue] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <div className="App">
-      <Header
-        route={setSelectedRoute}
-        userData={userData}
-        value={value}
-        setValue={setValue}
-      />
+      <Header route={setSelectedRoute} userData={userData} value = {value} setValue = {setValue} setSearchTerm = {setSearchTerm} />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
@@ -55,10 +52,10 @@ function App() {
           mushrooms={mushroomData}
         />
       ) : selectedRoute === "ACCOUNT" ? (
-        <Account users={userData} />
-      ) : (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
-      )}
+          <Account users={userData}/>
+      ) : selectedRoute === "LOGINSIGNUP" ? (
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
+      ) : <SearchResults searchTerm={searchTerm}/>}
     </div>
   );
 }

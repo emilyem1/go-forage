@@ -10,7 +10,7 @@ module.exports = (db) => {
       USER_ACCOUNT.FULLNAME AS username,
       BLOG.PUBLICATION_DATE AS date,
       json_agg(json_build_object(
-          'mushroom', MUSHROOM.TITLE,
+          'mushroom_name', MUSHROOM.TITLE,
           'mushroom_image', MUSHROOM.IMAGE_URL
       )) AS mushrooms,
       BLOG.CONTENT AS content,

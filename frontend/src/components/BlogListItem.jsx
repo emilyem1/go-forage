@@ -3,8 +3,6 @@ import BlogListMap from "./BlogListMap";
 
 const BlogListItem = (props) => {
   const { blog, setSelectedRoute, setBlogSelected } = props;
-  const mushrooms = blog.mushrooms.split(",");
-  const mushroom_images = blog.mushroom_images.split(",");
   const handleClick = () => {
     setBlogSelected(blog);
     setSelectedRoute("BLOGDETAILS");
@@ -16,14 +14,15 @@ const BlogListItem = (props) => {
       </div>
       <div>{blog.title}</div>
       <div>By: {blog.username}</div>
-      {mushrooms.map((mushroom,index) => (
-        <div key={index}>{mushroom}
-      <img
-        className="mushroom-list__image"
-        src={`images/${mushroom_images[index].trim()}`}
-        alt={mushroom}
-      />
-      </div>
+      {blog.mushrooms.map((mushroom, index) => (
+        <div key={index}>
+          {mushroom.mushroom_name}
+          <img
+            className="mushroom-list__image"
+            src={`images/${mushroom.mushroom_image}`}
+            alt={mushroom.mushroom_name}
+          />
+        </div>
       ))}
       <div className="mushroom-list__details">
         <footer className="mushroom-list__info">

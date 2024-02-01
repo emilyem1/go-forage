@@ -18,7 +18,6 @@ module.exports = (db) => {
         mushrooms : mushroomResults,
         blogs: blogResults,
       };
-      console.log(combinedResults);
       response.json(combinedResults);
     } catch (error) {
       console.error("Error performing search:", error);

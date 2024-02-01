@@ -22,11 +22,22 @@ const BlogForm = (props) => {
     }));
   };
 
-  const handleMushroomSelection = (event) => {
+  const handleMushroomSelection = (event, index) => {
     const selectedMushroomId = event.target.value;
+    setFormData((prevData) => {
+      const updatedMushrooms = [...prevData.mushrooms];
+      updatedMushrooms[index] = { mushroom_id: selectedMushroomId };
+      return {
+        ...prevData,
+        mushrooms: updatedMushrooms,
+      };
+    });
+  };
+
+  const handleAddMushroom = () => {
     setFormData((prevData) => ({
       ...prevData,
-      mushrooms: [...prevData.mushrooms, { mushroom_id: selectedMushroomId }],
+      mushrooms: [...prevData.mushrooms, { mushroom_id: "" }],
     }));
   };
 
@@ -109,18 +120,26 @@ const BlogForm = (props) => {
             />
           </label>
 
-          <select
-            name="mushroom_id"
-            value={formData.mushroom_id}
-            onChange={handleMushroomSelection}
-          >
-            <option value="">Select Mushroom</option>
-            {mushrooms.map((mushroom) => (
-              <option key={mushroom.id} value={mushroom.id}>
-                {mushroom.name}
-              </option>
-            ))}
-          </select>
+          {formData.mushrooms.map((mushroom, index) => (
+            <div key={index}>
+              <select
+                name={`mushroom_id_${index}`}
+                value={mushroom.mushroom_id}
+                onChange={(event) => handleMushroomSelection(event, index)}
+              >
+                <option value="">Select Mushroom</option>
+                {mushrooms.map((mushroomOption) => (
+                  <option key={mushroomOption.id} value={mushroomOption.id}>
+                    {mushroomOption.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+
+          <button type="button" onClick={handleAddMushroom}>
+            Add Mushroom
+          </button>
 
           <input
             type="text"

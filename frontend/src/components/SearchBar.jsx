@@ -3,7 +3,7 @@ import { TextField, InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const SearchBar = (props) => {
-  const {setSearchTerm, route} = props;
+  const {setSearchTerm, route, setValue} = props;
   const [currentSearch, setCurrentSearch] = useState('')
 
   const handleSearch = (event) => {
@@ -11,6 +11,7 @@ const SearchBar = (props) => {
     // Perform search based on the searchTerm
     console.log(`Searching for: ${currentSearch}`);
     setSearchTerm(currentSearch);
+    setValue(false);
     route(`SEARCH_RESULTS`);
   };
 

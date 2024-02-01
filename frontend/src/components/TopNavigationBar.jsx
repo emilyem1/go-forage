@@ -67,7 +67,7 @@ const TopNavigation = (props) => {
               <Tab label="Login/Signup" onClick={() => {route("LOGINSIGNUP");}}/>
             )}
           </Tabs>
-          <Box sx={{alignSelf: 'flex-end', marginTop: '-3.5rem'}}><SearchBar route={route} setSearchTerm={setSearchTerm}/></Box>
+          <Box sx={{alignSelf: 'flex-end', marginTop: '-3.5rem'}}><SearchBar route={route} setValue={setValue} setSearchTerm={setSearchTerm}/></Box>
         </Box>
       </Box>
     </ThemeProvider>

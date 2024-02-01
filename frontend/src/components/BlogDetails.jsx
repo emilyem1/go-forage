@@ -6,8 +6,6 @@ import Comments from "./Comments";
 
 const BlogDetails = (props) => {
   const { blog, comments } = props;
-  const mushrooms = blog.mushrooms.split(",");
-  const mushroom_images = blog.mushroom_images.split(",");
 
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
@@ -70,18 +68,16 @@ const BlogDetails = (props) => {
             <div>By: {blog.username}</div>
           </div>
 
-          {mushrooms.map((mushroom, index) => (
+          {blog.mushrooms.map((mushroom, index) => (
             <div key={index} className="mushrooms-info">
-              {mushroom}
+              {mushroom.mushroom_name}
               <img
                 className="mushroom-image"
-                src={`images/${mushroom_images[index].trim()}`}
-                alt={mushroom}
+                src={`images/${mushroom.mushroom_image}`}
+                alt={mushroom.mushroom_name}
               />
             </div>
           ))}
-
-
         </header>
         <section>
           <p>{blog.content}</p>

@@ -12,15 +12,21 @@ import LoginSignup from "./components/LoginSignup";
 import BlogDetails from "./components/BlogDetails";
 
 function App() {
-  const { state, setSelectedRoute } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData, userData, commentData } = state;
+  const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
+  const { blogData, selectedRoute, mushroomData, userData, commentData } =
+    state;
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
   const [value, setValue] = useState(0);
 
   return (
     <div className="App">
-      <Header route={setSelectedRoute} userData={userData} value = {value} setValue = {setValue} />
+      <Header
+        route={setSelectedRoute}
+        userData={userData}
+        value={value}
+        setValue={setValue}
+      />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
@@ -34,23 +40,24 @@ function App() {
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
           mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} comments={commentData} />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
-        <FieldJournal 
+        <FieldJournal
           email={userData.email}
           blogs={blogData}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
           mushrooms={mushroomData}
         />
-      ) : selectedRoute === "ACCOUNT" ?(
-          <Account users={userData}/>
+      ) : selectedRoute === "ACCOUNT" ? (
+        <Account users={userData} />
       ) : (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
       )}
     </div>
   );

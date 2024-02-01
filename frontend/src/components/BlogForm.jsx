@@ -3,7 +3,7 @@ import "../styles/BlogForm.scss";
 import { useState } from "react";
 
 const BlogForm = (props) => {
-  const { mushrooms } = props;
+  const { mushrooms, setBlogUpdate} = props;
 
   const [formData, setFormData] = useState({
     title: "",
@@ -67,6 +67,8 @@ const BlogForm = (props) => {
       const blogData = await blogResponse.json();
       console.log("Blog posted:", blogData);
 
+      
+
       // post to MUSHROOM_POST api for each selected mushroom
       for (const mushroom of formData.mushrooms) {
         const mushroomPostResponse = await fetch(
@@ -92,6 +94,7 @@ const BlogForm = (props) => {
         const mushroomPostData = await mushroomPostResponse.json();
         console.log("Mushroom post created:", mushroomPostData);
       }
+      setBlogUpdate(true);
       // Reset the form after submission
       setFormData({
         title: "",
@@ -104,6 +107,7 @@ const BlogForm = (props) => {
     } catch (error) {
       console.error("Error when posting:", error.message);
     }
+
   };
 
   return (

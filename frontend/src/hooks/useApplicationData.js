@@ -8,6 +8,7 @@ export const ACTIONS = {
   SET_MUSHROOM_DATA: "SET_MUSHROOM_DATA",
   SET_USER_DATA: "SET_USER_DATA",
   SET_COMMENT_DATA: "SET_COMMENT_DATA",
+  SET_BLOG_UPDATE: "SET_BLOG_UPDATE",
 };
 
 function reducer(state, action) {
@@ -38,6 +39,9 @@ function reducer(state, action) {
     case ACTIONS.SET_COMMENT_DATA:
       return { ...state, commentData: action.payload };
 
+      case ACTIONS.SET_BLOG_UPDATE:
+        return { ...state, blogUpdate: action.payload };
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -52,21 +56,28 @@ const useApplicationData = () => {
     selectedRoute: "PUBLIC",
     mushroomData: [],
     userData: {
-      fullname: '',
-      email: '',
-      profilePhoto: '',
+      fullname: "",
+      email: "",
+      profilePhoto: "",
       isLoggedIn: false,
     },
     commentData: [],
+    blogUpdate:false,
   });
 
   useEffect(() => {
     fetch("http://localhost:8001/api/blogs")
       .then((response) => response.json())
       .then((data) => dispatch({ type: ACTIONS.SET_BLOG_DATA, payload: data }))
+      .then(() => {
+        dispatch({ type: ACTIONS.SET_BLOG_UPDATE, payload: false });
+      })
       .catch((error) => {
         console.error("Error fetching blogs:", error);
       });
+  }, [state.blogUpdate]);
+
+  useEffect(() => {
     fetch("http://localhost:8001/api/mushrooms")
       .then((response) => response.json())
       .then((data) =>
@@ -93,15 +104,17 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_ROUTE, payload: route });
   };
 
+  const setBlogUpdate = (status) => {
+    dispatch({ type: ACTIONS.SET_BLOG_UPDATE, payload: status });
+  };
+
   useEffect(() => {
     const cookies = document.cookie;
-    const cookieObject = cookies
-      .split(";")
-      .reduce((acc, cookie) => {
-        const [key, value] = cookie.trim().split("=");
-        acc[key] = value;
-        return acc;
-      }, {});
+    const cookieObject = cookies.split(";").reduce((acc, cookie) => {
+      const [key, value] = cookie.trim().split("=");
+      acc[key] = value;
+      return acc;
+    }, {});
 
     dispatch({
       type: ACTIONS.SET_USER_DATA,
@@ -109,16 +122,16 @@ const useApplicationData = () => {
         fullname: cookieObject.fullname,
         email: cookieObject.email,
         profilePhoto: cookieObject.profilePhoto,
-        isLoggedIn : cookieObject.isLoggedIn,
+        isLoggedIn: cookieObject.isLoggedIn,
       },
     });
   }, [document.cookie]);
-
 
   return {
     state,
     setBlogSelected,
     setSelectedRoute,
+    setBlogUpdate,
   };
 };
 

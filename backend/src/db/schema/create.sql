@@ -30,8 +30,7 @@ CREATE TABLE BLOG (
   publication_date DATE,
   latitude DOUBLE PRECISION,
   longitude DOUBLE PRECISION,
-  USER_ID INTEGER REFERENCES USER_ACCOUNT(id) ON DELETE CASCADE,
-  MUSHROOM_ID INTEGER REFERENCES MUSHROOM(id) ON DELETE CASCADE
+  USER_ID INTEGER REFERENCES USER_ACCOUNT(id) ON DELETE CASCADE
 );
 /* Not going to touch mushroom_id rn but that will have to be deleted from blog table above */
 

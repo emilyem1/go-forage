@@ -6,6 +6,7 @@ import Comments from "./Comments";
 
 const BlogDetails = (props) => {
   const { blog, comments } = props;
+
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
@@ -16,7 +17,7 @@ const BlogDetails = (props) => {
     const { name: input, value } = event.target;
     setNewComment((prevData) => ({
       ...prevData,
-      [input]: value,     
+      [input]: value,
     }));
     console.log("Updated comment", newComment);
   };
@@ -66,14 +67,17 @@ const BlogDetails = (props) => {
             <h1>{blog.title}</h1>
             <div>By: {blog.username}</div>
           </div>
-          <div className="mushrooms-info">
-            <div>{blog.mushroom}</div>
-            <img
-              className="mushroom-image"
-              src={`images/${blog.mushroom_image}`}
-              alt={blog.mushroom}
-            />
-          </div>
+
+          {blog.mushrooms.map((mushroom, index) => (
+            <div key={index} className="mushrooms-info">
+              {mushroom.mushroom_name}
+              <img
+                className="mushroom-image"
+                src={`images/${mushroom.mushroom_image}`}
+                alt={mushroom.mushroom_name}
+              />
+            </div>
+          ))}
         </header>
         <section>
           <p>{blog.content}</p>
@@ -96,12 +100,13 @@ const BlogDetails = (props) => {
           </button>
         </form>
         <div>
-          {comments.map(
-            (comment) =>
-              comment.blog_id === blog.id && (
-                <p>{<Comments comment={comment} />}</p>
-              )
-          )}
+          {comments
+            .filter((comment) => comment.blog_id === blog.id)
+            .map((comment) => (
+              <div key={comment.id}>
+                <Comments comment={comment} />
+              </div>
+            ))}
         </div>
       </section>
     </main>

@@ -3,7 +3,8 @@ import "../styles/BlogForm.scss";
 import { useState } from "react";
 
 const BlogForm = (props) => {
-  const { mushrooms, setBlogUpdate} = props;
+  const { mushrooms, setBlogUpdate } = props;
+  const [disableAddMushroom, setDisableAddMushroom] = useState(true);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -11,7 +12,7 @@ const BlogForm = (props) => {
     latitude: 1,
     longitude: 1,
     user_id: 1,
-    mushrooms: [],
+    mushrooms: [{}],
   });
 
   const handleChange = (event) => {
@@ -32,6 +33,7 @@ const BlogForm = (props) => {
         mushrooms: updatedMushrooms,
       };
     });
+    setDisableAddMushroom(false)
   };
 
   const handleAddMushroom = () => {
@@ -39,6 +41,7 @@ const BlogForm = (props) => {
       ...prevData,
       mushrooms: [...prevData.mushrooms, { mushroom_id: "" }],
     }));
+    setDisableAddMushroom(true)
   };
 
   const handleSubmit = async (event) => {
@@ -66,8 +69,6 @@ const BlogForm = (props) => {
 
       const blogData = await blogResponse.json();
       console.log("Blog posted:", blogData);
-
-      
 
       // post to MUSHROOM_POST api for each selected mushroom
       for (const mushroom of formData.mushrooms) {
@@ -107,7 +108,6 @@ const BlogForm = (props) => {
     } catch (error) {
       console.error("Error when posting:", error.message);
     }
-
   };
 
   return (
@@ -140,10 +140,11 @@ const BlogForm = (props) => {
               </select>
             </div>
           ))}
-
-          <button type="button" onClick={handleAddMushroom}>
-            Add Mushroom
-          </button>
+          {formData.mushrooms.length < 4 && (
+            <button type="button" onClick={handleAddMushroom} disabled={disableAddMushroom}>
+              Add Mushroom
+            </button>
+          )}
 
           <input
             type="text"
@@ -157,7 +158,7 @@ const BlogForm = (props) => {
           <BlogFormMap setFormData={setFormData} />
         </section>
       </div>
-      <button type="button" onClick={handleSubmit}>
+      <button type="button" onClick={handleSubmit} >
         Submit
       </button>
     </form>

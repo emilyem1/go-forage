@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { List, Card } from "@mui/material";
+import { List, Card, Box } from "@mui/material";
+import MushroomResult from "./SearchResultComponents/MushroomResult";
 
 const SearchResults = (props) => {
   const { searchTerm } = props;
@@ -42,11 +43,11 @@ const SearchResults = (props) => {
           {searchResults.mushrooms && (
             <div>
               <h3>Mushroom Results</h3>
-              <List>
+              <Box sx={{display: 'flex', justifyContent:'space-evenly', flexWrap: 'wrap', gap: '2rem'}}>
                 {searchResults.mushrooms.rows.map((mushroom) => (
-                  <Card key={mushroom.id}>{mushroom.title}</Card>
+                  <MushroomResult key={mushroom.id} mushroom = {mushroom}></MushroomResult>
                 ))}
-              </List>
+              </Box>
             </div>
           )}
 

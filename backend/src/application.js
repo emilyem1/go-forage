@@ -17,6 +17,7 @@ const logout = require("./routes/logout");
 const icons = require("./routes/icons");
 const comments = require("./routes/comments");
 const journal = require("./routes/journal");
+const search = require("./routes/search");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -48,6 +49,7 @@ module.exports = function application() {
   app.use("/api", icons(db));
   app.use("/api", comments(db));
   app.use("/api", journal(db));
+  app.use("/api", search(db)); 
   
   // Reading SQL files for database schema creation and seeding
   Promise.all([

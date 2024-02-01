@@ -1,28 +1,38 @@
+import { useState } from 'react';
 import { TextField, InputAdornment, IconButton } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const SearchBar = (props) => {
-  // Handle search logic here
+  const {setSearchTerm, route, setValue} = props;
+  const [currentSearch, setCurrentSearch] = useState('')
+
   const handleSearch = (event) => {
-    const searchTerm = event.target.value;
+    event.preventDefault();
     // Perform search based on the searchTerm
-    console.log(`Searching for: ${searchTerm}`);
+    console.log(`Searching for: ${currentSearch}`);
+    setSearchTerm(currentSearch);
+    setValue(false);
+    route(`SEARCH_RESULTS`);
   };
 
   return (
-    <TextField
-      label="Search..."
-      variant="outlined"
-      InputProps={{
-        endAdornment: (
-          <InputAdornment position="end">
-            <IconButton onClick={handleSearch} size="large">
-              <SearchIcon />
-            </IconButton>
-          </InputAdornment>
-        ),
-      }}
-    />
+    <form onSubmit={handleSearch}>
+      <TextField
+        label="Search..."
+        variant="outlined"
+        value={currentSearch}
+        onChange={(e) => setCurrentSearch(e.target.value)}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton type="submit" size="large">
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+        }}
+      />
+    </form>
   );
 };
 

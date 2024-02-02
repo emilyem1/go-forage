@@ -15,7 +15,7 @@ import Favourites from "./components/Favourites";
 
 function App() {
   const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData, userData, commentData } =
+  const { blogData, selectedRoute, mushroomData, userData, commentData, favouriteBlogs } =
     state;
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
@@ -50,6 +50,7 @@ function App() {
           blogs={blogData}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
+          favouriteBlogs={favouriteBlogs}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} comments={commentData} />

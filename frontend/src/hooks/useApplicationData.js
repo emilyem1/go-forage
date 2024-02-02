@@ -133,13 +133,13 @@ const useApplicationData = () => {
       },
     });
 
-    fetch("http://localhost:8001/api/comments")
+    fetch(`http://localhost:8001/api/favourites/blogs/1`)
       .then((response) => response.json())
       .then((data) =>
-        dispatch({ type: ACTIONS.SET_COMMENT_DATA, payload: data })
+        dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: data })
       )
       .catch((error) => {
-        console.error("Error fetching comments:", error);
+        console.error("Error fetching favourite blogs:", error);
       });
 
   }, [document.cookie]);

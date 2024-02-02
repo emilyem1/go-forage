@@ -14,17 +14,30 @@ import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 
 function App() {
-  const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData, userData, commentData } =
-    state;
+  const { state, setSelectedRoute, setBlogUpdate, setFavouriteBlogs } =
+    useApplicationData();
+  const {
+    blogData,
+    selectedRoute,
+    mushroomData,
+    userData,
+    commentData,
+    favouriteBlogs,
+  } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
   const [value, setValue] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div className="App">
-      <Header route={setSelectedRoute} userData={userData} value = {value} setValue = {setValue} setSearchTerm = {setSearchTerm} />
+      <Header
+        route={setSelectedRoute}
+        userData={userData}
+        value={value}
+        setValue={setValue}
+        setSearchTerm={setSearchTerm}
+      />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
@@ -39,6 +52,8 @@ function App() {
           setSelectedRoute={setSelectedRoute}
           mushrooms={mushroomData}
           setBlogUpdate={setBlogUpdate}
+          favouriteBlogs={favouriteBlogs}
+          userData={userData}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
@@ -53,7 +68,7 @@ function App() {
           mushrooms={mushroomData}
         />
       ) : selectedRoute === "ACCOUNT" ? (
-          <Account users={userData}/>
+        <Account users={userData} />
       ) : selectedRoute === "LOGINSIGNUP" ? (
         <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
       ) : selectedRoute === "FIELDDETAILS" ? (

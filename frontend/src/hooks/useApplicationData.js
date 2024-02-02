@@ -1,5 +1,4 @@
 import { useReducer, useEffect } from "react";
-import { mapStyles } from "../styles/Map";
 
 export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
@@ -9,6 +8,7 @@ export const ACTIONS = {
   SET_USER_DATA: "SET_USER_DATA",
   SET_COMMENT_DATA: "SET_COMMENT_DATA",
   SET_BLOG_UPDATE: "SET_BLOG_UPDATE",
+  SET_FAVOURITE_BLOGS: "SET_FAVOURITE_BLOGS",
 };
 
 function reducer(state, action) {
@@ -29,6 +29,7 @@ function reducer(state, action) {
       return {
         ...state,
         userData: {
+          user_id: decodeURIComponent(action.payload.user_id),
           fullname: decodeURIComponent(action.payload.fullname),
           email: decodeURIComponent(action.payload.email),
           profilePhoto: decodeURIComponent(action.payload.profilePhoto),
@@ -36,11 +37,14 @@ function reducer(state, action) {
         },
       };
 
+    case ACTIONS.SET_FAVOURITE_BLOGS:
+      return { ...state, favouriteBlogs: action.payload };
+
+    case ACTIONS.SET_BLOG_UPDATE:
+      return { ...state, blogUpdate: action.payload };
+
     case ACTIONS.SET_COMMENT_DATA:
       return { ...state, commentData: action.payload };
-
-      case ACTIONS.SET_BLOG_UPDATE:
-        return { ...state, blogUpdate: action.payload };
 
     default:
       throw new Error(
@@ -56,13 +60,15 @@ const useApplicationData = () => {
     selectedRoute: "PUBLIC",
     mushroomData: [],
     userData: {
+      user_id: null,
       fullname: "",
       email: "",
       profilePhoto: "",
       isLoggedIn: false,
     },
     commentData: [],
-    blogUpdate:false,
+    blogUpdate: false,
+    favouriteBlogs: [],
   });
 
   useEffect(() => {
@@ -86,6 +92,7 @@ const useApplicationData = () => {
       .catch((error) => {
         console.error("Error fetching mushrooms:", error);
       });
+
     fetch("http://localhost:8001/api/comments")
       .then((response) => response.json())
       .then((data) =>
@@ -93,6 +100,15 @@ const useApplicationData = () => {
       )
       .catch((error) => {
         console.error("Error fetching comments:", error);
+      });
+
+      fetch("http://localhost:8001/api/favourites")
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: data })
+      )
+      .catch((error) => {
+        console.error("Error fetching favourites:", error);
       });
   }, []);
 
@@ -108,6 +124,10 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_BLOG_UPDATE, payload: status });
   };
 
+  const setFavouriteBlogs = (blogIDs) => {
+    dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: blogIDs });
+  };
+
   useEffect(() => {
     const cookies = document.cookie;
     const cookieObject = cookies.split(";").reduce((acc, cookie) => {
@@ -119,6 +139,7 @@ const useApplicationData = () => {
     dispatch({
       type: ACTIONS.SET_USER_DATA,
       payload: {
+        user_id: cookieObject.user_id,
         fullname: cookieObject.fullname,
         email: cookieObject.email,
         profilePhoto: cookieObject.profilePhoto,
@@ -132,6 +153,7 @@ const useApplicationData = () => {
     setBlogSelected,
     setSelectedRoute,
     setBlogUpdate,
+    setFavouriteBlogs,
   };
 };
 

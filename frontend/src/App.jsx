@@ -14,7 +14,7 @@ import SearchResults from "./components/SearchResults";
 import Favourites from "./components/Favourites";
 
 function App() {
-  const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
+  const { state, setSelectedRoute, setFavouriteBlogs } = useApplicationData();
   const { blogData, selectedRoute, mushroomData, userData, commentData, favouriteBlogs } =
     state;
   const [blogSelected, setBlogSelected] = useState(null);
@@ -67,7 +67,7 @@ function App() {
       ) : selectedRoute === "ACCOUNT" ? (
         <Account users={userData} />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} setFavouriteBlogs={setFavouriteBlogs}/>
       ) : (
         <SearchResults searchTerm={searchTerm} />
       )}

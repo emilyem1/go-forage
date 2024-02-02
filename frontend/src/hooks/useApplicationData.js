@@ -1,6 +1,5 @@
 import { useReducer, useEffect } from "react";
 
-
 export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
   SELECT_BLOG: "SELECT_BLOG",
@@ -45,7 +44,7 @@ function reducer(state, action) {
 
     case ACTIONS.SET_COMMENT_DATA:
       return { ...state, commentData: action.payload };
-  
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -67,8 +66,8 @@ const useApplicationData = () => {
       isLoggedIn: false,
     },
     commentData: [],
-    blogUpdate:false,
-    favouriteBlogs:[],
+    blogUpdate: false,
+    favouriteBlogs: [],
   });
 
   useEffect(() => {
@@ -110,8 +109,8 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_ROUTE, payload: route });
   };
 
-  const setBlogUpdate = (status) => {
-    dispatch({ type: ACTIONS.SET_BLOG_UPDATE, payload: status });
+  const setFavouriteBlogs = (blogIDs) => {
+    dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: blogIDs });
   };
 
   useEffect(() => {
@@ -132,23 +131,13 @@ const useApplicationData = () => {
         isLoggedIn: cookieObject.isLoggedIn,
       },
     });
-
-    fetch(`http://localhost:8001/api/favourites/blogs/1`)
-      .then((response) => response.json())
-      .then((data) =>
-        dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: data })
-      )
-      .catch((error) => {
-        console.error("Error fetching favourite blogs:", error);
-      });
-
   }, [document.cookie]);
 
   return {
     state,
     setBlogSelected,
     setSelectedRoute,
-    setBlogUpdate,
+    setFavouriteBlogs,
   };
 };
 

@@ -6,30 +6,19 @@ module.exports = (db) => {
     const host = request.hostname;
     const port = process.env.PORT || 8001;
     const serverUrl = `${protocol}://${host}:${port}`;
-  
+
     db.query(
       `
-      SELECT 
-      USER_ACCOUNT.id AS user_id,
-      USER_ACCOUNT.FULLNAME AS username,
-      json_agg(
-        jsonb_build_object(
-          'blog_id', BLOG.id,
-          'blog_title', BLOG.TITLE,
-          'blog_publication_date', BLOG.publication_date,
-          'blog_latitude', BLOG.latitude,
-          'blog_longitude', BLOG.longitude,
-          'blog_author_id', BLOG.USER_ID
-        )
-      ) AS fav_blogs
+    SELECT 
+    BLOG.id AS blog_id
     FROM FAVOURITES
     JOIN USER_ACCOUNT ON FAVOURITES.USER_ID = USER_ACCOUNT.id
     JOIN BLOG ON FAVOURITES.BLOG_ID = BLOG.id
     WHERE FAVOURITES.USER_ID = ${request.params.user_id}
-    GROUP BY USER_ACCOUNT.id
     `
     ).then(({ rows: favourite_blogs }) => {
-      response.json(favourite_blogs);
+      const blogIds = favourite_blogs.map(blog => blog.blog_id);
+    response.json(blogIds);
     });
   });
 

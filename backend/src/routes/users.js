@@ -39,6 +39,7 @@ module.exports = (db) => {
           console.log(rows[0]);
           if (password === rows[0].password) {
             console.log("Successful login");
+            response.cookie("user_id", rows[0].id);
             response.cookie("email", rows[0].email);
             response.cookie("fullname", rows[0].fullname);
             response.cookie("profilePhoto", rows[0].photo_url);

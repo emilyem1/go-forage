@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from "react";
-import { mapStyles } from "../styles/Map";
+
 
 export const ACTIONS = {
   SET_BLOG_DATA: "SET_BLOG_DATA",
@@ -9,6 +9,7 @@ export const ACTIONS = {
   SET_USER_DATA: "SET_USER_DATA",
   SET_COMMENT_DATA: "SET_COMMENT_DATA",
   SET_BLOG_UPDATE: "SET_BLOG_UPDATE",
+  SET_FAVOURITE_BLOGS: "SET_FAVOURITE_BLOGS",
 };
 
 function reducer(state, action) {
@@ -36,12 +37,15 @@ function reducer(state, action) {
         },
       };
 
+    case ACTIONS.SET_FAVOURITE_BLOGS:
+      return { ...state, favouriteBlogs: action.payload };
+
+    case ACTIONS.SET_BLOG_UPDATE:
+      return { ...state, blogUpdate: action.payload };
+
     case ACTIONS.SET_COMMENT_DATA:
       return { ...state, commentData: action.payload };
-
-      case ACTIONS.SET_BLOG_UPDATE:
-        return { ...state, blogUpdate: action.payload };
-
+  
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -56,6 +60,7 @@ const useApplicationData = () => {
     selectedRoute: "PUBLIC",
     mushroomData: [],
     userData: {
+      user_id: null,
       fullname: "",
       email: "",
       profilePhoto: "",
@@ -63,6 +68,7 @@ const useApplicationData = () => {
     },
     commentData: [],
     blogUpdate:false,
+    favouriteBlogs:[],
   });
 
   useEffect(() => {
@@ -119,12 +125,23 @@ const useApplicationData = () => {
     dispatch({
       type: ACTIONS.SET_USER_DATA,
       payload: {
+        user_id: cookieObject.id,
         fullname: cookieObject.fullname,
         email: cookieObject.email,
         profilePhoto: cookieObject.profilePhoto,
         isLoggedIn: cookieObject.isLoggedIn,
       },
     });
+
+    fetch("http://localhost:8001/api/comments")
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_COMMENT_DATA, payload: data })
+      )
+      .catch((error) => {
+        console.error("Error fetching comments:", error);
+      });
+
   }, [document.cookie]);
 
   return {

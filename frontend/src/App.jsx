@@ -11,6 +11,7 @@ import FieldJournal from "./components/FieldJournal";
 import LoginSignup from "./components/LoginSignup";
 import BlogDetails from "./components/BlogDetails";
 import SearchResults from "./components/SearchResults";
+import Favourites from "./components/Favourites";
 
 function App() {
   const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
@@ -19,11 +20,17 @@ function App() {
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
   const [value, setValue] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <div className="App">
-      <Header route={setSelectedRoute} userData={userData} value = {value} setValue = {setValue} setSearchTerm = {setSearchTerm} />
+      <Header
+        route={setSelectedRoute}
+        userData={userData}
+        value={value}
+        setValue={setValue}
+        setSearchTerm={setSearchTerm}
+      />
       {selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
@@ -32,12 +39,17 @@ function App() {
           setSelectedRoute={setSelectedRoute}
         />
       ) : selectedRoute === "BLOGLIST" ? (
-        <BlogList
+        // <BlogList
+        //   blogs={blogData}
+        //   setBlogSelected={setBlogSelected}
+        //   setSelectedRoute={setSelectedRoute}
+        //   mushrooms={mushroomData}
+        //   setBlogUpdate={setBlogUpdate}
+        // />
+        <Favourites
           blogs={blogData}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
-          mushrooms={mushroomData}
-          setBlogUpdate={setBlogUpdate}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} comments={commentData} />
@@ -52,10 +64,12 @@ function App() {
           mushrooms={mushroomData}
         />
       ) : selectedRoute === "ACCOUNT" ? (
-          <Account users={userData}/>
+        <Account users={userData} />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
-      ) : <SearchResults searchTerm={searchTerm}/>}
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
+      ) : (
+        <SearchResults searchTerm={searchTerm} />
+      )}
     </div>
   );
 }

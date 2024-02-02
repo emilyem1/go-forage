@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { Client } = require('pg');
 
 module.exports = (db) => {
   router.get("/blogs", (request, response) => {
@@ -60,5 +61,51 @@ module.exports = (db) => {
     });
   });
 
+  router.put("/blogs/:id", async (request, response) => {
+    console.log("Received PUT request to /blogs/:id");
+    const blogId = request.params.id;
+    const { title, content, latitude, longitude, user_id, mushrooms } = request.body;
+  
+    const client = new Client();
+    try {
+      await client.connect();
+      await client.query("BEGIN");
+      const updateBlogResponse = await client.query(
+        `
+        UPDATE BLOG
+        SET TITLE = $1, CONTENT = $2, LATITUDE = $3, LONGITUDE = $4, USER_ID = $5
+        WHERE ID = $6
+        RETURNING *
+      `,
+        [title, content, latitude, longitude, user_id, blogId]
+      );
+  
+      if (updateBlogResponse.rows.length === 0) {
+        response.status(404).json({ error: "Blog not found" });
+        return;
+      }
+      // Delete old mushrooms
+      await client.query("DELETE FROM MUSHROOM_POST WHERE BLOG_ID = $1", [blogId]);
+  
+      // Insert new mushrooms
+      if (mushrooms && mushrooms.length > 0) {
+        const mushroomValues = mushrooms.map((mushroomId) => [blogId, mushroomId]);
+        console.log("mushroomValues:", mushroomValues);
+        // placeholders = so you can insert more then 1 mushroom
+        const placeholders = mushroomValues.map((_, index) => `($${2 * index + 1}, $${2 * index + 2})`).join(', ');
+        const insertQuery = `INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID) VALUES ${placeholders}`;
+        await client.query(insertQuery, mushroomValues.flat());
+      }
+  
+      await client.query("COMMIT");
+      response.json(updateBlogResponse.rows[0]);
+    } catch (error) {
+      await client.query("ROLLBACK");
+      console.error("Error when updating blog:", error.message);
+      response.status(500).json({ error: "Internal Server Error" });
+    } finally {
+      await client.end();
+    }
+  });
   return router;
 };

@@ -4,7 +4,7 @@ import "../styles/MushroomList.scss";
 const Favourites = (props) => {
   const { blogs, setSelectedRoute, setBlogSelected, favouriteBlogs,userData } = props;
   const user_id= userData.user_id;
-  console.log(userData)
+
   return (
     <main>
       <ul className="mushroom-list">

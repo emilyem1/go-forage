@@ -11,6 +11,7 @@ import FieldJournal from "./components/FieldJournal";
 import LoginSignup from "./components/LoginSignup";
 import BlogDetails from "./components/BlogDetails";
 import SearchResults from "./components/SearchResults";
+import FieldDetails from "./components/FieldDetails";
 
 function App() {
   const { state, setSelectedRoute, setBlogUpdate } = useApplicationData();
@@ -40,7 +41,7 @@ function App() {
           setBlogUpdate={setBlogUpdate}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
-        <BlogDetails blog={blogSelected} comments={commentData} />
+        <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
@@ -55,6 +56,8 @@ function App() {
           <Account users={userData}/>
       ) : selectedRoute === "LOGINSIGNUP" ? (
         <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
+      ) : selectedRoute === "FIELDDETAILS" ? (
+        <FieldDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
       ) : <SearchResults searchTerm={searchTerm}/>}
     </div>
   );

@@ -109,6 +109,10 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_ROUTE, payload: route });
   };
 
+  const setBlogUpdate = (status) => {
+    dispatch({ type: ACTIONS.SET_BLOG_UPDATE, payload: status });
+  };
+
   const setFavouriteBlogs = (blogIDs) => {
     dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: blogIDs });
   };
@@ -137,6 +141,7 @@ const useApplicationData = () => {
     state,
     setBlogSelected,
     setSelectedRoute,
+    setBlogUpdate,
     setFavouriteBlogs,
   };
 };

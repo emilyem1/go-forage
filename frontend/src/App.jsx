@@ -11,12 +11,18 @@ import FieldJournal from "./components/FieldJournal";
 import LoginSignup from "./components/LoginSignup";
 import BlogDetails from "./components/BlogDetails";
 import SearchResults from "./components/SearchResults";
-import Favourites from "./components/Favourites";
 
 function App() {
-  const { state, setSelectedRoute, setFavouriteBlogs } = useApplicationData();
-  const { blogData, selectedRoute, mushroomData, userData, commentData, favouriteBlogs } =
-    state;
+  const { state, setSelectedRoute, setBlogUpdate, setFavouriteBlogs } =
+    useApplicationData();
+  const {
+    blogData,
+    selectedRoute,
+    mushroomData,
+    userData,
+    commentData,
+    favouriteBlogs,
+  } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
   const [value, setValue] = useState(0);
@@ -39,17 +45,12 @@ function App() {
           setSelectedRoute={setSelectedRoute}
         />
       ) : selectedRoute === "BLOGLIST" ? (
-        // <BlogList
-        //   blogs={blogData}
-        //   setBlogSelected={setBlogSelected}
-        //   setSelectedRoute={setSelectedRoute}
-        //   mushrooms={mushroomData}
-        //   setBlogUpdate={setBlogUpdate}
-        // />
-        <Favourites
+        <BlogList
           blogs={blogData}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
+          mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
           favouriteBlogs={favouriteBlogs}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
@@ -67,7 +68,11 @@ function App() {
       ) : selectedRoute === "ACCOUNT" ? (
         <Account users={userData} />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} setFavouriteBlogs={setFavouriteBlogs}/>
+        <LoginSignup
+          setSelectedRoute={setSelectedRoute}
+          setValue={setValue}
+          setFavouriteBlogs={setFavouriteBlogs}
+        />
       ) : (
         <SearchResults searchTerm={searchTerm} />
       )}

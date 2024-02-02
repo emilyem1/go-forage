@@ -11,10 +11,12 @@ module.exports = (db) => {
         BLOG.TITLE AS title,
         USER_ACCOUNT.FULLNAME AS username,
         BLOG.PUBLICATION_DATE AS date,
-        json_agg(json_build_object(
-          'mushroom_name', MUSHROOM.TITLE,
-          'mushroom_image', MUSHROOM.IMAGE_URL
-        )) AS mushrooms,
+        COALESCE(json_agg(
+            json_build_object(
+                'mushroom_name', COALESCE(MUSHROOM.TITLE, ''),
+                'mushroom_image', COALESCE(MUSHROOM.IMAGE_URL, '')
+            )
+        ), '[]'::json) AS mushrooms,
         BLOG.CONTENT AS content,
         BLOG.LATITUDE AS lat,
         BLOG.LONGITUDE AS long
@@ -31,6 +33,9 @@ module.exports = (db) => {
     [email]
     ).then(({ rows: blogs }) => {
       response.json(blogs);
+    }).catch(error => {
+      console.error('Error executing query:', error);
+      response.status(500).json({ error: 'Internal Server Error' });
     });
   });
   return router;

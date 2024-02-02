@@ -1,24 +1,26 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.get("/favourites/blogs/:user_id", (request, response) => {
-    const protocol = request.protocol;
-    const host = request.hostname;
-    const port = process.env.PORT || 8001;
-    const serverUrl = `${protocol}://${host}:${port}`;
-
+  router.get("/favourites", (request, response) => {
     db.query(
       `
-    SELECT 
-    BLOG.id AS blog_id
-    FROM FAVOURITES
-    JOIN USER_ACCOUNT ON FAVOURITES.USER_ID = USER_ACCOUNT.id
-    JOIN BLOG ON FAVOURITES.BLOG_ID = BLOG.id
-    WHERE FAVOURITES.USER_ID = ${request.params.user_id}
-    `
-    ).then(({ rows: favourite_blogs }) => {
-      const blogIds = favourite_blogs.map(blog => blog.blog_id);
-    response.json(blogIds);
+      SELECT 
+        USER_ACCOUNT.ID as user_id,
+        ARRAY_AGG(BLOG.id) AS blog_ids
+      FROM FAVOURITES
+      JOIN USER_ACCOUNT ON FAVOURITES.USER_ID = USER_ACCOUNT.id
+      JOIN BLOG ON FAVOURITES.BLOG_ID = BLOG.id
+      GROUP BY USER_ACCOUNT.ID
+      `
+    ).then(({ rows: favourites }) => {
+      // Transform the result to the desired format
+      const result = {};
+      
+      favourites.forEach((favourite) => {
+        result[favourite.user_id] = favourite.blog_ids;
+      });
+  
+      response.json(result);
     });
   });
 

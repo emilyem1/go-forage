@@ -29,6 +29,7 @@ function reducer(state, action) {
       return {
         ...state,
         userData: {
+          user_id: decodeURIComponent(action.payload.user_id),
           fullname: decodeURIComponent(action.payload.fullname),
           email: decodeURIComponent(action.payload.email),
           profilePhoto: decodeURIComponent(action.payload.profilePhoto),
@@ -91,6 +92,7 @@ const useApplicationData = () => {
       .catch((error) => {
         console.error("Error fetching mushrooms:", error);
       });
+
     fetch("http://localhost:8001/api/comments")
       .then((response) => response.json())
       .then((data) =>
@@ -98,6 +100,15 @@ const useApplicationData = () => {
       )
       .catch((error) => {
         console.error("Error fetching comments:", error);
+      });
+
+      fetch("http://localhost:8001/api/favourites")
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: data })
+      )
+      .catch((error) => {
+        console.error("Error fetching favourites:", error);
       });
   }, []);
 
@@ -128,7 +139,7 @@ const useApplicationData = () => {
     dispatch({
       type: ACTIONS.SET_USER_DATA,
       payload: {
-        user_id: cookieObject.id,
+        user_id: cookieObject.user_id,
         fullname: cookieObject.fullname,
         email: cookieObject.email,
         profilePhoto: cookieObject.profilePhoto,

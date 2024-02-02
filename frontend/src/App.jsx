@@ -52,6 +52,7 @@ function App() {
           mushrooms={mushroomData}
           setBlogUpdate={setBlogUpdate}
           favouriteBlogs={favouriteBlogs}
+          userData={userData}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} comments={commentData} />

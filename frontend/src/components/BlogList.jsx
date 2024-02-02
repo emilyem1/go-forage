@@ -9,7 +9,7 @@ import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
 
 const BlogList = (props) => {
-  const { blogs, mushrooms, setSelectedRoute, setBlogSelected, setBlogUpdate, favouriteBlogs } =
+  const { blogs, mushrooms, setSelectedRoute, setBlogSelected, setBlogUpdate, favouriteBlogs,userData } =
     props;
 
   const [checked, setChecked] = useState(false);
@@ -58,6 +58,7 @@ const BlogList = (props) => {
             setBlogSelected={setBlogSelected}
             setSelectedRoute={setSelectedRoute}
             favouriteBlogs={favouriteBlogs}
+            userData ={userData}
           />
         )}
       </ul>

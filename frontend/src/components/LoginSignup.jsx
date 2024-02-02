@@ -4,7 +4,6 @@ import { useState } from "react";
 const LoginSignup = (props) => {
   const setSelectedRoute = props.setSelectedRoute;
   const setValue = props.setValue;
-  const setFavouriteBlogs = props.setFavouriteBlogs;
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -52,13 +51,6 @@ const LoginSignup = (props) => {
           console.log("Login successful");
           setSelectedRoute("ACCOUNT");
           setValue(4);
-
-          fetch(`http://localhost:8001/api/favourites/blogs/${data.user.id}`)
-            .then((response) => response.json())
-            .then((data) => setFavouriteBlogs(data))
-            .catch((error) => {
-              console.error("Error fetching favourite blogs:", error);
-            });
         } else {
           console.log("Login failed");
         }

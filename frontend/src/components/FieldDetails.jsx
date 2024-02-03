@@ -57,6 +57,25 @@ const FieldDetails = (props) => {
     setEditMode(true);
   };
 
+  const handleDeleteClick = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8001/api/blogs/${blog.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to delete blog. Status: ${response.status}`);
+      }
+      console.log("Blog Deleted Successfully");
+    } catch (error) {
+      console.error("Error deleting blog:", error.message);
+    }
+    setSelectedRoute("FIELDJOURNAL");
+  };
+
   return (
     <main>
       {editMode ? (
@@ -113,6 +132,9 @@ const FieldDetails = (props) => {
             <footer>
               <button type="button" onClick={handleEditClick}>
                 Edit
+              </button>
+              <button type="button" onClick={handleDeleteClick}>
+                Delete
               </button>
             </footer>
           </section>

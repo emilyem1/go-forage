@@ -107,5 +107,22 @@ module.exports = (db) => {
       await client.end();
     }
   });
+  router.delete("/blogs/:id", async (request, response) => {
+    console.log("Received DELETE request to /blogs/:id");
+    const blogId = request.params.id;
+    try {
+      const deleteBlogResponse = await db.query('DELETE FROM BLOG WHERE ID = $1 RETURNING *', [blogId]);
+
+      if (deleteBlogResponse.rows.length === 0) {
+        response.status(404).json({ error: "Blog not found" });
+        return;
+      }
+      response.json({ message: `Blog with ID ${blogId} deleted successfully` });
+    } catch (error) {
+      console.error("Error when deleting blog:", error.message);
+      response.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+
   return router;
 };

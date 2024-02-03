@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { List, Card, Box } from "@mui/material";
 import MushroomResult from "./SearchResultComponents/MushroomResult";
+import UserResult from "./SearchResultComponents/UserResult";
+import BlogResult from "./SearchResultComponents/BlogResult";
 
 const SearchResults = (props) => {
   const { searchTerm } = props;
@@ -31,11 +33,11 @@ const SearchResults = (props) => {
           {searchResults.users && (
             <div>
               <h3>User Results</h3>
-              <List>
+              <Box sx={{display: 'flex', justifyContent:'space-evenly', flexWrap: 'wrap', gap: '2rem'}}>
                 {searchResults.users.rows.map((user) => (
-                  <Card key={user.id}>{user.fullname}</Card>
+                  <UserResult key={user.id} user = {user}></UserResult>
                 ))}
-              </List>
+              </Box>
             </div>
           )}
 
@@ -55,11 +57,11 @@ const SearchResults = (props) => {
           {searchResults.blogs && (
             <div>
               <h3>Blog Results</h3>
-              <List>
+              <Box sx={{display: 'flex', justifyContent:'space-evenly', flexWrap: 'wrap', gap: '2rem'}}>
                 {searchResults.blogs.rows.map((blog) => (
-                  <Card key={blog.id}>{blog.title}</Card>
+                  <BlogResult key={blog.id} blog = {blog}></BlogResult>
                 ))}
-              </List>
+              </Box>
             </div>
           )}
         </div>

@@ -30,9 +30,9 @@ CREATE TABLE BLOG (
   publication_date DATE,
   latitude DOUBLE PRECISION,
   longitude DOUBLE PRECISION,
-  USER_ID INTEGER REFERENCES USER_ACCOUNT(id) ON DELETE CASCADE
+  USER_ID INTEGER REFERENCES USER_ACCOUNT(id) ON DELETE CASCADE,
+  privacy BOOLEAN NOT NULL
 );
-/* Not going to touch mushroom_id rn but that will have to be deleted from blog table above */
 
 CREATE TABLE FRIENDS (
   ID SERIAL PRIMARY KEY NOT NULL,

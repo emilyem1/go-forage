@@ -1,5 +1,6 @@
 import "../styles/MushroomListItem.scss";
 import BlogListMap from "./BlogListMap";
+import BookmarkIcon from "./BookmarkIcon";
 
 const BlogListItem = (props) => {
   const { blog, setSelectedRoute, setBlogSelected } = props;
@@ -10,6 +11,7 @@ const BlogListItem = (props) => {
   return (
     <section onClick={handleClick} className="mushroom-list__item">
       <div>
+        <BookmarkIcon/>
         <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
       </div>
       <div>{blog.title}</div>

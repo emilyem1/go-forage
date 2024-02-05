@@ -28,7 +28,9 @@ module.exports = (db) => {
   GROUP BY
       BLOG.ID, BLOG.TITLE, USER_ACCOUNT.FULLNAME, USER_ACCOUNT.PHOTO_URL,BLOG.PUBLICATION_DATE,
       BLOG.CONTENT, BLOG.LATITUDE, BLOG.LONGITUDE
-    `
+      ORDER BY
+      BLOG.ID DESC
+      `
     ).then(({ rows: blogs }) => {
       response.json(blogs);
     });

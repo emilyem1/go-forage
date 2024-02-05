@@ -9,11 +9,14 @@ module.exports = (db) => {
       COMMENTS.BLOG_ID as blog_id, 
       COMMENTS.COMMENTER_ID as user_id, 
       COMMENTS.MESSAGE as message,
-      USER_ACCOUNT.FULLNAME AS username
+      USER_ACCOUNT.FULLNAME AS username,
+      USER_ACCOUNT.PHOTO_URL AS avatar
       FROM
       COMMENTS    
       JOIN USER_ACCOUNT ON COMMENTS.COMMENTER_ID = USER_ACCOUNT.ID
-    `
+      ORDER BY
+      COMMENTS.ID DESC
+      `
     ).then(({ rows: blogs }) => {
       response.json(blogs);
     });

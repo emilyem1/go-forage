@@ -10,7 +10,7 @@ export const ACTIONS = {
   SET_BLOG_UPDATE: "SET_BLOG_UPDATE",
   SET_BOOKMARKED_BLOGS: "SET_BOOKMARKED_BLOGS",
   BLOG_BOOKMARK_ADDED: "FAV_PHOTO_ADDED",
-  BLOG_BOOKMARK_REMOVED: "FAV_PHOTO_REMOVED",
+  COMMENT_ADDED: "COMMENT_ADDED",
 };
 
 function reducer(state, action) {
@@ -73,7 +73,8 @@ function reducer(state, action) {
           },
         };
       }
-
+    case ACTIONS.COMMENT_ADDED:
+      return { ...state, commentUpdate: action.payload };
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -97,6 +98,7 @@ const useApplicationData = () => {
     commentData: [],
     blogUpdate: false,
     bookmarkedBlogs: {},
+    commentUpdate: false,
   });
 
   useEffect(() => {
@@ -120,16 +122,21 @@ const useApplicationData = () => {
       .catch((error) => {
         console.error("Error fetching mushrooms:", error);
       });
+  }, []);
 
+  useEffect(() => {
     fetch("http://localhost:8001/api/comments")
       .then((response) => response.json())
       .then((data) =>
         dispatch({ type: ACTIONS.SET_COMMENT_DATA, payload: data })
       )
+      .then(() => {
+        dispatch({ type: ACTIONS.COMMENT_ADDED, payload: false });
+      })
       .catch((error) => {
         console.error("Error fetching comments:", error);
       });
-  }, []);
+  }, [state.commentUpdate]);
 
   useEffect(() => {
     fetch("http://localhost:8001/api/bookmarks")
@@ -158,6 +165,10 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.BLOG_BOOKMARK_ADDED, payload: blog });
   };
 
+  const updateComments = (comment) => {
+    dispatch({ type: ACTIONS.COMMENT_ADDED, payload: comment });
+  };
+
   useEffect(() => {
     const cookies = document.cookie;
     const cookieObject = cookies.split(";").reduce((acc, cookie) => {
@@ -184,6 +195,7 @@ const useApplicationData = () => {
     setSelectedRoute,
     setBlogUpdate,
     updateBookmarkedBlogs,
+    updateComments,
   };
 };
 

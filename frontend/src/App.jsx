@@ -14,7 +14,7 @@ import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 
 function App() {
-  const { state, setSelectedRoute, setBlogUpdate, updateBookmarkedBlogs } =
+  const { state, setSelectedRoute, setBlogUpdate, updateBookmarkedBlogs, updateComments } =
     useApplicationData();
   const {
     blogData,
@@ -54,10 +54,17 @@ function App() {
           setBlogUpdate={setBlogUpdate}
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
-          onBookmarkClick ={updateBookmarkedBlogs}
+          onBookmarkClick={updateBookmarkedBlogs}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
-        <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
+        <BlogDetails
+          blog={blogSelected}
+          comments={commentData}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
+          updateComments ={updateComments}
+        />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
@@ -71,10 +78,18 @@ function App() {
       ) : selectedRoute === "ACCOUNT" ? (
         <Account users={userData} />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
       ) : selectedRoute === "FIELDDETAILS" ? (
-        <FieldDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
-      ) : <SearchResults searchTerm={searchTerm}/>}
+        <FieldDetails
+          blog={blogSelected}
+          comments={commentData}
+          mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
+          setSelectedRoute={setSelectedRoute}
+        />
+      ) : (
+        <SearchResults searchTerm={searchTerm} />
+      )}
     </div>
   );
 }

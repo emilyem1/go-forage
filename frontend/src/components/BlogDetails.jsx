@@ -1,26 +1,64 @@
 import { useState } from "react";
 
-import "../styles/BlogDetails.scss";
+// import "../styles/BlogDetails.scss";
 import BlogListMap from "./BlogListMap";
+import BookmarkButton from "./BookmarkButton";
 import Comments from "./Comments";
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
+
+import {
+  List,
+  Divider,
+  ListSubheader,
+  TextField,
+  InputAdornment,
+  Button,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+  IconButton,
+  CardHeader,
+} from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+
+import SendIcon from "@mui/icons-material/Send";
 
 const BlogDetails = (props) => {
-  const { blog, comments } = props;
+  const {
+    blog,
+    comments,
+    userData,
+    onBookmarkClick,
+    bookmarkedBlogs,
+    updateComments,
+  } = props;
+  const { user_id } = userData;
 
+  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
+    ? true
+    : false;
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
     message: "",
   });
+  const dateFormatter = (blogDate) => {
+    const date = new Date(blogDate);
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
 
-  const handleChange = (event) => {
+  const handleChange = async(event) => {
     const { name: input, value } = event.target;
     setNewComment((prevData) => ({
       ...prevData,
       [input]: value,
     }));
+    
     console.log("Updated comment", newComment);
   };
 
@@ -46,7 +84,7 @@ const BlogDetails = (props) => {
 
       const responseData = await response.json();
       console.log("Comment posted:", responseData);
-
+      updateComments(true);
       // Reset the comment box values after submission
       setNewComment({
         blog_Id: blog.id,
@@ -59,58 +97,114 @@ const BlogDetails = (props) => {
   };
   return (
     <main>
-      <section className="blog-container">
-        <div className="map">
-          <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
-        </div>
-        <header className="blog-header">
-        {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
-          <div className="blog-info">
-            <h1>{blog.title}</h1>
-            <div>By: {blog.username}</div>
-          </div>
-
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          margin: "25px",
+          boxShadow: 3,
+          borderRadius: 3,
+          transition: "box-shadow 0.3s ease",
+          "&:hover": {
+            boxShadow: 5,
+          },
+        }}
+      >
+        <CardHeader
+          avatar={<Avatar alt={blog.username} src={blog.avatar} />}
+          action={
+            <IconButton>
+              <BookmarkButton
+                blog={blog}
+                onBookmarkClick={onBookmarkClick}
+                bookmarkSelect={bookmarkSelect ? true : false}
+                user_id={user_id}
+              />
+            </IconButton>
+          }
+          title={<h1>{blog.title}</h1>}
+          subheader={`By: ${blog.username} published: ${dateFormatter(
+            blog.date
+          )}`}
+        />
+        <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
           {blog.mushrooms.map((mushroom, index) => (
-            <div key={index} className="mushrooms-info">
-              {mushroom.mushroom_name}
+            <div key={index}>
               <img
-                className="mushroom-image"
-                src={`images/${mushroom.mushroom_image}`}
+                style={{ width: "22px" }}
+                src={`images/${mushroom.mushroom_icon}`}
                 alt={mushroom.mushroom_name}
               />
             </div>
           ))}
-        </header>
-        <section>
-          <p>{blog.content}</p>
-        </section>
-      </section>
-      <section className="comments-container">
-        add comment:
-        <form>
-          <label>
-            <input
-              type="text"
-              name="message"
-              value={newComment.message}
-              onChange={handleChange}
-              placeholder="Enter Comment"
-            />
-          </label>
-          <button type="button" onClick={handleSubmit}>
-            Submit
-          </button>
-        </form>
+          {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
+        </CardActions>
+        <CardMedia>
+          <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
+        </CardMedia>
+        <CardContent>
+          <Typography variant="body1" color="text.primary">
+            {blog.content}
+          </Typography>
+        </CardContent>
+      </Card>
+      <br />
+      <List
+        sx={{
+          width: "100%",
+          paddingTop: "10px",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 300,
+          "& ul": { padding: 0 },
+        }}
+        subheader={<li />}
+      >
+        <ListSubheader>
+          <form>
+            <label>
+              <TextField
+                sx={{ width: "70vw" }}
+                multiline
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Avatar
+                        alt={userData.fullname}
+                        src={userData.profilePhoto}
+                      />
+                    </InputAdornment>
+                  ),
+                }}
+                label={userData.fullname}
+                type="text"
+                name="message"
+                value={newComment.message}
+                onChange={handleChange}
+                placeholder="Enter Comment"
+              />
+            </label>
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={handleSubmit}
+            >
+              Send
+            </Button>
+          </form>
+        </ListSubheader>
         <div>
           {comments
             .filter((comment) => comment.blog_id === blog.id)
             .map((comment) => (
               <div key={comment.id}>
                 <Comments comment={comment} />
+                <Divider variant="inset" component="li" />
               </div>
             ))}
         </div>
-      </section>
+      </List>
     </main>
   );
 };

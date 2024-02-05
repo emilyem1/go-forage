@@ -106,7 +106,16 @@ const BlogDetails = (props) => {
       >
         <CardHeader
           avatar={<Avatar alt={blog.username} src={blog.avatar} />}
-
+          action={
+            <IconButton>
+              <BookmarkButton
+                blog={blog}
+                onBookmarkClick={onBookmarkClick}
+                bookmarkSelect={bookmarkSelect ? true : false}
+                user_id={user_id}
+              />
+            </IconButton>
+          }
           title={<h1>{blog.title}</h1>}
           subheader={`By: ${blog.username} published: ${dateFormatter(
             blog.date

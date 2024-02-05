@@ -1,16 +1,25 @@
 import BlogListItem from "./BlogListItem";
-import Favourites from "./Favourites";
+import Bookmarks from "./Bookmarks";
 
-import "../styles/MushroomList.scss";
+// import "../styles/MushroomList.scss";
 import BlogForm from "./BlogForm";
 
 import { useState } from "react";
 import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
+import { Box, Button } from "@mui/material";
 
 const BlogList = (props) => {
-  const { blogs, mushrooms, setSelectedRoute, setBlogSelected, setBlogUpdate, favouriteBlogs,userData } =
-    props;
+  const {
+    blogs,
+    mushrooms,
+    setSelectedRoute,
+    setBlogSelected,
+    setBlogUpdate,
+    bookmarkedBlogs,
+    userData,
+    onBookmarkClick,
+  } = props;
 
   const [checked, setChecked] = useState(false);
   const [feed, setFeed] = useState("HOME");
@@ -27,41 +36,69 @@ const BlogList = (props) => {
           <br />
         </Collapse>
       </div>
-      <button
-        onClick={() => {
-          setFeed("HOME");
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
         }}
       >
-        Home Feed
-      </button>
-      <button
-        onClick={() => {
-          setFeed("FAVOURITES");
-        }}
-      >
-        Favourite Blogs
-      </button>
-      <ul className="mushroom-list">
-        {feed === "HOME" &&
-          blogs.map((blog) => (
-            <BlogListItem
-              className="mushroom-list"
-              key={blog.id}
-              blog={blog}
-              setSelectedRoute={setSelectedRoute}
-              setBlogSelected={setBlogSelected}
-            />
-          ))}
-        {feed === "FAVOURITES" && (
-          <Favourites
-            blogs={blogs}
-            setBlogSelected={setBlogSelected}
-            setSelectedRoute={setSelectedRoute}
-            favouriteBlogs={favouriteBlogs}
-            userData ={userData}
-          />
-        )}
-      </ul>
+        <Button
+          onClick={() => {
+            setFeed("HOME");
+          }}
+          variant="contained"
+        >
+          Home Feed
+        </Button>
+
+        <Button
+          onClick={() => {
+            setFeed("FAVOURITES");
+          }}
+          variant="contained"
+        >
+          Favourite Blogs
+        </Button>
+      </Box>
+      
+      {feed === "HOME" && (
+        <div>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignContent:"center",
+              flexWrap: "wrap",
+              padding:"10px",
+              gap: "2rem",
+            }}
+          >
+            {blogs.map((blog) => (
+              <BlogListItem
+                className="mushroom-list"
+                key={blog.id}
+                blog={blog}
+                setBlogSelected={setBlogSelected}
+                setSelectedRoute={setSelectedRoute}
+                bookmarkedBlogs={bookmarkedBlogs}
+                userData={userData}
+                onBookmarkClick={onBookmarkClick}
+              />
+            ))}
+          </Box>
+        </div>
+      )}
+      {feed === "FAVOURITES" && (
+        <Bookmarks
+          blogs={blogs}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={onBookmarkClick}
+        />
+      )}
     </main>
   );
 };

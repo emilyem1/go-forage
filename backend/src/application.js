@@ -18,7 +18,7 @@ const icons = require("./routes/icons");
 const comments = require("./routes/comments");
 const journal = require("./routes/journal");
 const search = require("./routes/search");
-const favourites = require("./routes/favourites");
+const bookmarks = require("./routes/bookmarks");
 
 function read(file) {
   return new Promise((resolve, reject) => {
@@ -51,7 +51,7 @@ module.exports = function application() {
   app.use("/api", comments(db));
   app.use("/api", journal(db));
   app.use("/api", search(db)); 
-  app.use("/api", favourites(db)); 
+  app.use("/api", bookmarks(db)); 
   
   // Reading SQL files for database schema creation and seeding
   Promise.all([

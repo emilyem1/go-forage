@@ -14,7 +14,9 @@ module.exports = (db) => {
       FROM
       COMMENTS    
       JOIN USER_ACCOUNT ON COMMENTS.COMMENTER_ID = USER_ACCOUNT.ID
-    `
+      ORDER BY
+      COMMENTS.ID DESC
+      `
     ).then(({ rows: blogs }) => {
       response.json(blogs);
     });

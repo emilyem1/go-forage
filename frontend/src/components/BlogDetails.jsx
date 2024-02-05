@@ -159,6 +159,8 @@ const BlogDetails = (props) => {
           <form>
             <label>
               <TextField
+              sx={{ width: '70vw' }} 
+              multiline
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

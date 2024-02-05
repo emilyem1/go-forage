@@ -8,7 +8,6 @@ function BookmarkButton(props) {
   
   const handleLikeClick = () => {
     onBookmarkClick(blog);
-    console.log (blog)
   }
   
   return (

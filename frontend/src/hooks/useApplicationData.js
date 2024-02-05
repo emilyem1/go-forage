@@ -49,21 +49,28 @@ function reducer(state, action) {
       return { ...state, bookmarkedBlogs: action.payload };
 
     case ACTIONS.BLOG_BOOKMARK_ADDED:
-      const {user_id} = state.userData
+      const { user_id } = state.userData;
       const blogIdToAdd = action.payload.id;
-      console.log(user_id)
-      console.log(state.bookmarkedBlogs[user_id].includes(blogIdToAdd))
       if (state.bookmarkedBlogs[user_id].includes(blogIdToAdd)) {
+        // Remove the blogIdToAdd from the array
+        const updatedBookmarkedBlogs = state.bookmarkedBlogs[user_id].filter(
+          (blog_id) => blog_id !== blogIdToAdd
+        );
         return {
           ...state,
-          bookmarkedBlogs: state.bookmarkedBlogs[user_id].filter(
-            (blog_id) => blog_id !== blogIdToAdd
-          ),
+          bookmarkedBlogs: {
+            ...state.bookmarkedBlogs,
+            [user_id]: updatedBookmarkedBlogs,
+          },
         };
       } else {
+        // Add the blogIdToAdd to the array
         return {
           ...state,
-          bookmarkedBlogs: [...state.bookmarkedBlogs[user_id], action.payload],
+          bookmarkedBlogs: {
+            ...state.bookmarkedBlogs,
+            [user_id]: [...state.bookmarkedBlogs[user_id], blogIdToAdd],
+          },
         };
       }
 
@@ -89,7 +96,7 @@ const useApplicationData = () => {
     },
     commentData: [],
     blogUpdate: false,
-    bookmarkedBlogs: [],
+    bookmarkedBlogs: {},
   });
 
   useEffect(() => {

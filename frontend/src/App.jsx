@@ -54,10 +54,16 @@ function App() {
           setBlogUpdate={setBlogUpdate}
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
-          onBookmarkClick ={updateBookmarkedBlogs}
+          onBookmarkClick={updateBookmarkedBlogs}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
-        <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} userData={userData}/>
+        <BlogDetails
+          blog={blogSelected}
+          comments={commentData}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
+        />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
@@ -71,10 +77,18 @@ function App() {
       ) : selectedRoute === "ACCOUNT" ? (
         <Account users={userData} />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue = {setValue}/>
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
       ) : selectedRoute === "FIELDDETAILS" ? (
-        <FieldDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
-      ) : <SearchResults searchTerm={searchTerm}/>}
+        <FieldDetails
+          blog={blogSelected}
+          comments={commentData}
+          mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
+          setSelectedRoute={setSelectedRoute}
+        />
+      ) : (
+        <SearchResults searchTerm={searchTerm} />
+      )}
     </div>
   );
 }

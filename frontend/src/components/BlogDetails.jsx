@@ -28,7 +28,14 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import SendIcon from "@mui/icons-material/Send";
 
 const BlogDetails = (props) => {
-  const { blog, comments, userData, onBookmarkClick, bookmarkedBlogs } = props;
+  const {
+    blog,
+    comments,
+    userData,
+    onBookmarkClick,
+    bookmarkedBlogs,
+    updateComments,
+  } = props;
   const { user_id } = userData;
 
   const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
@@ -45,13 +52,13 @@ const BlogDetails = (props) => {
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
-
-  const handleChange = (event) => {
+  const handleChange = async(event) => {
     const { name: input, value } = event.target;
     setNewComment((prevData) => ({
       ...prevData,
       [input]: value,
     }));
+    
     console.log("Updated comment", newComment);
   };
 
@@ -77,7 +84,7 @@ const BlogDetails = (props) => {
 
       const responseData = await response.json();
       console.log("Comment posted:", responseData);
-
+      updateComments(true);
       // Reset the comment box values after submission
       setNewComment({
         blog_Id: blog.id,
@@ -119,8 +126,8 @@ const BlogDetails = (props) => {
           title={<h1>{blog.title}</h1>}
           subheader={`By: ${blog.username} published: ${dateFormatter(
             blog.date
-            )}`}
-            />
+          )}`}
+        />
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
           {blog.mushrooms.map((mushroom, index) => (
             <div key={index}>
@@ -128,7 +135,7 @@ const BlogDetails = (props) => {
                 style={{ width: "22px" }}
                 src={`images/${mushroom.mushroom_icon}`}
                 alt={mushroom.mushroom_name}
-                />
+              />
             </div>
           ))}
           {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
@@ -146,8 +153,7 @@ const BlogDetails = (props) => {
       <List
         sx={{
           width: "100%",
-          padding: "10px",
-          bgcolor: "background.paper",
+          paddingTop: "10px",
           position: "relative",
           overflow: "auto",
           maxHeight: 300,
@@ -159,8 +165,8 @@ const BlogDetails = (props) => {
           <form>
             <label>
               <TextField
-              sx={{ width: '70vw' }} 
-              multiline
+                sx={{ width: "70vw" }}
+                multiline
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

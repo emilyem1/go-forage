@@ -14,7 +14,7 @@ import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 
 function App() {
-  const { state, setSelectedRoute, setBlogUpdate, updateBookmarkedBlogs } =
+  const { state, setSelectedRoute, setBlogUpdate, updateBookmarkedBlogs, updateComments } =
     useApplicationData();
   const {
     blogData,
@@ -63,6 +63,7 @@ function App() {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
+          updateComments ={updateComments}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />

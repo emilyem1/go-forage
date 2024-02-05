@@ -14,7 +14,7 @@ import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 
 function App() {
-  const { state, setSelectedRoute, setBlogUpdate, setFavouriteBlogs } =
+  const { state, setSelectedRoute, setBlogUpdate, updateBookmarkedBlogs } =
     useApplicationData();
   const {
     blogData,
@@ -22,7 +22,7 @@ function App() {
     mushroomData,
     userData,
     commentData,
-    favouriteBlogs,
+    bookmarkedBlogs,
   } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   // Currently selected tab = value
@@ -52,8 +52,9 @@ function App() {
           setSelectedRoute={setSelectedRoute}
           mushrooms={mushroomData}
           setBlogUpdate={setBlogUpdate}
-          favouriteBlogs={favouriteBlogs}
+          bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
+          onBookmarkClick ={updateBookmarkedBlogs}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} userData={userData}/>

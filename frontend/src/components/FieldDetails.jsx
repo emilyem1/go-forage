@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import BlogListMap from "./BlogListMap";
 import Comments from "./Comments";
 import BlogEdit from "./BlogEdit";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
 
 const FieldDetails = (props) => {
   const { blog, comments, mushrooms, setBlogUpdate, setSelectedRoute } = props;
@@ -86,6 +88,7 @@ const FieldDetails = (props) => {
             <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
           </div>
           <header className="blog-header">
+          {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
             <div className="blog-info">
               <h1>{blog.title}</h1>
               <div>By: {blog.username}</div>

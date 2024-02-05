@@ -11,6 +11,7 @@ module.exports = (db) => {
       USER_ACCOUNT.FULLNAME AS username,
       USER_ACCOUNT.PHOTO_URL AS avatar,
       BLOG.PUBLICATION_DATE AS date,
+      BLOG.PRIVACY AS privacy,
       json_agg(json_build_object(
           'mushroom_name', MUSHROOM.TITLE,
           'mushroom_image', MUSHROOM.IMAGE_URL,
@@ -35,14 +36,14 @@ module.exports = (db) => {
 
   router.post("/blogs", async (request, response) => {
     console.log("Received POST request to /blogs");
-    const { title, content, latitude, longitude, user_id} = request.body;
+    const { title, content, latitude, longitude, user_id, privacy} = request.body;
     db.query(
       `
-      INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID, PRIVACY)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *
     `,
-      [title, content, latitude, longitude, user_id]
+      [title, content, latitude, longitude, user_id, privacy]
     ).then(({ rows }) => {
       response.json(rows[0]);
     });
@@ -66,7 +67,7 @@ module.exports = (db) => {
   router.put("/blogs/:id", async (request, response) => {
     console.log("Received PUT request to /blogs/:id");
     const blogId = request.params.id;
-    const { title, content, latitude, longitude, user_id, mushrooms } = request.body;
+    const { title, content, latitude, longitude, user_id, mushrooms, privacy } = request.body;
   
     const client = new Client();
     try {
@@ -75,11 +76,11 @@ module.exports = (db) => {
       const updateBlogResponse = await client.query(
         `
         UPDATE BLOG
-        SET TITLE = $1, CONTENT = $2, LATITUDE = $3, LONGITUDE = $4, USER_ID = $5
-        WHERE ID = $6
+        SET TITLE = $1, CONTENT = $2, LATITUDE = $3, LONGITUDE = $4, USER_ID = $5, PRIVACY = $6
+        WHERE ID = $7
         RETURNING *
       `,
-        [title, content, latitude, longitude, user_id, blogId]
+        [title, content, latitude, longitude, user_id, privacy, blogId]
       );
   
       if (updateBlogResponse.rows.length === 0) {

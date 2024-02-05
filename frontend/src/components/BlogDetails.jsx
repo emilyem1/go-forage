@@ -3,6 +3,8 @@ import { useState } from "react";
 import "../styles/BlogDetails.scss";
 import BlogListMap from "./BlogListMap";
 import Comments from "./Comments";
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import LockRoundedIcon from '@mui/icons-material/LockRounded';
 
 const BlogDetails = (props) => {
   const { blog, comments } = props;
@@ -62,6 +64,7 @@ const BlogDetails = (props) => {
           <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
         </div>
         <header className="blog-header">
+        {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
           <div className="blog-info">
             <h1>{blog.title}</h1>
             <div>By: {blog.username}</div>

@@ -11,6 +11,7 @@ module.exports = (db) => {
         BLOG.TITLE AS title,
         USER_ACCOUNT.FULLNAME AS username,
         BLOG.PUBLICATION_DATE AS date,
+        BLOG.PRIVACY AS privacy,
         COALESCE(json_agg(
             json_build_object(
                 'mushroom_name', COALESCE(MUSHROOM.TITLE, ''),

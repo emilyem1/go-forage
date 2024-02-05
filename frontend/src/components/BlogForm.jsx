@@ -13,6 +13,7 @@ const BlogForm = (props) => {
     longitude: 1,
     user_id: 1,
     mushrooms: [{}],
+    privacy: true,
   });
 
   const handleChange = (event) => {
@@ -60,6 +61,7 @@ const BlogForm = (props) => {
           latitude: formData.latitude,
           longitude: formData.longitude,
           user_id: formData.user_id,
+          privacy: formData.privacy,
         }),
       });
 
@@ -114,15 +116,13 @@ const BlogForm = (props) => {
     <form className="blog-form">
       <div className="form-content">
         <section className="form-input">
-          <label>
-            <input
+          <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
               placeholder="Enter Blog Title"
             />
-          </label>
 
           {formData.mushrooms.map((mushroom, index) => (
             <div key={index}>
@@ -145,7 +145,6 @@ const BlogForm = (props) => {
               Add Mushroom
             </button>
           )}
-
           <input
             type="text"
             name="content"
@@ -153,6 +152,14 @@ const BlogForm = (props) => {
             onChange={handleChange}
             placeholder="Enter Blog Content"
           />
+          <select
+            name="privacy"
+            value={formData.privacy}
+            onChange={handleChange}
+          >
+            <option value={true}>Public</option>
+            <option value={false}>Private</option>
+          </select>
         </section>
         <section className="map">
           <BlogFormMap setFormData={setFormData} />

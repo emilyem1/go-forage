@@ -13,6 +13,7 @@ const BlogEdit = (props) => {
     longitude: existingBlog.longitude || 1,
     user_id: existingBlog.user_id || 1,
     mushrooms: existingBlog.mushrooms || [{}],
+    privacy: existingBlog.privacy || true,
   });
 
   useEffect(() => {
@@ -24,6 +25,7 @@ const BlogEdit = (props) => {
       longitude: existingBlog.longitude || 1,
       user_id: existingBlog.user_id || 1,
       mushrooms: existingBlog.mushrooms || [{}],
+      privacy: existingBlog.privacy || true,
     });
   }, [existingBlog]);
 
@@ -73,6 +75,7 @@ const BlogEdit = (props) => {
           longitude: formData.longitude,
           user_id: formData.user_id,
           mushrooms: mushroomIds,
+          privacy: formData.privacy
         }),
       });
   
@@ -91,6 +94,7 @@ const BlogEdit = (props) => {
         longitude: null,
         user_id: 1,
         mushrooms: [],
+        privacy: true,
       });
   
       setBlogUpdate(true);
@@ -105,16 +109,13 @@ const BlogEdit = (props) => {
     <form className="blog-form">
       <div className="form-content">
         <section className="form-input">
-          <label>
-            <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Enter Blog Title"
-            />
-          </label>
-  
+          <input
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Blog Title"
+          />
           <input
             type="text"
             name="content"
@@ -122,6 +123,14 @@ const BlogEdit = (props) => {
             onChange={handleChange}
             placeholder="Enter Blog Content"
           />
+          <select
+            name="privacy"
+            value={formData.privacy}
+            onChange={handleChange}
+          >
+            <option value={true}>Public</option>
+            <option value={false}>Private</option>
+          </select>
   
           {formData.mushrooms.map((mushroom, index) => (
             <div key={index}>

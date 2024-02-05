@@ -62,7 +62,7 @@ function BookmarkButton(props) {
   };
 
   return (
-    <div>
+    <div >
       <div onClick={handleLikeClick} className="bookmark-icon-svg">
         <BookmarkIcon selected={bookmarkSelect} />
       </div>

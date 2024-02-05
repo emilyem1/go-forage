@@ -1,5 +1,5 @@
 import BlogListItem from "./BlogListItem";
-import Favourites from "./Favourites";
+import Bookmarks from "./Bookmarks";
 
 import "../styles/MushroomList.scss";
 import BlogForm from "./BlogForm";
@@ -9,8 +9,16 @@ import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
 
 const BlogList = (props) => {
-  const { blogs, mushrooms, setSelectedRoute, setBlogSelected, setBlogUpdate, favouriteBlogs,userData } =
-    props;
+  const {
+    blogs,
+    mushrooms,
+    setSelectedRoute,
+    setBlogSelected,
+    setBlogUpdate,
+    bookmarkedBlogs,
+    userData,
+    onBookmarkClick,
+  } = props;
 
   const [checked, setChecked] = useState(false);
   const [feed, setFeed] = useState("HOME");
@@ -48,17 +56,21 @@ const BlogList = (props) => {
               className="mushroom-list"
               key={blog.id}
               blog={blog}
-              setSelectedRoute={setSelectedRoute}
               setBlogSelected={setBlogSelected}
+              setSelectedRoute={setSelectedRoute}
+              bookmarkedBlogs={bookmarkedBlogs}
+              userData={userData}
+              onBookmarkClick={onBookmarkClick}
             />
           ))}
         {feed === "FAVOURITES" && (
-          <Favourites
+          <Bookmarks
             blogs={blogs}
             setBlogSelected={setBlogSelected}
             setSelectedRoute={setSelectedRoute}
-            favouriteBlogs={favouriteBlogs}
-            userData ={userData}
+            bookmarkedBlogs={bookmarkedBlogs}
+            userData={userData}
+            onBookmarkClick={onBookmarkClick}
           />
         )}
       </ul>

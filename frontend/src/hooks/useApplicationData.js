@@ -8,7 +8,9 @@ export const ACTIONS = {
   SET_USER_DATA: "SET_USER_DATA",
   SET_COMMENT_DATA: "SET_COMMENT_DATA",
   SET_BLOG_UPDATE: "SET_BLOG_UPDATE",
-  SET_FAVOURITE_BLOGS: "SET_FAVOURITE_BLOGS",
+  SET_BOOKMARKED_BLOGS: "SET_BOOKMARKED_BLOGS",
+  BLOG_BOOKMARK_ADDED: "FAV_PHOTO_ADDED",
+  BLOG_BOOKMARK_REMOVED: "FAV_PHOTO_REMOVED",
 };
 
 function reducer(state, action) {
@@ -37,14 +39,33 @@ function reducer(state, action) {
         },
       };
 
-    case ACTIONS.SET_FAVOURITE_BLOGS:
-      return { ...state, favouriteBlogs: action.payload };
-
     case ACTIONS.SET_BLOG_UPDATE:
       return { ...state, blogUpdate: action.payload };
 
     case ACTIONS.SET_COMMENT_DATA:
       return { ...state, commentData: action.payload };
+
+    case ACTIONS.SET_BOOKMARKED_BLOGS:
+      return { ...state, bookmarkedBlogs: action.payload };
+
+    case ACTIONS.BLOG_BOOKMARK_ADDED:
+      const {user_id} = state.userData
+      const blogIdToAdd = action.payload.id;
+      console.log(user_id)
+      console.log(state.bookmarkedBlogs[user_id].includes(blogIdToAdd))
+      if (state.bookmarkedBlogs[user_id].includes(blogIdToAdd)) {
+        return {
+          ...state,
+          bookmarkedBlogs: state.bookmarkedBlogs[user_id].filter(
+            (blog_id) => blog_id !== blogIdToAdd
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          bookmarkedBlogs: [...state.bookmarkedBlogs[user_id], action.payload],
+        };
+      }
 
     default:
       throw new Error(
@@ -68,7 +89,7 @@ const useApplicationData = () => {
     },
     commentData: [],
     blogUpdate: false,
-    favouriteBlogs: [],
+    bookmarkedBlogs: [],
   });
 
   useEffect(() => {
@@ -102,10 +123,10 @@ const useApplicationData = () => {
         console.error("Error fetching comments:", error);
       });
 
-      fetch("http://localhost:8001/api/favourites")
+    fetch("http://localhost:8001/api/bookmarks")
       .then((response) => response.json())
       .then((data) =>
-        dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: data })
+        dispatch({ type: ACTIONS.SET_BOOKMARKED_BLOGS, payload: data })
       )
       .catch((error) => {
         console.error("Error fetching favourites:", error);
@@ -124,8 +145,8 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SET_BLOG_UPDATE, payload: status });
   };
 
-  const setFavouriteBlogs = (blogIDs) => {
-    dispatch({ type: ACTIONS.SET_FAVOURITE_BLOGS, payload: blogIDs });
+  const updateBookmarkedBlogs = (blog) => {
+    dispatch({ type: ACTIONS.BLOG_BOOKMARK_ADDED, payload: blog });
   };
 
   useEffect(() => {
@@ -153,7 +174,7 @@ const useApplicationData = () => {
     setBlogSelected,
     setSelectedRoute,
     setBlogUpdate,
-    setFavouriteBlogs,
+    updateBookmarkedBlogs,
   };
 };
 

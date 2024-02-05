@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 module.exports = (db) => {
-  router.get("/favourites", (request, response) => {
+  router.get("/bookmarks", (request, response) => {
     db.query(
       `
       SELECT 
@@ -12,19 +12,19 @@ module.exports = (db) => {
       JOIN BLOG ON FAVOURITES.BLOG_ID = BLOG.id
       GROUP BY USER_ACCOUNT.ID
       `
-    ).then(({ rows: favourites }) => {
+    ).then(({ rows: bookmarks }) => {
       // Transform the result to the desired format
       const result = {};
       
-      favourites.forEach((favourite) => {
-        result[favourite.user_id] = favourite.blog_ids;
+      bookmarks.forEach((bookmark) => {
+        result[bookmark.user_id] = bookmark.blog_ids;
       });
   
       response.json(result);
     });
   });
 
-  router.post("/favourites", async (request, response) => {
+  router.post("/bookmarks", async (request, response) => {
     console.log("Received POST request to /favourites");
     const { blog_Id, commenter_Id, message } = request.body;
     db.query(

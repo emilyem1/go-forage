@@ -1,11 +1,14 @@
-import React from 'react';
+import React from "react";
 
-const BookmarkIcon = ({props}) => {
-  // const { selected } = props;
-  const selected = true;
+const BookmarkIcon = (props) => {
+  const { selected } = props;
   return (
     <div>
-    {selected ? <img src = "./assets/bookmark_active.svg"/> : <img src = "./assets/bookmark.svg"/>}
+      {selected ? (
+        <img src="./assets/bookmark_active.svg" />
+      ) : (
+        <img src="./assets/bookmark.svg" />
+      )}
     </div>
   );
 };

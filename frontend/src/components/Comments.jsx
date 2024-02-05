@@ -1,14 +1,36 @@
-import "../styles/Comments.scss";
+// import "../styles/Comments.scss";
+import * as React from "react";
+import {
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+} from "@mui/material";
 
 const Comments = (props) => {
   const { comment } = props;
   return (
-    <main>
-      <section className="comments">
-        <div>{comment.username}</div>
-        {comment.message}
-      </section>
-    </main>
+    <ListItem alignItems="flex-start">
+      <ListItemAvatar>
+        <Avatar alt={comment.username} src={comment.avatar} />
+      </ListItemAvatar>
+      <ListItemText
+        primary={comment.username}
+        secondary={
+          <React.Fragment>
+            <Typography
+              sx={{ display: "inline" }}
+              component="span"
+              variant="body2"
+              color="text.primary"
+            >
+              {comment.message}
+            </Typography>
+          </React.Fragment>
+        }
+      />
+    </ListItem>
   );
 };
 

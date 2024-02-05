@@ -56,7 +56,7 @@ function App() {
           userData={userData}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
-        <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
+        <BlogDetails blog={blogSelected} comments={commentData} mushrooms={mushroomData} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} userData={userData}/>
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList mushrooms={mushroomData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (

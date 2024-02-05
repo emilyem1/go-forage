@@ -1,13 +1,26 @@
 import { useState } from "react";
 
-import "../styles/BlogDetails.scss";
+// import "../styles/BlogDetails.scss";
 import BlogListMap from "./BlogListMap";
 import Comments from "./Comments";
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
+
+import {
+  List,
+  Divider,
+  ListSubheader,
+  TextField,
+  InputAdornment,
+  Button,
+  Avatar,
+} from "@mui/material";
+import AccountCircle from '@mui/icons-material/AccountCircle';
+
+import SendIcon from '@mui/icons-material/Send';
 
 const BlogDetails = (props) => {
-  const { blog, comments } = props;
+  const { blog, comments,userData } = props;
 
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
@@ -65,7 +78,7 @@ const BlogDetails = (props) => {
           <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
         </div>
         <header className="blog-header">
-        {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
+          {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
           <div className="blog-info">
             <h1>{blog.title}</h1>
             <div>By: {blog.username}</div>
@@ -86,32 +99,57 @@ const BlogDetails = (props) => {
           <p>{blog.content}</p>
         </section>
       </section>
-      <section className="comments-container">
-        add comment:
-        <form>
-          <label>
-            <input
-              type="text"
-              name="message"
-              value={newComment.message}
-              onChange={handleChange}
-              placeholder="Enter Comment"
-            />
-          </label>
-          <button type="button" onClick={handleSubmit}>
-            Submit
-          </button>
-        </form>
+      <List
+        sx={{
+          width: "100%",
+          // padding: "10px",
+          bgcolor: "background.paper",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 300,
+          "& ul": { padding: 0 },
+        }}
+        subheader={<li />}
+      >
+        <ListSubheader>
+          <form>
+            <label>
+              <TextField
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start" >
+                      <Avatar alt={userData.fullname} src={userData.profilePhoto} />
+                    </InputAdornment>
+                  ),
+                }}
+                label={userData.fullname}
+                type="text"
+                name="message"
+                value={newComment.message}
+                onChange={handleChange}
+                placeholder="Enter Comment"
+              />
+            </label>
+            <Button
+              variant="contained"
+              endIcon={<SendIcon />}
+              onClick={handleSubmit}
+            >
+              Send
+            </Button>
+          </form>
+        </ListSubheader>
         <div>
           {comments
             .filter((comment) => comment.blog_id === blog.id)
             .map((comment) => (
               <div key={comment.id}>
                 <Comments comment={comment} />
+                <Divider variant="inset" component="li" />
               </div>
             ))}
         </div>
-      </section>
+      </List>
     </main>
   );
 };

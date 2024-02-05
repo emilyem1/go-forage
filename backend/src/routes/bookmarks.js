@@ -25,17 +25,41 @@ module.exports = (db) => {
   });
 
   router.post("/bookmarks", async (request, response) => {
-    console.log("Received POST request to /favourites");
-    const { blog_Id, commenter_Id, message } = request.body;
+    console.log("Received POST request to /bookmarks");
+    const { user_id, blog_id } = request.body;
     db.query(
       `
-      INSERT INTO COMMENTS (BLOG_ID, COMMENTER_ID, MESSAGE)
-      VALUES ($1, $2, $3)
+      INSERT INTO FAVOURITES (USER_ID, BLOG_ID)
+      VALUES ($1, $2)
       RETURNING *
     `,
-      [blog_Id, commenter_Id, message]
+      [user_id, blog_id]
     ).then(({ rows }) => {
       response.json(rows[0]);
+    });
+  });
+
+  router.post("/bookmarks/delete", async (request, response) => {
+    console.log("Received POST request to /bookmarks/delete");
+    const { user_id, blog_id } = request.body;
+    db.query(
+      `
+      DELETE FROM FAVOURITES
+      WHERE USER_ID = $1 AND BLOG_ID = $2
+      RETURNING *
+    `,
+      [user_id, blog_id]
+    ).then(({ rows }) => {
+      if (rows.length === 0) {
+        // No matching entry found
+        response.status(404).json({ message: "Entry not found" });
+      } else {
+        // Entry deleted successfully
+        response.json({ message: "Entry deleted successfully" });
+      }
+    }).catch((error) => {
+      console.error("Error when deleting:", error.message);
+      response.status(500).json({ message: "Internal Server Error" });
     });
   });
 

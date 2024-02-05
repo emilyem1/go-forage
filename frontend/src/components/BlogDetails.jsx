@@ -25,7 +25,6 @@ const BlogDetails = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (newComment.message.trim() === "") {
-      // Handle error, e.g., show a message to the user
       console.error("Comment message cannot be empty");
       return;
     }

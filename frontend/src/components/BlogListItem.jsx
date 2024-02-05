@@ -27,6 +27,7 @@ const BlogListItem = (props) => {
         blog={blog}
         onBookmarkClick={onBookmarkClick}
         bookmarkSelect={bookmarkSelect ? true : false}
+        user_id={user_id}
       />
 
       <section onClick={handleClick}>

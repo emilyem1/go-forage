@@ -129,7 +129,9 @@ const useApplicationData = () => {
       .catch((error) => {
         console.error("Error fetching comments:", error);
       });
+  }, []);
 
+  useEffect(() => {
     fetch("http://localhost:8001/api/bookmarks")
       .then((response) => response.json())
       .then((data) =>

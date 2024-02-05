@@ -7,7 +7,7 @@ import BlogForm from "./BlogForm";
 import { useState } from "react";
 import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const BlogList = (props) => {
   const {
@@ -36,27 +36,41 @@ const BlogList = (props) => {
           <br />
         </Collapse>
       </div>
-      <button
-        onClick={() => {
-          setFeed("HOME");
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-evenly",
         }}
       >
-        Home Feed
-      </button>
-      <button
-        onClick={() => {
-          setFeed("FAVOURITES");
-        }}
-      >
-        Favourite Blogs
-      </button>
+        <Button
+          onClick={() => {
+            setFeed("HOME");
+          }}
+          variant="contained"
+        >
+          Home Feed
+        </Button>
+
+        <Button
+          onClick={() => {
+            setFeed("FAVOURITES");
+          }}
+          variant="contained"
+        >
+          Favourite Blogs
+        </Button>
+      </Box>
+      
       {feed === "HOME" && (
         <div>
+
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-evenly",
+              flexDirection: "column",
+              alignContent:"center",
               flexWrap: "wrap",
+              padding:"10px",
               gap: "2rem",
             }}
           >

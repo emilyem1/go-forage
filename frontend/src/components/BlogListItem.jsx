@@ -50,7 +50,6 @@ const BlogListItem = (props) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        maxWidth: 345,
         boxShadow: 3,
         borderRadius: 3,
         transition: "box-shadow 0.3s ease",

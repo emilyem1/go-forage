@@ -19,8 +19,10 @@ const Bookmarks = (props) => {
         <Box
           sx={{
             display: "flex",
-            justifyContent: "space-evenly",
+            flexDirection: "column",
+            alignContent:"center",
             flexWrap: "wrap",
+            padding:"10px",
             gap: "2rem",
           }}
         >

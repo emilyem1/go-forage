@@ -38,7 +38,7 @@ const BlogDetails = (props) => {
   } = props;
   const { user_id } = userData;
 
-  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
+  const bookmarkSelect = userData.isLoggedIn && bookmarkedBlogs[user_id].includes(blog.id)
     ? true
     : false;
   const [newComment, setNewComment] = useState({
@@ -120,6 +120,7 @@ const BlogDetails = (props) => {
                 onBookmarkClick={onBookmarkClick}
                 bookmarkSelect={bookmarkSelect ? true : false}
                 user_id={user_id}
+                userData={userData}
               />
             </IconButton>
           }
@@ -161,6 +162,7 @@ const BlogDetails = (props) => {
         }}
         subheader={<li />}
       >
+        
         <ListSubheader>
           <form>
             <label>

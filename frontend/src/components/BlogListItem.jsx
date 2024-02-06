@@ -25,7 +25,7 @@ const BlogListItem = (props) => {
   } = props;
   const { user_id } = userData;
 
-  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
+  const bookmarkSelect = userData.isLoggedIn && bookmarkedBlogs[user_id].includes(blog.id)
     ? true
     : false;
 
@@ -67,6 +67,7 @@ const BlogListItem = (props) => {
               onBookmarkClick={onBookmarkClick}
               bookmarkSelect={bookmarkSelect ? true : false}
               user_id={user_id}
+              userData={userData}
             />
           </IconButton>
         }

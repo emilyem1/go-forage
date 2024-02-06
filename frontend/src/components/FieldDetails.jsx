@@ -4,15 +4,40 @@ import Comments from "./Comments";
 import BlogEdit from "./BlogEdit";
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import SendIcon from "@mui/icons-material/Send";
+import DeleteIcon from "@mui/icons-material/Delete";
+import BookmarkButton from "./BookmarkButton";
+import {
+  Stack,
+  List,
+  Divider,
+  ListSubheader,
+  TextField,
+  InputAdornment,
+  Button,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+  IconButton,
+  CardHeader,
+} from "@mui/material";
 
 const FieldDetails = (props) => {
-  const { blog, comments, mushrooms, setBlogUpdate, setSelectedRoute } = props;
+  const { blog, comments, mushrooms, setBlogUpdate, setSelectedRoute, userData,  onBookmarkClick, bookmarkedBlogs, updateComments } = props;
+  const [editMode, setEditMode] = useState(false);
+  const { user_id } = userData;
+
+  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
+    ? true
+    : false;
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
     message: "",
   });
-  const [editMode, setEditMode] = useState(false);
 
   const handleChange = (event) => {
     const { name: input, value } = event.target;
@@ -20,6 +45,12 @@ const FieldDetails = (props) => {
       ...prevData,
       [input]: value,
     }));
+  };
+
+  const dateFormatter = (blogDate) => {
+    const date = new Date(blogDate);
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
   const handleSubmit = async (event) => {
@@ -44,12 +75,6 @@ const FieldDetails = (props) => {
 
       const responseData = await response.json();
       console.log("Comment posted:", responseData);
-
-      setNewComment({
-        blog_Id: blog.id,
-        commenter_Id: 1,
-        message: "",
-      });
     } catch (error) {
       console.error("Error when posting:", error.message);
     }
@@ -83,35 +108,99 @@ const FieldDetails = (props) => {
       {editMode ? (
         <BlogEdit setEditMode={setEditMode} mushrooms={mushrooms} existingBlog={blog} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
       ) : (
-        <section className="blog-container">
-          <div className="map">
-            <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
-          </div>
-          <header className="blog-header">
-          {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
-            <div className="blog-info">
-              <h1>{blog.title}</h1>
-              <div>By: {blog.username}</div>
-            </div>
-
+        <main>
+        <Card
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            margin: "25px",
+            boxShadow: 3,
+            borderRadius: 3,
+            transition: "box-shadow 0.3s ease",
+            "&:hover": {
+              boxShadow: 5,
+            },
+          }}
+        >
+          <CardHeader
+            avatar={<Avatar alt={blog.username} src={blog.avatar} />}
+            action={
+              <IconButton>
+                <BookmarkButton
+                  blog={blog}
+                  onBookmarkClick={onBookmarkClick}
+                  bookmarkSelect={bookmarkSelect ? true : false}
+                  user_id={user_id}
+                />
+              </IconButton>
+            }
+            title={<h1>{blog.title}</h1>}
+            subheader={`By: ${blog.username} published: ${dateFormatter(
+              blog.date
+            )}`}
+          />
+          <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
             {blog.mushrooms.map((mushroom, index) => (
-              <div key={index} className="mushrooms-info">
-                {mushroom.mushroom_name}
+              <div key={index}>
                 <img
-                  className="mushroom-image"
-                  src={`images/${mushroom.mushroom_image}`}
+                  style={{ width: "22px" }}
+                  src={`images/${mushroom.mushroom_icon}`}
                   alt={mushroom.mushroom_name}
                 />
               </div>
             ))}
-          </header>
-          <section>
-            <p>{blog.content}</p>
-          </section>
-          <section className="comments-container">
+            {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
+          </CardActions>
+          <CardMedia>
+            <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
+          </CardMedia>
+          <CardContent>
+            <Typography variant="body1" color="text.primary">
+              {blog.content}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Stack direction="row" spacing={2} sx={{
+            display: "flex",
+            justifyContent: "center"
+        }}>
+          <Button variant="contained" color="success" onClick={handleEditClick}>
+            Edit
+          </Button>
+          <Button variant="outlined" color="error" onClick={handleDeleteClick}>
+            Delete
+          </Button>
+        </Stack>
+        <br />
+        <List
+          sx={{
+            width: "100%",
+            paddingTop: "10px",
+            position: "relative",
+            overflow: "auto",
+            maxHeight: 300,
+            "& ul": { padding: 0 },
+          }}
+          subheader={<li />}
+        >
+          <ListSubheader>
             <form>
               <label>
-                <input
+                <TextField
+                  sx={{ width: "70vw" }}
+                  multiline
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt={userData.fullname}
+                          src={userData.profilePhoto}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                  label={userData.fullname}
                   type="text"
                   name="message"
                   value={newComment.message}
@@ -119,29 +208,30 @@ const FieldDetails = (props) => {
                   placeholder="Enter Comment"
                 />
               </label>
-              <button type="button" onClick={handleSubmit}>
-                Submit
-              </button>
+              <Button
+                variant="contained"
+                endIcon={<SendIcon />}
+                onClick={handleSubmit}
+                sx={{
+                  marginLeft: "1%"
+                }}
+              >
+                Send
+              </Button>
             </form>
-            <div>
-              {comments
-                .filter((comment) => comment.blog_id === blog.id)
-                .map((comment) => (
-                  <div key={comment.id}>
-                    <Comments comment={comment} />
-                  </div>
-                ))}
-            </div>
-            <footer>
-              <button type="button" onClick={handleEditClick}>
-                Edit
-              </button>
-              <button type="button" onClick={handleDeleteClick}>
-                Delete
-              </button>
-            </footer>
-          </section>
-        </section>
+          </ListSubheader>
+          <div>
+            {comments
+              .filter((comment) => comment.blog_id === blog.id)
+              .map((comment) => (
+                <div key={comment.id}>
+                  <Comments comment={comment} />
+                  <Divider variant="inset" component="li" />
+                </div>
+              ))}
+          </div>
+        </List>
+      </main>
       )}
     </main>
   );

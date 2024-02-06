@@ -51,8 +51,8 @@ const TopNavigation = (props) => {
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Tabs value={value} onChange={handleChange} textColor="primary"
             indicatorColor="primary" sx = {{alignSelf: 'center'}}>
-            <Tab label="Map" onClick={() => {route("PUBLIC");}}  />
             <Tab label="Blogs" onClick={() => {route("BLOGLIST");}}/>
+            <Tab label="Map" onClick={() => {route("PUBLIC");}}  />
             <Tab label="Mushrooms" onClick={() => {route("MUSHROOMS");}}/>
             {userData.isLoggedIn && (
               <Tab label="Field Journal" onClick={() => {route("FIELDJOURNAL");}}/>

@@ -52,7 +52,7 @@ const UserResult = (props) => {
         }}
       >
         <Button size="small">Blogs</Button>
-        <Button size="small">Add Friend</Button>
+        <Button size="small">Follow</Button>
       </Box>
     </Card>
   );

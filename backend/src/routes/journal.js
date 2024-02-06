@@ -10,14 +10,14 @@ module.exports = (db) => {
         BLOG.ID AS id,
         BLOG.TITLE AS title,
         USER_ACCOUNT.FULLNAME AS username,
+        USER_ACCOUNT.PHOTO_URL AS avatar,
         BLOG.PUBLICATION_DATE AS date,
         BLOG.PRIVACY AS privacy,
-        COALESCE(json_agg(
-            json_build_object(
-                'mushroom_name', COALESCE(MUSHROOM.TITLE, ''),
-                'mushroom_image', COALESCE(MUSHROOM.IMAGE_URL, '')
-            )
-        ), '[]'::json) AS mushrooms,
+        json_agg(json_build_object(
+          'mushroom_name', MUSHROOM.TITLE,
+          'mushroom_image', MUSHROOM.IMAGE_URL,
+          'mushroom_icon', MUSHROOM.ICON
+      )) AS mushrooms,
         BLOG.CONTENT AS content,
         BLOG.LATITUDE AS lat,
         BLOG.LONGITUDE AS long
@@ -28,8 +28,10 @@ module.exports = (db) => {
         LEFT JOIN MUSHROOM ON MUSHROOM_POST.MUSHROOM_ID = MUSHROOM.ID
       WHERE USER_ACCOUNT.EMAIL = $1
       GROUP BY
-        BLOG.ID, BLOG.TITLE, USER_ACCOUNT.FULLNAME, BLOG.PUBLICATION_DATE,
-        BLOG.CONTENT, BLOG.LATITUDE, BLOG.LONGITUDE;
+        BLOG.ID, BLOG.TITLE, USER_ACCOUNT.FULLNAME, USER_ACCOUNT.PHOTO_URL, BLOG.PUBLICATION_DATE,
+        BLOG.CONTENT, BLOG.LATITUDE, BLOG.LONGITUDE
+      ORDER BY
+        BLOG.ID DESC;
     `,
     [email]
     ).then(({ rows: blogs }) => {

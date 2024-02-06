@@ -126,9 +126,12 @@ const BlogDetails = (props) => {
             </IconButton>
           }
           title={<h1>{blog.title}</h1>}
-          subheader={`By: ${blog.username} published: ${dateFormatter(
-            blog.date
-          )}`}
+          subheader={
+            <div>
+              <div>By: {blog.username}</div>{" "}
+              <div>Published: {dateFormatter(blog.date)}</div>
+            </div>
+          }
         />
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
           {blog.mushrooms.map((mushroom, index) => (
@@ -204,7 +207,7 @@ const BlogDetails = (props) => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <Avatar  />
+                  <Avatar />
                 </InputAdornment>
               ),
             }}

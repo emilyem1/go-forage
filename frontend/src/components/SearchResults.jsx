@@ -9,7 +9,7 @@ import BlogResult from "./SearchResultComponents/BlogResult";
 // ... (previous imports)
 
 const SearchResults = (props) => {
-  const { searchTerm } = props;
+  const { searchTerm, setBlogSelected, setSelectedRoute, setValue } = props;
   const [searchResults, setSearchResults] = useState(null);
   const itemsPerPage = 3; // Set the number of results per page
 
@@ -132,6 +132,8 @@ const SearchResults = (props) => {
                         <MushroomResult
                           key={mushroom.id}
                           mushroom={mushroom}
+                          setSelectedRoute={setSelectedRoute}
+                          setValue={setValue}
                         ></MushroomResult>
                       ))}
                     </div>
@@ -175,7 +177,7 @@ const SearchResults = (props) => {
                       }}
                     >
                       {page.map((blog) => (
-                        <BlogResult key={blog.id} blog={blog}></BlogResult>
+                        <BlogResult key={blog.id} blog={blog} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute}></BlogResult>
                       ))}
                     </div>
                   )

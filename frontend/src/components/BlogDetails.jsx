@@ -38,9 +38,10 @@ const BlogDetails = (props) => {
   } = props;
   const { user_id } = userData;
 
-  const bookmarkSelect = userData.isLoggedIn && bookmarkedBlogs[user_id].includes(blog.id)
-    ? true
-    : false;
+  const bookmarkSelect =
+    userData.isLoggedIn && bookmarkedBlogs[user_id].includes(blog.id)
+      ? true
+      : false;
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
@@ -52,13 +53,13 @@ const BlogDetails = (props) => {
     return new Intl.DateTimeFormat("en-US", options).format(date);
   };
 
-  const handleChange = async(event) => {
+  const handleChange = async (event) => {
     const { name: input, value } = event.target;
     setNewComment((prevData) => ({
       ...prevData,
       [input]: value,
     }));
-    
+
     console.log("Updated comment", newComment);
   };
 
@@ -162,40 +163,56 @@ const BlogDetails = (props) => {
         }}
         subheader={<li />}
       >
-        
-        <ListSubheader>
-          <form>
-            <label>
-              <TextField
-                sx={{ width: "70vw" }}
-                multiline
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Avatar
-                        alt={userData.fullname}
-                        src={userData.profilePhoto}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                label={userData.fullname}
-                type="text"
-                name="message"
-                value={newComment.message}
-                onChange={handleChange}
-                placeholder="Enter Comment"
-              />
-            </label>
-            <Button
-              variant="contained"
-              endIcon={<SendIcon />}
-              onClick={handleSubmit}
-            >
-              Send
-            </Button>
-          </form>
-        </ListSubheader>
+        {userData.isLoggedIn ? (
+          <ListSubheader>
+            <form>
+              <label>
+                <TextField
+                  sx={{ width: "70vw" }}
+                  multiline
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Avatar
+                          alt={userData.fullname}
+                          src={userData.profilePhoto}
+                        />
+                      </InputAdornment>
+                    ),
+                  }}
+                  label={userData.fullname}
+                  type="text"
+                  name="message"
+                  value={newComment.message}
+                  onChange={handleChange}
+                  placeholder="Enter Comment"
+                />
+              </label>
+              <Button
+                variant="contained"
+                endIcon={<SendIcon />}
+                onClick={handleSubmit}
+              >
+                Send
+              </Button>
+            </form>
+          </ListSubheader>
+        ) : (
+          <TextField
+            sx={{ width: "70vw" }}
+            disabled
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Avatar  />
+                </InputAdornment>
+              ),
+            }}
+            name="message"
+            value={""}
+            placeholder="Login to add comments!"
+          />
+        )}
         <div>
           {comments
             .filter((comment) => comment.blog_id === blog.id)

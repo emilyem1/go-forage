@@ -13,6 +13,7 @@ const SearchBar = (props) => {
     setSearchTerm(currentSearch);
     setValue(false);
     route(`SEARCH_RESULTS`);
+    setCurrentSearch('');
   };
 
   return (

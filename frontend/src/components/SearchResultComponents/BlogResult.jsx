@@ -10,21 +10,25 @@ import {
 import Map from "../BlogListMap";
 
 const BlogResult = (props) => {
-  const { blog } = props;
-  console.log(blog)
+  const { blog, setBlogSelected, setSelectedRoute } = props;
 
   const shortenedInfo =
     blog.content.length > 100
       ? `${blog.content.slice(0, 100)}...`
       : blog.content;
 
+  const handleClick = () => {
+    setBlogSelected(blog);
+    setSelectedRoute("BLOGDETAILS");
+  };
+
   return (
     <Card
       className="blog-result-item"
       sx={{
-        display: 'flex',
-        flexDirection:'column',
-        justifyContent: 'space-between',
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
         maxWidth: 345,
         height: 550,
         boxShadow: 3,
@@ -36,7 +40,7 @@ const BlogResult = (props) => {
       }}
     >
       <CardMedia>
-      <Map location={{lat: blog.latitude, lng: blog.longitude }}></Map>
+        <Map location={{ lat: blog.lat, lng: blog.long }}></Map>
       </CardMedia>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -47,16 +51,16 @@ const BlogResult = (props) => {
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button size="small">Read More</Button>
+        <Button size="small" onClick={handleClick}>Read More</Button>
         {blog.mushrooms.map((mushroom, index) => (
-            <div key={index}>
-              <img
-                style={{ width: "22px" }}
-                src={`images/${mushroom.mushroom_icon}`}
-                alt={mushroom.mushroom_name}
-              />
-            </div>
-          ))}
+          <div key={index}>
+            <img
+              style={{ width: "22px" }}
+              src={`images/${mushroom.mushroom_icon}`}
+              alt={mushroom.mushroom_name}
+            />
+          </div>
+        ))}
       </CardActions>
     </Card>
   );

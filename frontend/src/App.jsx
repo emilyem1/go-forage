@@ -95,7 +95,8 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
         />
       ) : (
-        <SearchResults searchTerm={searchTerm} />
+        <SearchResults searchTerm={searchTerm} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue}
+        />
       )}
     </div>
   );

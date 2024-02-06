@@ -8,12 +8,18 @@ import {
 } from "@mui/material";
 
 const MushroomResult = (props) => {
-  const { mushroom } = props;
+  const { mushroom, setSelectedRoute, setValue } = props;
 
   const shortenedInfo =
     mushroom.info.length > 100
       ? `${mushroom.info.slice(0, 100)}...`
       : mushroom.info;
+
+
+  const handleClick = () => {
+    setSelectedRoute("MUSHROOMS");
+    setValue(2);
+  };
 
   return (
     <Card
@@ -46,7 +52,7 @@ const MushroomResult = (props) => {
         {/* <p>Edible? {mushroom.edible ? "Yes" : "No"}</p> */}
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Button size="small">Learn More</Button>
+        <Button onClick={handleClick} size="small">Learn More</Button>
         <img
           style={{ width: "22px" }}
           className="mushroom-result-icon"

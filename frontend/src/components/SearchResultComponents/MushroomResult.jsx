@@ -19,7 +19,7 @@ const MushroomResult = (props) => {
     <Card
       className="mushroom-result-item"
       sx={{
-        maxWidth: 345,
+        width: 345,
         boxShadow: 3,
         borderRadius: 3,
         transition: "box-shadow 0.3s ease",

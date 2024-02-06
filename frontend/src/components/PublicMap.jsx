@@ -22,8 +22,11 @@ import {
   Typography,
   IconButton,
   CardHeader,
+  InputBase,
+  Paper,
 } from "@mui/material";
 
+import SearchIcon from "@mui/icons-material/Search";
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
@@ -31,6 +34,7 @@ const libraries = ["places"];
 const mapContainerStyle = {
   width: "100%",
   height: "80vh",
+  borderRadius: "15px",
 };
 
 const centerBC = {
@@ -109,99 +113,117 @@ const PublicMap = (props) => {
   }
 
   return (
-    <div>
-      <Autocomplete
-        options={{
-          types: ["geocode"],
-          componentRestrictions: { country: "CA" },
-        }}
-        // onPlaceChanged={onPlaceChanged}
-        onLoad={onSearchBarLoad}
-      >
-        <input
-          type="text"
-          placeholder="Search Your Location"
-          ref={searchInputRef}
-        />
-      </Autocomplete>
-      <button type="submit" onClick={onPlaceChanged}>
-        Search
-      </button>
-
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={5}
-        center={mapCenter}
-        options={options}
-        onLoad={onMapLoad}
-      >
-        {blogData.map((blog) => (
-          <MarkerF
-            key={blog.id}
-            position={{ lat: blog.lat, lng: blog.long }}
-            icon={{
-              url: "./assets/mushroom_marker.svg",
-              scaledSize: new window.google.maps.Size(30, 30),
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
+    <div className="map-container">
+      <section className="search">
+        <div className="search-bar">
+          <Autocomplete
+            options={{
+              types: ["geocode"],
+              componentRestrictions: { country: "CA" },
             }}
-            onClick={() => {
-              setMarkerSelected(blog);
-            }}
-          />
-        ))}
-
-        {markerSelected ? (
-          <InfoWindowF
-            position={{ lat: markerSelected.lat, lng: markerSelected.long }}
-            onCloseClick={() => {
-              setMarkerSelected(null);
-            }}
+            // onPlaceChanged={onPlaceChanged}
+            onLoad={onSearchBarLoad}
           >
-            <div
+            <TextField
+              sx={{ width: "60vw" }}
+              label="Lets Go Forage!"
+              type="text"
+              placeholder="Search Your Location"
+              ref={searchInputRef}
+              // variant="filled"
+              color="success"
+              focused
+            />
+          </Autocomplete>
+        </div>
+        <div className="search-button">
+        <Divider sx={{ height: 55 }} orientation="vertical" />
+          <IconButton onClick={onPlaceChanged} sx={{ pr: '18px' }} type="button"  aria-label="search">
+            <SearchIcon />
+          </IconButton>
+
+        </div>
+      </section>
+      <section>
+        <GoogleMap
+          mapContainerStyle={mapContainerStyle}
+          zoom={5}
+          center={mapCenter}
+          options={options}
+          onLoad={onMapLoad}
+        >
+          {blogData.map((blog) => (
+            <MarkerF
+              key={blog.id}
+              position={{ lat: blog.lat, lng: blog.long }}
+              icon={{
+                url: "./assets/mushroom_marker.svg",
+                scaledSize: new window.google.maps.Size(30, 30),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(15, 15),
+              }}
               onClick={() => {
-                setBlogSelected(markerSelected);
-                setSelectedRoute("BLOGDETAILS");
+                setMarkerSelected(blog);
+              }}
+            />
+          ))}
+
+          {markerSelected ? (
+            <InfoWindowF
+              position={{ lat: markerSelected.lat, lng: markerSelected.long }}
+              onCloseClick={() => {
+                setMarkerSelected(null);
               }}
             >
-              <Card
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
+              <div
+                onClick={() => {
+                  setBlogSelected(markerSelected);
+                  setSelectedRoute("BLOGDETAILS");
                 }}
               >
-                <CardHeader
-                  avatar={
-                    <Avatar
-                      alt={markerSelected.username}
-                      src={markerSelected.avatar}
-                    />
-                  }
-                  title={markerSelected.title}
-                  subheader={
-                    <div>
-                      <div>By: {markerSelected.username}</div>{" "}
-                      <div>Published: {dateFormatter(markerSelected.date)}</div>
-                    </div>
-                  }
-                />
-                <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                  {markerSelected.mushrooms.map((mushroom, index) => (
-                    <div key={index}>
-                      <img
-                        style={{ width: "22px" }}
-                        src={`images/${mushroom.mushroom_icon}`}
-                        alt={mushroom.mushroom_name}
+                <Card
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <CardHeader
+                    avatar={
+                      <Avatar
+                        alt={markerSelected.username}
+                        src={markerSelected.avatar}
                       />
-                    </div>
-                  ))}
-                </CardActions>
-              </Card>
-            </div>
-          </InfoWindowF>
-        ) : null}
-      </GoogleMap>
+                    }
+                    title={markerSelected.title}
+                    subheader={
+                      <div>
+                        <div>By: {markerSelected.username}</div>{" "}
+                        <div>
+                          Published: {dateFormatter(markerSelected.date)}
+                        </div>
+                      </div>
+                    }
+                  />
+                  <CardActions
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    {markerSelected.mushrooms.map((mushroom, index) => (
+                      <div key={index}>
+                        <img
+                          style={{ width: "22px" }}
+                          src={`images/${mushroom.mushroom_icon}`}
+                          alt={mushroom.mushroom_name}
+                        />
+                      </div>
+                    ))}
+                  </CardActions>
+                </Card>
+              </div>
+            </InfoWindowF>
+          ) : null}
+        </GoogleMap>
+      </section>
     </div>
   );
 };

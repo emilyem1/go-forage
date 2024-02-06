@@ -2,27 +2,32 @@
 
 .map-container {
   position: relative;
+  display: inline-block;
+  width: 100%;
+  padding: 10px;
 }
 
-.search {
+.search-bar{
+  background-color: rgba(206, 231, 215, 0.68);
+}
+.search{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
+  z-index: 2;
+  padding: 10px;
 }
-
-.locate {
+.search-button{
+  display: flex;
+  flex-direction: row;
   position: absolute;
-  top: 10px;
-  right: 10px;
   z-index: 1;
-  background: none;
-  border: none;
-  cursor: pointer;
+  right: 0;
+  // transform: translateY(50%);
 }
 
-.locate img {
-  width: 30px;
-  height: 30px;
+.map{
+  display: block;
 }
+

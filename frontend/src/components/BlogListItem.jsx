@@ -25,9 +25,10 @@ const BlogListItem = (props) => {
   } = props;
   const { user_id } = userData;
 
-  const bookmarkSelect = userData.isLoggedIn && bookmarkedBlogs[user_id].includes(blog.id)
-    ? true
-    : false;
+  const bookmarkSelect =
+    userData.isLoggedIn &&
+    bookmarkedBlogs &&
+    bookmarkedBlogs[user_id]?.includes(blog.id);
 
   const dateFormatter = (blogDate) => {
     const date = new Date(blogDate);

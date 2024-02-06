@@ -8,22 +8,13 @@ import {
 } from "@react-google-maps/api";
 
 import {
-  List,
   Divider,
-  ListSubheader,
   TextField,
-  InputAdornment,
-  Button,
   Avatar,
   Card,
   CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
   IconButton,
   CardHeader,
-  InputBase,
-  Paper,
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -102,6 +93,22 @@ const PublicMap = (props) => {
 
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setMapCenter({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      () => {
+        setMapCenter(centerBC);
+      }
+    );
+  }, []);
+
+  const panTo = useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(14);
   }, []);
 
   if (loadError) {
@@ -114,6 +121,9 @@ const PublicMap = (props) => {
 
   return (
     <div className="map-container">
+      <div className="locate">
+        <Locate panTo={panTo} />
+      </div>
       <section className="search">
         <div className="search-bar">
           <Autocomplete
@@ -137,15 +147,20 @@ const PublicMap = (props) => {
           </Autocomplete>
         </div>
         <div className="search-button">
-        <Divider sx={{ height: 55 }} orientation="vertical" />
-          <IconButton onClick={onPlaceChanged} sx={{ pr: '18px' }} type="button"  aria-label="search">
+          <Divider sx={{ height: 55 }} orientation="vertical" />
+          <IconButton
+            onClick={onPlaceChanged}
+            sx={{ pr: "18px" }}
+            type="button"
+            aria-label="search"
+          >
             <SearchIcon />
           </IconButton>
-
         </div>
       </section>
       <section>
         <GoogleMap
+          id="map"
           mapContainerStyle={mapContainerStyle}
           zoom={5}
           center={mapCenter}
@@ -227,5 +242,27 @@ const PublicMap = (props) => {
     </div>
   );
 };
+
+function Locate({ panTo }) {
+  return (
+    <button
+      type="button"
+      // className="locate"
+      onClick={() => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            panTo({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          () => null
+        );
+      }}
+    >
+      <img src="./assets/compass.svg" alt="Locate Me" />
+    </button>
+  );
+}
 
 export default PublicMap;

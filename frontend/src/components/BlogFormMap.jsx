@@ -5,7 +5,9 @@ import {
   MarkerF,
   Autocomplete,
 } from "@react-google-maps/api";
+import { Divider, TextField, IconButton } from "@mui/material";
 
+import SearchIcon from "@mui/icons-material/Search";
 import "../styles/Map.scss";
 import { mapStyles } from "../styles/Map";
 
@@ -115,26 +117,41 @@ const BlogFormMap = (props) => {
 
   return (
     <div className="map-container">
-      <Locate panTo={panTo} />
-      <div className="search">
-        <Autocomplete
-          options={{
-            types: ["geocode"],
-            componentRestrictions: { country: "CA" },
-          }}
-          // onPlaceChanged={onPlaceChanged}
-          onLoad={onSearchBarLoad}
-        >
-          <input
-            type="text"
-            placeholder="Search Your Location"
-            ref={searchInputRef}
-          />
-        </Autocomplete>
-        <button type="button" onClick={onPlaceChanged}>
-          Search
-        </button>
+      <div className="locate">
+        <Locate panTo={panTo} />
       </div>
+      <section className="search">
+        <div className="search-bar">
+          <Autocomplete
+            options={{
+              types: ["geocode"],
+              componentRestrictions: { country: "CA" },
+            }}
+            onLoad={onSearchBarLoad}
+          >
+            <TextField
+              sx={{ width: "60vw" }}
+              label="Lets Go Forage!"
+              type="text"
+              placeholder="Search Your Location"
+              ref={searchInputRef}
+              color="success"
+              focused
+            />
+          </Autocomplete>
+        </div>
+        <div className="search-button">
+          <Divider sx={{ height: 55 }} orientation="vertical" />
+          <IconButton
+            onClick={onPlaceChanged}
+            sx={{ pr: "18px" }}
+            type="button"
+            aria-label="search"
+          >
+            <SearchIcon />
+          </IconButton>
+        </div>
+      </section>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -165,7 +182,6 @@ function Locate({ panTo }) {
   return (
     <button
       type="button"
-      className="locate"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {

@@ -131,7 +131,6 @@ const PublicMap = (props) => {
               types: ["geocode"],
               componentRestrictions: { country: "CA" },
             }}
-            // onPlaceChanged={onPlaceChanged}
             onLoad={onSearchBarLoad}
           >
             <TextField
@@ -140,7 +139,6 @@ const PublicMap = (props) => {
               type="text"
               placeholder="Search Your Location"
               ref={searchInputRef}
-              // variant="filled"
               color="success"
               focused
             />
@@ -247,7 +245,6 @@ function Locate({ panTo }) {
   return (
     <button
       type="button"
-      // className="locate"
       onClick={() => {
         navigator.geolocation.getCurrentPosition(
           (position) => {

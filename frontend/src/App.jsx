@@ -38,24 +38,24 @@ function App() {
         setValue={setValue}
         setSearchTerm={setSearchTerm}
       />
-      {selectedRoute === "PUBLIC" ? (
+      {selectedRoute === "BLOGLIST" ? (
+      <BlogList
+        blogs={blogData}
+        setBlogSelected={setBlogSelected}
+        setSelectedRoute={setSelectedRoute}
+        mushrooms={mushroomData}
+        setBlogUpdate={setBlogUpdate}
+        bookmarkedBlogs={bookmarkedBlogs}
+        userData={userData}
+        onBookmarkClick={updateBookmarkedBlogs}
+      />
+      ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
           blogSelected={blogSelected}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
-        />
-      ) : selectedRoute === "BLOGLIST" ? (
-        <BlogList
-          blogs={blogData}
-          setBlogSelected={setBlogSelected}
-          setSelectedRoute={setSelectedRoute}
-          mushrooms={mushroomData}
-          setBlogUpdate={setBlogUpdate}
-          bookmarkedBlogs={bookmarkedBlogs}
-          userData={userData}
-          onBookmarkClick={updateBookmarkedBlogs}
-        />
+        />       
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails
           blog={blogSelected}
@@ -74,6 +74,10 @@ function App() {
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
           mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
         />
       ) : selectedRoute === "ACCOUNT" ? (
         <Account users={userData} />
@@ -86,6 +90,9 @@ function App() {
           mushrooms={mushroomData}
           setBlogUpdate={setBlogUpdate}
           setSelectedRoute={setSelectedRoute}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
         />
       ) : (
         <SearchResults searchTerm={searchTerm} />

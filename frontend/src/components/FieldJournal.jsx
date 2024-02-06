@@ -3,9 +3,10 @@ import BlogForm from "./BlogForm";
 import { useState, useEffect } from "react";
 import Switch from "@mui/material/Switch";
 import Collapse from "@mui/material/Collapse";
+import { Box, Button } from "@mui/material";
 
 const FieldJournal = (props) => {
-  const { email, setBlogSelected, setSelectedRoute, mushrooms } = props;
+  const { email, setBlogSelected, setSelectedRoute, mushrooms, onBookmarkClick, bookmarkedBlogs, userData, setBlogUpdate } = props;
   const [blogs, setBlogs] = useState([]);
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
@@ -27,24 +28,39 @@ const FieldJournal = (props) => {
   }, [email]);
 
   return (
-    <div className="field-journal">
-      <br />
-        Add a Blog:{<Switch checked={checked} onChange={handleChange} />}
+    <main>
+      Add a Blog:{<Switch checked={checked} onChange={handleChange} />}
       <div>
         <Collapse in={checked}>
-          <BlogForm mushrooms={mushrooms} />
+          <BlogForm mushrooms={mushrooms} setBlogUpdate={setBlogUpdate} />
           <br />
         </Collapse>
       </div>
-      {blogs.map(blog => (
-        <FieldJournalItem
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignContent:"center",
+          flexWrap: "wrap",
+          padding:"10px",
+          gap: "2rem",
+        }}
+      >
+        {blogs.map((blog) => (
+          <FieldJournalItem
+          mushrooms={mushrooms}
+          className="mushroom-list"
           key={blog.id}
           blog={blog}
-          setSelectedRoute={setSelectedRoute}
           setBlogSelected={setBlogSelected}
-        />
-      ))}
-    </div>
+          setSelectedRoute={setSelectedRoute}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={onBookmarkClick}
+          />
+        ))}
+      </Box>
+    </main>
   );
 };
 

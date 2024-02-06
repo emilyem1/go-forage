@@ -26,6 +26,7 @@ const BlogResult = (props) => {
         flexDirection:'column',
         justifyContent: 'space-between',
         maxWidth: 345,
+        height: 550,
         boxShadow: 3,
         borderRadius: 3,
         transition: "box-shadow 0.3s ease",

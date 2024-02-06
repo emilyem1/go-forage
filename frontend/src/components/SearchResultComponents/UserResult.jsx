@@ -7,7 +7,8 @@ const UserResult = (props) => {
   return (
     <Card
       sx={{
-        width: '22rem',
+        width: 350,
+        height: 100,
         display: 'flex',
         justifyContent: 'space',
         alignItems: 'center',

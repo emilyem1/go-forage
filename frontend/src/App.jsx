@@ -88,7 +88,8 @@ function App() {
           setSelectedRoute={setSelectedRoute}
         />
       ) : (
-        <SearchResults searchTerm={searchTerm} />
+        <SearchResults searchTerm={searchTerm} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue}
+        />
       )}
     </div>
   );

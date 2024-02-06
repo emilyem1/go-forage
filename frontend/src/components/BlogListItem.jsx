@@ -73,9 +73,12 @@ const BlogListItem = (props) => {
           </IconButton>
         }
         title={blog.title}
-        subheader={`By: ${blog.username} published: ${dateFormatter(
-          blog.date
-        )}`}
+        subheader={
+          <div>
+            <div>By: {blog.username}</div>{" "}
+            <div>Published: {dateFormatter(blog.date)}</div>
+          </div>
+        }
       />
       <section onClick={handleClick}>
         <CardMedia>

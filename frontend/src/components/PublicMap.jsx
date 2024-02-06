@@ -6,6 +6,24 @@ import {
   InfoWindowF,
   Autocomplete,
 } from "@react-google-maps/api";
+
+import {
+  List,
+  Divider,
+  ListSubheader,
+  TextField,
+  InputAdornment,
+  Button,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+  IconButton,
+  CardHeader,
+} from "@mui/material";
+
 import { mapStyles } from "../styles/Map";
 
 const libraries = ["places"];
@@ -49,6 +67,12 @@ const PublicMap = (props) => {
   const [mapCenter, setMapCenter] = useState(centerBC);
   const [searchResult, setSearchResult] = useState(null);
   const searchInputRef = useRef();
+
+  const dateFormatter = (blogDate) => {
+    const date = new Date(blogDate);
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Intl.DateTimeFormat("en-US", options).format(date);
+  };
 
   const onSearchBarLoad = async (autocomplete) => {
     setSearchResult(autocomplete);
@@ -140,8 +164,40 @@ const PublicMap = (props) => {
                 setSelectedRoute("BLOGDETAILS");
               }}
             >
-              <h3>{markerSelected.title}</h3>
-              <p>{markerSelected.username}</p>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <CardHeader
+                  avatar={
+                    <Avatar
+                      alt={markerSelected.username}
+                      src={markerSelected.avatar}
+                    />
+                  }
+                  title={markerSelected.title}
+                  subheader={
+                    <div>
+                      <div>By: {markerSelected.username}</div>{" "}
+                      <div>Published: {dateFormatter(markerSelected.date)}</div>
+                    </div>
+                  }
+                />
+                <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+                  {markerSelected.mushrooms.map((mushroom, index) => (
+                    <div key={index}>
+                      <img
+                        style={{ width: "22px" }}
+                        src={`images/${mushroom.mushroom_icon}`}
+                        alt={mushroom.mushroom_name}
+                      />
+                    </div>
+                  ))}
+                </CardActions>
+              </Card>
             </div>
           </InfoWindowF>
         ) : null}

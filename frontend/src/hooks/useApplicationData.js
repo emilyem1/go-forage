@@ -11,6 +11,7 @@ export const ACTIONS = {
   SET_BOOKMARKED_BLOGS: "SET_BOOKMARKED_BLOGS",
   BLOG_BOOKMARK_ADDED: "FAV_PHOTO_ADDED",
   COMMENT_ADDED: "COMMENT_ADDED",
+  SELECT_USER: "SELECT_USER",
 };
 
 function reducer(state, action) {
@@ -75,6 +76,10 @@ function reducer(state, action) {
       }
     case ACTIONS.COMMENT_ADDED:
       return { ...state, commentUpdate: action.payload };
+
+    case ACTIONS.SELECT_USER:
+      return { ...state, selectedUser: action.payload };
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -99,6 +104,7 @@ const useApplicationData = () => {
     blogUpdate: false,
     bookmarkedBlogs: {},
     commentUpdate: false,
+    selectedUser:false,
   });
 
   useEffect(() => {
@@ -189,6 +195,10 @@ const useApplicationData = () => {
     });
   }, [document.cookie]);
 
+  const setUserSelected = (blog) => {
+    dispatch({ type: ACTIONS.SELECT_USER, payload: blog });
+  };
+
   return {
     state,
     setBlogSelected,
@@ -196,6 +206,7 @@ const useApplicationData = () => {
     setBlogUpdate,
     updateBookmarkedBlogs,
     updateComments,
+    setUserSelected,
   };
 };
 

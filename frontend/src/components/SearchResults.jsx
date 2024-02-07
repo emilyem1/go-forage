@@ -15,6 +15,7 @@ const SearchResults = (props) => {
     setSelectedRoute,
     setValue,
     setMushroomSelected,
+    setUserSelected,
   } = props;
   const [searchResults, setSearchResults] = useState(null);
   const itemsPerPage = 3; // Set the number of results per page
@@ -92,7 +93,7 @@ const SearchResults = (props) => {
                       }}
                     >
                       {page.map((user) => (
-                        <UserResult key={user.id} user={user}></UserResult>
+                        <UserResult key={user.id} user={user} setUserSelected={setUserSelected} setSelectedRoute={setSelectedRoute}></UserResult>
                       ))}
                     </div>
                   )

@@ -22,6 +22,7 @@ function App() {
     setBlogUpdate,
     updateBookmarkedBlogs,
     updateComments,
+    setUserSelected,
   } = useApplicationData();
   const {
     blogData,
@@ -30,6 +31,7 @@ function App() {
     userData,
     commentData,
     bookmarkedBlogs,
+    userSelected,
   } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   const [mushroomSelected, setMushroomSelected] = useState(null);
@@ -125,7 +127,8 @@ function App() {
           setSelectedRoute={setSelectedRoute}
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
-        />
+          setUserSelected={setUserSelected}
+          />
       )}
     </div>
   );

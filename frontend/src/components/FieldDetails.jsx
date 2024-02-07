@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import BlogListMap from "./BlogListMap";
 import Comments from "./Comments";
 import BlogEdit from "./BlogEdit";
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import LockRoundedIcon from '@mui/icons-material/LockRounded';
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SendIcon from "@mui/icons-material/Send";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BookmarkButton from "./BookmarkButton";
@@ -26,13 +26,25 @@ import {
 } from "@mui/material";
 
 const FieldDetails = (props) => {
-  const { blog, comments, mushrooms, setBlogUpdate, setSelectedRoute, userData,  onBookmarkClick, bookmarkedBlogs, updateComments } = props;
+  const {
+    blog,
+    comments,
+    mushrooms,
+    setBlogUpdate,
+    setSelectedRoute,
+    userData,
+    onBookmarkClick,
+    bookmarkedBlogs,
+    updateComments,
+  } = props;
   const [editMode, setEditMode] = useState(false);
   const { user_id } = userData;
 
-  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
-    ? true
-    : false;
+  const bookmarkSelect =
+    userData.isLoggedIn &&
+    bookmarkedBlogs &&
+    bookmarkedBlogs[user_id]?.includes(blog.id);
+
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
@@ -87,12 +99,15 @@ const FieldDetails = (props) => {
   const handleDeleteClick = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8001/api/blogs/${blog.id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8001/api/blogs/${blog.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error(`Failed to delete blog. Status: ${response.status}`);
       }
@@ -106,132 +121,153 @@ const FieldDetails = (props) => {
   return (
     <main>
       {editMode ? (
-        <BlogEdit setEditMode={setEditMode} mushrooms={mushrooms} existingBlog={blog} setBlogUpdate={setBlogUpdate} setSelectedRoute={setSelectedRoute} />
+        <BlogEdit
+          setEditMode={setEditMode}
+          mushrooms={mushrooms}
+          existingBlog={blog}
+          setBlogUpdate={setBlogUpdate}
+          setSelectedRoute={setSelectedRoute}
+        />
       ) : (
         <main>
-        <Card
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            margin: "25px",
-            boxShadow: 3,
-            borderRadius: 3,
-            transition: "box-shadow 0.3s ease",
-            "&:hover": {
-              boxShadow: 5,
-            },
-          }}
-        >
-          <CardHeader
-            avatar={<Avatar alt={blog.username} src={blog.avatar} />}
-            action={
-              <IconButton>
-                <BookmarkButton
-                  blog={blog}
-                  onBookmarkClick={onBookmarkClick}
-                  bookmarkSelect={bookmarkSelect ? true : false}
-                  user_id={user_id}
-                />
-              </IconButton>
-            }
-            title={<h1>{blog.title}</h1>}
-            subheader={`By: ${blog.username} published: ${dateFormatter(
-              blog.date
-            )}`}
-          />
-          <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-            {blog.mushrooms.map((mushroom, index) => (
-              <div key={index}>
-                <img
-                  style={{ width: "22px" }}
-                  src={`images/${mushroom.mushroom_icon}`}
-                  alt={mushroom.mushroom_name}
-                />
-              </div>
-            ))}
-            {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
-          </CardActions>
-          <CardMedia>
-            <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
-          </CardMedia>
-          <CardContent>
-            <Typography variant="body1" color="text.primary">
-              {blog.content}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Stack direction="row" spacing={2} sx={{
-            display: "flex",
-            justifyContent: "center"
-        }}>
-          <Button variant="contained" color="success" onClick={handleEditClick}>
-            Edit
-          </Button>
-          <Button variant="outlined" color="error" onClick={handleDeleteClick}>
-            Delete
-          </Button>
-        </Stack>
-        <br />
-        <List
-          sx={{
-            width: "100%",
-            paddingTop: "10px",
-            position: "relative",
-            overflow: "auto",
-            maxHeight: 300,
-            "& ul": { padding: 0 },
-          }}
-          subheader={<li />}
-        >
-          <ListSubheader>
-            <form>
-              <label>
-                <TextField
-                  sx={{ width: "70vw" }}
-                  multiline
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Avatar
-                          alt={userData.fullname}
-                          src={userData.profilePhoto}
-                        />
-                      </InputAdornment>
-                    ),
-                  }}
-                  label={userData.fullname}
-                  type="text"
-                  name="message"
-                  value={newComment.message}
-                  onChange={handleChange}
-                  placeholder="Enter Comment"
-                />
-              </label>
-              <Button
-                variant="contained"
-                endIcon={<SendIcon />}
-                onClick={handleSubmit}
-                sx={{
-                  marginLeft: "1%"
-                }}
-              >
-                Send
-              </Button>
-            </form>
-          </ListSubheader>
-          <div>
-            {comments
-              .filter((comment) => comment.blog_id === blog.id)
-              .map((comment) => (
-                <div key={comment.id}>
-                  <Comments comment={comment} />
-                  <Divider variant="inset" component="li" />
+          <Card
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              margin: "25px",
+              boxShadow: 3,
+              borderRadius: 3,
+              transition: "box-shadow 0.3s ease",
+              "&:hover": {
+                boxShadow: 5,
+              },
+            }}
+          >
+            <CardHeader
+              avatar={<Avatar alt={blog.username} src={blog.avatar} />}
+              action={
+                <IconButton>
+                  <BookmarkButton
+                    blog={blog}
+                    onBookmarkClick={onBookmarkClick}
+                    bookmarkSelect={bookmarkSelect ? true : false}
+                    user_id={user_id}
+                    userData={userData}
+                  />
+                </IconButton>
+              }
+              title={<h1>{blog.title}</h1>}
+              subheader={`By: ${blog.username} published: ${dateFormatter(
+                blog.date
+              )}`}
+            />
+            <CardActions
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              {blog.mushrooms.map((mushroom, index) => (
+                <div key={index}>
+                  <img
+                    style={{ width: "22px" }}
+                    src={`images/${mushroom.mushroom_icon}`}
+                    alt={mushroom.mushroom_name}
+                  />
                 </div>
               ))}
-          </div>
-        </List>
-      </main>
+              {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
+            </CardActions>
+            <CardMedia>
+              <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
+            </CardMedia>
+            <CardContent>
+              <Typography variant="body1" color="text.primary">
+                {blog.content}
+              </Typography>
+            </CardContent>
+          </Card>
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleEditClick}
+            >
+              Edit
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={handleDeleteClick}
+            >
+              Delete
+            </Button>
+          </Stack>
+          <br />
+          <List
+            sx={{
+              width: "100%",
+              paddingTop: "10px",
+              position: "relative",
+              overflow: "auto",
+              maxHeight: 300,
+              "& ul": { padding: 0 },
+            }}
+            subheader={<li />}
+          >
+            <ListSubheader>
+              <form>
+                <label>
+                  <TextField
+                    sx={{ width: "70vw" }}
+                    multiline
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Avatar
+                            alt={userData.fullname}
+                            src={userData.profilePhoto}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                    label={userData.fullname}
+                    type="text"
+                    name="message"
+                    value={newComment.message}
+                    onChange={handleChange}
+                    placeholder="Enter Comment"
+                  />
+                </label>
+                <Button
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                  onClick={handleSubmit}
+                  sx={{
+                    marginLeft: "1%",
+                  }}
+                >
+                  Send
+                </Button>
+              </form>
+            </ListSubheader>
+            <div>
+              {comments
+                .filter((comment) => comment.blog_id === blog.id)
+                .map((comment) => (
+                  <div key={comment.id}>
+                    <Comments comment={comment} />
+                    <Divider variant="inset" component="li" />
+                  </div>
+                ))}
+            </div>
+          </List>
+        </main>
       )}
     </main>
   );

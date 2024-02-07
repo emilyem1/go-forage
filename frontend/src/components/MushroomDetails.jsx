@@ -2,7 +2,6 @@ import { Card, CardContent, CardMedia, Typography, Grid } from "@mui/material";
 
 const MushroomDetails = (props) => {
   const { mushroomSelected } = props;
-  console.log(mushroomSelected);
   if (!mushroomSelected.title || !mushroomSelected.image_url) {
     mushroomSelected.title = mushroomSelected.name;
     mushroomSelected.image_url = mushroomSelected.image;
@@ -17,17 +16,19 @@ const MushroomDetails = (props) => {
             item
             xs={12}
             sm={4}
-            sx={{
-              // display: "flex",
-              // justifyContent: "center",
-              // alignItems: "center",
-            }}
+            sx={
+              {
+                // display: "flex",
+                // justifyContent: "center",
+                // alignItems: "center",
+              }
+            }
           >
             <CardMedia
               component="img"
               alt={mushroomSelected.title}
               image={`/images/${mushroomSelected.image_url}`}
-              height={'100%'}
+              height={"100%"}
             />
           </Grid>
 

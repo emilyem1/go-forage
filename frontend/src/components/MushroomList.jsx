@@ -2,12 +2,12 @@ import MushroomListItem from "./MushroomListItem";
 import "../styles/MushroomList.scss";
 
 const MushroomList = (props) => {
-  const { mushrooms } = props;
+  const { mushrooms, setSelectedRoute, setMushroomSelected } = props;
   return (
     <main>
       <ul className="mushroom-list">
         {mushrooms.map((mushroom) => (
-          <MushroomListItem className="mushroom-list" key={mushroom.id} mushroom={mushroom} />
+          <MushroomListItem className="mushroom-list" key={mushroom.id} mushroom={mushroom} setSelectedRoute={setSelectedRoute} setMushroomSelected={setMushroomSelected} />
         ))}
       </ul>
     </main>

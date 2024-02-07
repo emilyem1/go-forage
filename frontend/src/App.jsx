@@ -12,10 +12,16 @@ import LoginSignup from "./components/LoginSignup";
 import BlogDetails from "./components/BlogDetails";
 import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
+import MushroomDetails from "./components/MushroomDetails";
 
 function App() {
-  const { state, setSelectedRoute, setBlogUpdate, updateBookmarkedBlogs, updateComments } =
-    useApplicationData();
+  const {
+    state,
+    setSelectedRoute,
+    setBlogUpdate,
+    updateBookmarkedBlogs,
+    updateComments,
+  } = useApplicationData();
   const {
     blogData,
     selectedRoute,
@@ -25,6 +31,7 @@ function App() {
     bookmarkedBlogs,
   } = state;
   const [blogSelected, setBlogSelected] = useState(null);
+  const [mushroomSelected, setMushroomSelected] = useState(null);
   // Currently selected tab = value
   const [value, setValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,23 +46,23 @@ function App() {
         setSearchTerm={setSearchTerm}
       />
       {selectedRoute === "BLOGLIST" ? (
-      <BlogList
-        blogs={blogData}
-        setBlogSelected={setBlogSelected}
-        setSelectedRoute={setSelectedRoute}
-        mushrooms={mushroomData}
-        setBlogUpdate={setBlogUpdate}
-        bookmarkedBlogs={bookmarkedBlogs}
-        userData={userData}
-        onBookmarkClick={updateBookmarkedBlogs}
-      />
+        <BlogList
+          blogs={blogData}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
+        />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
           blogData={blogData}
           blogSelected={blogSelected}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
-        />       
+        />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails
           blog={blogSelected}
@@ -63,10 +70,16 @@ function App() {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
-          updateComments ={updateComments}
+          updateComments={updateComments}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
-        <MushroomList mushrooms={mushroomData} />
+        <MushroomList
+          mushrooms={mushroomData}
+          setMushroomSelected={setMushroomSelected}
+          setSelectedRoute={setSelectedRoute}
+        />
+      ) : selectedRoute === "MUSHROOMDETAILS" ? (
+        <MushroomDetails mushroomSelected={mushroomSelected} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal
           email={userData.email}
@@ -95,7 +108,12 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
         />
       ) : (
-        <SearchResults searchTerm={searchTerm} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue}
+        <SearchResults
+          searchTerm={searchTerm}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          setValue={setValue}
+          setMushroomSelected={setMushroomSelected}
         />
       )}
     </div>

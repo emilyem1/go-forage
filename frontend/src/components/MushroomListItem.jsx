@@ -1,10 +1,15 @@
 import "../styles/MushroomListItem.scss";
 
 const MushroomListItem = (props) => {
-  const { mushroom } = props;
+  const { mushroom, setMushroomSelected, setSelectedRoute } = props;
+
+  const handleClick = () => {
+    setMushroomSelected(mushroom)
+    setSelectedRoute("MUSHROOMDETAILS");
+  };
 
   return (
-    <section className="mushroom-list__item">
+    <section className="mushroom-list__item" onClick={handleClick}>
       <img
         className="mushroom-list__image" 
         src={`images/${mushroom.image}`}

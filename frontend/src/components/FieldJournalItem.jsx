@@ -18,9 +18,10 @@ const FieldJournalItem = (props) => {
 
   const { user_id } = userData;
 
-  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
-  ? true
-  : false;
+  const bookmarkSelect =
+    userData.isLoggedIn &&
+    bookmarkedBlogs &&
+    bookmarkedBlogs[user_id]?.includes(blog.id);
 
   const dateFormatter = (blogDate) => {
     const date = new Date(blogDate);
@@ -62,6 +63,7 @@ const FieldJournalItem = (props) => {
             onBookmarkClick={onBookmarkClick}
             bookmarkSelect={bookmarkSelect ? true : false}
             user_id={user_id}
+            userData={userData}
           />
         </IconButton>
       }

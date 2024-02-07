@@ -77,6 +77,7 @@ function App() {
           mushrooms={mushroomData}
           setMushroomSelected={setMushroomSelected}
           setSelectedRoute={setSelectedRoute}
+          users={userData}
         />
       ) : selectedRoute === "MUSHROOMDETAILS" ? (
         <MushroomDetails mushroomSelected={mushroomSelected} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue} />

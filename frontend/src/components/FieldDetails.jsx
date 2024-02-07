@@ -30,9 +30,10 @@ const FieldDetails = (props) => {
   const [editMode, setEditMode] = useState(false);
   const { user_id } = userData;
 
-  const bookmarkSelect = bookmarkedBlogs[user_id].includes(blog.id)
-    ? true
-    : false;
+  const bookmarkSelect =
+    userData.isLoggedIn && bookmarkedBlogs[user_id].includes(blog.id)
+      ? true
+      : false;
   const [newComment, setNewComment] = useState({
     blog_Id: blog.id,
     commenter_Id: 1,
@@ -132,6 +133,7 @@ const FieldDetails = (props) => {
                   onBookmarkClick={onBookmarkClick}
                   bookmarkSelect={bookmarkSelect ? true : false}
                   user_id={user_id}
+                  userData={userData}
                 />
               </IconButton>
             }

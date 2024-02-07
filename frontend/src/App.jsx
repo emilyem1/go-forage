@@ -13,6 +13,7 @@ import BlogDetails from "./components/BlogDetails";
 import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 import MushroomDetails from "./components/MushroomDetails";
+import UserBlogs from "./components/UserBlogs";
 
 function App() {
   const {
@@ -108,7 +109,16 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
         />
-      ) : (
+      ) : selectedRoute === "USERBLOGS" ? (
+        <UserBlogs
+        blogs={blogData}
+        setBlogSelected={setBlogSelected}
+        setSelectedRoute={setSelectedRoute}
+        bookmarkedBlogs={bookmarkedBlogs}
+        userData={userData}
+        onBookmarkClick={updateBookmarkedBlogs}
+        />
+      ):(
         <SearchResults
           searchTerm={searchTerm}
           setBlogSelected={setBlogSelected}

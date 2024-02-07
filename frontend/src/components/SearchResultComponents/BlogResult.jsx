@@ -10,7 +10,7 @@ import {
 import Map from "../BlogListMap";
 
 const BlogResult = (props) => {
-  const { blog, setBlogSelected, setSelectedRoute } = props;
+  const { blog, setBlogSelected, setSelectedRoute, setValue } = props;
 
   const shortenedInfo =
     blog.content.length > 100
@@ -20,6 +20,7 @@ const BlogResult = (props) => {
   const handleClick = () => {
     setBlogSelected(blog);
     setSelectedRoute("BLOGDETAILS");
+    setValue(0);
   };
 
   return (

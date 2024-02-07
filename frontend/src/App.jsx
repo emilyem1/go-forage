@@ -14,6 +14,7 @@ import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 import MushroomDetails from "./components/MushroomDetails";
 import UserBlogs from "./components/UserBlogs";
+import { createTheme } from '@mui/material/styles';
 
 function App() {
   const {
@@ -39,6 +40,30 @@ function App() {
   const [value, setValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Pass down theme, then use color="primary" etc to access
+  const custom = {
+    green: {
+      main: '#4D6A66',
+    },
+    red: {
+      main: '#c74343',
+    },
+    offwhite: {
+      main: '#e6e6dd',
+    },
+    yellow: {
+      main: '#d6cfa3',
+    }
+  };
+  const theme = createTheme({
+    palette: {
+      primary: custom.green,
+      secondary: custom.offwhite,
+      error: custom.red,
+      success: custom.yellow
+    },
+  });
+
   return (
     <div className="App">
       <Header
@@ -59,6 +84,7 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
           setUserSelected={setUserSelected}
+          theme={theme}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -66,6 +92,7 @@ function App() {
           blogSelected={blogSelected}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
+          theme={theme}
         />
       ) : selectedRoute === "BLOGDETAILS" ? (
         <BlogDetails
@@ -75,6 +102,7 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
           updateComments={updateComments}
+          theme={theme}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList
@@ -96,6 +124,7 @@ function App() {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
+          theme={theme}
         />
       ) : selectedRoute === "ACCOUNT" ? (
         <Account users={userData} />
@@ -111,6 +140,7 @@ function App() {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
+          theme={theme}
         />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs

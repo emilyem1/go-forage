@@ -98,15 +98,17 @@ const FieldJournalItem = (props) => {
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
           <Button size="small">Read More</Button>
-          {blog.mushrooms.map((mushroom, index) => (
-            <div key={index}>
-              <img
-                style={{ width: "22px" }}
-                src={`images/${mushroom.mushroom_icon}`}
-                alt={mushroom.mushroom_name}
-              />
-            </div>
-          ))}
+          <div>
+            {blog.mushrooms.map((mushroom, index) => (
+                <img
+                  key={index}
+                  style={{ width: "22px" }}
+                  src={`images/${mushroom.mushroom_icon}`}
+                  alt={mushroom.mushroom_name}
+                />
+              
+            ))}
+          </div>
         </CardActions>
       </section>
     </Card>

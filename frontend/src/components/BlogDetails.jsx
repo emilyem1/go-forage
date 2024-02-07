@@ -6,6 +6,7 @@ import BookmarkButton from "./BookmarkButton";
 import Comments from "./Comments";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
+import { ThemeProvider } from '@mui/material/styles'; 
 
 import {
   List,
@@ -22,6 +23,7 @@ import {
   Typography,
   IconButton,
   CardHeader,
+  theme,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 
@@ -35,6 +37,7 @@ const BlogDetails = (props) => {
     onBookmarkClick,
     bookmarkedBlogs,
     updateComments,
+    theme
   } = props;
   const { user_id } = userData;
 
@@ -97,6 +100,7 @@ const BlogDetails = (props) => {
     }
   };
   return (
+    <ThemeProvider theme={theme}>
     <main>
       <Card
         sx={{
@@ -140,15 +144,16 @@ const BlogDetails = (props) => {
         }
       />
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
-          {blog.mushrooms.map((mushroom, index) => (
-            <div key={index}>
-              <img
-                style={{ width: "22px" }}
-                src={`images/${mushroom.mushroom_icon}`}
-                alt={mushroom.mushroom_name}
-              />
+          <div style={{ marginLeft: '2%'}}>
+              {blog.mushrooms.map((mushroom, index) => (
+                  <img
+                    key={index}
+                    style={{ width: "22px" }}
+                    src={`images/${mushroom.mushroom_icon}`}
+                    alt={mushroom.mushroom_name}
+                  />
+              ))}
             </div>
-          ))}
           {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
         </CardActions>
         <CardMedia>
@@ -201,6 +206,9 @@ const BlogDetails = (props) => {
                 variant="contained"
                 endIcon={<SendIcon />}
                 onClick={handleSubmit}
+                sx={{
+                  marginLeft: "1%",
+                }}
               >
                 Send
               </Button>
@@ -234,6 +242,7 @@ const BlogDetails = (props) => {
         </div>
       </List>
     </main>
+    </ThemeProvider>
   );
 };
 

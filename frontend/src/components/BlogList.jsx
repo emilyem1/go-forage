@@ -19,6 +19,7 @@ const BlogList = (props) => {
     bookmarkedBlogs,
     userData,
     onBookmarkClick,
+    setUserSelected,
   } = props;
 
   const [checked, setChecked] = useState(false);
@@ -84,6 +85,7 @@ const BlogList = (props) => {
                 bookmarkedBlogs={bookmarkedBlogs}
                 userData={userData}
                 onBookmarkClick={onBookmarkClick}
+                setUserSelected={setUserSelected}
               />
             ))}
           </Box>
@@ -97,6 +99,7 @@ const BlogList = (props) => {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={onBookmarkClick}
+          setUserSelected={setUserSelected}
         />
       )}
     </main>

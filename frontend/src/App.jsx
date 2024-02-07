@@ -58,6 +58,7 @@ function App() {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
+          setUserSelected={setUserSelected}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -120,6 +121,7 @@ function App() {
         userData={userData}
         onBookmarkClick={updateBookmarkedBlogs}
         userSelected={userSelected}
+        setUserSelected={setUserSelected}
         />
       ):(
         <SearchResults
@@ -129,7 +131,6 @@ function App() {
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
           setUserSelected={setUserSelected}
-          userSelected={userSelected}
           />
       )}
     </div>

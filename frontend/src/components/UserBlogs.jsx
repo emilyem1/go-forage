@@ -4,13 +4,9 @@ import BlogListItem from "./BlogListItem";
 import { Box } from "@mui/material";
 import {
   Card,
-  CardActions,
   CardContent,
-  CardMedia,
-  Button,
   Typography,
   Avatar,
-  IconButton,
   CardHeader,
 } from "@mui/material";
 
@@ -23,8 +19,11 @@ const UserBlogs = (props) => {
     userData,
     onBookmarkClick,
     userSelected,
+    setUserSelected,
   } = props;
+
   const [icons, setIcons] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,7 +65,7 @@ const UserBlogs = (props) => {
               }}
               avatar={
                 <Avatar
-                sx={{ width: 90, height: 90 }}
+                  sx={{ width: 90, height: 90 }}
                   alt={userSelected.fullname}
                   src={userSelected.photo_url}
                 />
@@ -75,14 +74,9 @@ const UserBlogs = (props) => {
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
-
-                  {icons.map((icon) => (
-                    <img
-                      style={{ width: "22px" }}
-                      src={`images/${icon.icon}`}
-                    />
-                  ))}
-
+                {icons.map((icon) => (
+                  <img style={{ width: "22px" }} src={`images/${icon.icon}`} />
+                ))}
               </Typography>
             </CardContent>
           </Card>
@@ -98,6 +92,7 @@ const UserBlogs = (props) => {
                 bookmarkedBlogs={bookmarkedBlogs}
                 userData={userData}
                 onBookmarkClick={onBookmarkClick}
+                setUserSelected={setUserSelected}
               />
             ))}
         </Box>

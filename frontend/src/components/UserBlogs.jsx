@@ -12,7 +12,7 @@ const UserBlogs = (props) => {
     onBookmarkClick,
   } = props;
   const { user_id } = userData;
-  console.log(user_id);
+
   return (
     <main>
       <div>
@@ -27,7 +27,7 @@ const UserBlogs = (props) => {
           }}
         >
           {blogs
-            .filter((blog) => blog.id === 1)
+            .filter((blog) => blog.user_id=== 1)
             .map((blog) => (
               <BlogListItem
                 className="mushroom-list"

@@ -12,7 +12,7 @@ const Bookmarks = (props) => {
     onBookmarkClick,
   } = props;
   const { user_id } = userData;
-  console.log(user_id);
+
   return (
     <main>
       <div>

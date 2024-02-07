@@ -11,7 +11,8 @@ import Carousel from "react-material-ui-carousel";
 import BlogResult from "./SearchResultComponents/BlogResult";
 
 const MushroomDetails = (props) => {
-  const { mushroomSelected, setBlogSelected, setSelectedRoute, setValue } = props;
+  const { mushroomSelected, setBlogSelected, setSelectedRoute, setValue } =
+    props;
   const [mushroomBlogs, setMushroomBlogs] = useState(null);
   const itemsPerPage = 3;
 
@@ -87,9 +88,16 @@ const MushroomDetails = (props) => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography variant="h5" gutterBottom>
-                {mushroomSelected.title}
-              </Typography>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <div></div>
+                <Typography variant="h4" gutterBottom>
+                  {mushroomSelected.title}
+                </Typography>
+                <img
+                  src={`images/${mushroomSelected.icon}`}
+                  style={{ width: 40, height: 40 }}
+                ></img>
+              </Box>
               <Box
                 sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
               >
@@ -134,7 +142,9 @@ const MushroomDetails = (props) => {
             justifyContent: "center",
           }}
         >
-          <Typography variant="h6" sx={{padding: '2rem'}}>Find them here!</Typography>
+          <Typography variant="h6" sx={{ padding: "2rem" }}>
+            Find them here!
+          </Typography>
           <Carousel
             navButtonsAlwaysVisible={true}
             autoPlay={false}

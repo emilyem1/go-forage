@@ -66,7 +66,7 @@ function App() {
           updateComments ={updateComments}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
-        <MushroomList mushrooms={mushroomData} />
+        <MushroomList mushrooms={mushroomData} users={userData} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal
           email={userData.email}

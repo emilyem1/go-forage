@@ -66,11 +66,12 @@ const UserBlogs = (props) => {
               }}
               avatar={
                 <Avatar
+                sx={{ width: 90, height: 90 }}
                   alt={userSelected.fullname}
                   src={userSelected.photo_url}
                 />
               }
-              subheader={`${userSelected.fullname}'s blogs`}
+              subheader={<h2>{userSelected.fullname}'s blogs</h2>}
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">

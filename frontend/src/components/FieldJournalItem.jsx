@@ -29,6 +29,7 @@ const FieldJournalItem = (props) => {
     bookmarkedBlogs &&
     bookmarkedBlogs[user_id]?.includes(blog.id);
 
+
   const dateFormatter = (blogDate) => {
     const date = new Date(blogDate);
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };

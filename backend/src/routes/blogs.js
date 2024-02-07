@@ -70,6 +70,7 @@ module.exports = (db) => {
     console.log("Received PUT request to /blogs/:id");
     const blogId = request.params.id;
     const { title, content, latitude, longitude, user_id, mushrooms, privacy } = request.body;
+    console.log("Received data:", { title, content, latitude, longitude, user_id, mushrooms, privacy });
   
     const client = new Client();
     try {
@@ -84,22 +85,22 @@ module.exports = (db) => {
       `,
         [title, content, latitude, longitude, user_id, privacy, blogId]
       );
-  
+      console.log("Update response:", updateBlogResponse.rows);
       if (updateBlogResponse.rows.length === 0) {
         response.status(404).json({ error: "Blog not found" });
         return;
       }
       // Delete old mushrooms
       await client.query("DELETE FROM MUSHROOM_POST WHERE BLOG_ID = $1", [blogId]);
+      console.log("Deleted old mushrooms");
   
       // Insert new mushrooms
       if (mushrooms && mushrooms.length > 0) {
-        const mushroomValues = mushrooms.map((mushroomId) => [blogId, mushroomId]);
-        console.log("mushroomValues:", mushroomValues);
-        // placeholders = so you can insert more then 1 mushroom
+        const mushroomValues = mushrooms.map((mushroom) => [blogId, mushroom.mushroom_id]);
         const placeholders = mushroomValues.map((_, index) => `($${2 * index + 1}, $${2 * index + 2})`).join(', ');
         const insertQuery = `INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID) VALUES ${placeholders}`;
         await client.query(insertQuery, mushroomValues.flat());
+        console.log("Inserted new mushrooms:", mushroomValues);
       }
   
       await client.query("COMMIT");

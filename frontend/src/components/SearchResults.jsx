@@ -93,7 +93,12 @@ const SearchResults = (props) => {
                       }}
                     >
                       {page.map((user) => (
-                        <UserResult key={user.id} user={user} setUserSelected={setUserSelected} setSelectedRoute={setSelectedRoute}></UserResult>
+                        <UserResult
+                          key={user.id}
+                          user={user}
+                          setUserSelected={setUserSelected}
+                          setSelectedRoute={setSelectedRoute}
+                        ></UserResult>
                       ))}
                     </div>
                   )

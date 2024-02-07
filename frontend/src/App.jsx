@@ -119,6 +119,7 @@ function App() {
         bookmarkedBlogs={bookmarkedBlogs}
         userData={userData}
         onBookmarkClick={updateBookmarkedBlogs}
+        userSelected={userSelected}
         />
       ):(
         <SearchResults
@@ -128,6 +129,7 @@ function App() {
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
           setUserSelected={setUserSelected}
+          userSelected={userSelected}
           />
       )}
     </div>

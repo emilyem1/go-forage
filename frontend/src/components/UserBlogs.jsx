@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import BlogListItem from "./BlogListItem";
 // import "../styles/MushroomList.scss";
 import { Box } from "@mui/material";
@@ -21,71 +22,27 @@ const UserBlogs = (props) => {
     bookmarkedBlogs,
     userData,
     onBookmarkClick,
+    userSelected,
   } = props;
-  const selectedUser = blogs[1] !== undefined && blogs[1];
+  const [icons, setIcons] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8001/api/icons?email=${userSelected.email}`
+        );
+        const data = await response.json();
+        setIcons(data);
+      } catch (error) {
+        console.error("Error fetching icon data:", error);
+      }
+    };
+    fetchData();
+  }, [userSelected.email]);
 
   return (
     <main>
       <div>
-        {/* <Card
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            boxShadow: 3,
-            borderRadius: 3,
-            transition: "box-shadow 0.3s ease",
-            "&:hover": {
-              boxShadow: 5,
-            },
-          }}
-        >
-          <CardHeader
-            avatar={<Avatar alt={blog.username} src={blog.avatar} />}
-            action={
-              <IconButton>
-                <BookmarkButton
-                  blog={blog}
-                  onBookmarkClick={onBookmarkClick}
-                  bookmarkSelect={bookmarkSelect ? true : false}
-                  user_id={user_id}
-                  userData={userData}
-                />
-              </IconButton>
-            }
-            title={blog.title}
-            subheader={
-              <div>
-                <div>By: {blog.username}</div>{" "}
-                <div>Published: {dateFormatter(blog.date)}</div>
-              </div>
-            }
-          />
-          <section onClick={handleClick}>
-            <CardMedia>
-              <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
-            </CardMedia>
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {shortenedInfo}
-              </Typography>
-            </CardContent>
-            <CardActions
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Button size="small">Read More</Button>
-              {blog.mushrooms.map((mushroom, index) => (
-                <div key={index}>
-                  <img
-                    style={{ width: "22px" }}
-                    src={`images/${mushroom.mushroom_icon}`}
-                    alt={mushroom.mushroom_name}
-                  />
-                </div>
-              ))}
-            </CardActions>
-          </section>
-        </Card> */}
         <Box
           sx={{
             display: "flex",
@@ -96,8 +53,40 @@ const UserBlogs = (props) => {
             gap: "2rem",
           }}
         >
+          <Card
+            sx={{
+              boxShadow: 3,
+              borderRadius: 3,
+            }}
+          >
+            <CardHeader
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+              avatar={
+                <Avatar
+                  alt={userSelected.fullname}
+                  src={userSelected.photo_url}
+                />
+              }
+              subheader={`${userSelected.fullname}'s blogs`}
+            />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+
+                  {icons.map((icon) => (
+                    <img
+                      style={{ width: "22px" }}
+                      src={`images/${icon.icon}`}
+                    />
+                  ))}
+
+              </Typography>
+            </CardContent>
+          </Card>
           {blogs
-            .filter((blog) => blog.user_id === selectedUser.user_id)
+            .filter((blog) => blog.user_id === userSelected.id)
             .map((blog) => (
               <BlogListItem
                 className="mushroom-list"

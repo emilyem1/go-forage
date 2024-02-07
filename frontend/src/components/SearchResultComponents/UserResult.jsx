@@ -10,7 +10,6 @@ import {
 
 const UserResult = (props) => {
   const { user, setUserSelected, setSelectedRoute } = props;
-
   const handleClick = () => {
     setUserSelected(user);
     setSelectedRoute("USERBLOGS");

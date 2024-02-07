@@ -78,7 +78,7 @@ function reducer(state, action) {
       return { ...state, commentUpdate: action.payload };
 
     case ACTIONS.SELECT_USER:
-      return { ...state, selectedUser: action.payload };
+      return { ...state, userSelected: action.payload };
 
     default:
       throw new Error(
@@ -91,7 +91,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     selectedBlog: false,
     blogData: [],
-    selectedRoute: "USERBLOGS",
+    selectedRoute: "BLOGLIST",
     mushroomData: [],
     userData: {
       user_id: null,
@@ -104,7 +104,7 @@ const useApplicationData = () => {
     blogUpdate: false,
     bookmarkedBlogs: {},
     commentUpdate: false,
-    selectedUser:false,
+    userSelected:false,
   });
 
   useEffect(() => {
@@ -195,8 +195,8 @@ const useApplicationData = () => {
     });
   }, [document.cookie]);
 
-  const setUserSelected = (blog) => {
-    dispatch({ type: ACTIONS.SELECT_USER, payload: blog });
+  const setUserSelected = (user) => {
+    dispatch({ type: ACTIONS.SELECT_USER, payload: user });
   };
 
   return {

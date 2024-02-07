@@ -3,7 +3,7 @@ import "../styles/BlogForm.scss";
 import { useState } from "react";
 
 const BlogForm = (props) => {
-  const { mushrooms, setBlogUpdate } = props;
+  const { mushrooms, setBlogUpdate, handleClose } = props;
   const [disableAddMushroom, setDisableAddMushroom] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -110,6 +110,7 @@ const BlogForm = (props) => {
     } catch (error) {
       console.error("Error when posting:", error.message);
     }
+    handleClose()
   };
 
   return (

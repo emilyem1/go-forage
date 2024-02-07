@@ -5,8 +5,8 @@ import BlogEdit from "./BlogEdit";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import LockRoundedIcon from "@mui/icons-material/LockRounded";
 import SendIcon from "@mui/icons-material/Send";
-import DeleteIcon from "@mui/icons-material/Delete";
 import BookmarkButton from "./BookmarkButton";
+import { ThemeProvider } from '@mui/material/styles'; 
 import {
   Stack,
   List,
@@ -36,6 +36,7 @@ const FieldDetails = (props) => {
     onBookmarkClick,
     bookmarkedBlogs,
     updateComments,
+    theme,
   } = props;
   const [editMode, setEditMode] = useState(false);
   const { user_id } = userData;
@@ -119,6 +120,7 @@ const FieldDetails = (props) => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <main>
       {editMode ? (
         <BlogEdit
@@ -174,15 +176,16 @@ const FieldDetails = (props) => {
             <CardActions
               sx={{ display: "flex", justifyContent: "space-between" }}
             >
-              {blog.mushrooms.map((mushroom, index) => (
-                <div key={index}>
-                  <img
-                    style={{ width: "22px" }}
-                    src={`images/${mushroom.mushroom_icon}`}
-                    alt={mushroom.mushroom_name}
-                  />
-                </div>
-              ))}
+              <div style={{ marginLeft: '2%'}}>
+                {blog.mushrooms.map((mushroom, index) => (
+                    <img
+                      key={index}
+                      style={{ width: "22px" }}
+                      src={`images/${mushroom.mushroom_icon}`}
+                      alt={mushroom.mushroom_name}
+                    />
+                ))}
+              </div>
               {blog.privacy ? <LockOpenIcon /> : <LockRoundedIcon />}
             </CardActions>
             <CardMedia>
@@ -204,7 +207,7 @@ const FieldDetails = (props) => {
           >
             <Button
               variant="contained"
-              color="success"
+              color="primary"
               onClick={handleEditClick}
             >
               Edit
@@ -279,6 +282,7 @@ const FieldDetails = (props) => {
         </main>
       )}
     </main>
+    </ThemeProvider>
   );
 };
 

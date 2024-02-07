@@ -6,6 +6,7 @@ import {
   InfoWindowF,
   Autocomplete,
 } from "@react-google-maps/api";
+import { ThemeProvider } from '@mui/material/styles'; 
 
 import {
   Divider,
@@ -51,7 +52,7 @@ const options = {
 };
 
 const PublicMap = (props) => {
-  const { blogData, setBlogSelected, setSelectedRoute } = props;
+  const { blogData, setBlogSelected, setSelectedRoute, theme } = props;
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -120,6 +121,7 @@ const PublicMap = (props) => {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <div className="map-container">
       <div className="locate">
         <Locate panTo={panTo} />
@@ -139,7 +141,7 @@ const PublicMap = (props) => {
               type="text"
               placeholder="Search Your Location"
               ref={searchInputRef}
-              color="success"
+              color="primary"
               focused
             />
           </Autocomplete>
@@ -238,6 +240,7 @@ const PublicMap = (props) => {
         </GoogleMap>
       </section>
     </div>
+    </ThemeProvider>
   );
 };
 

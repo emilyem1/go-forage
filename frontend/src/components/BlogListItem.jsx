@@ -76,7 +76,7 @@ const BlogListItem = (props) => {
           >
             <Avatar
               sx={{ width: 90, height: 90,'&:hover': {
-                border: '4px solid lightgreen',
+                border: '4px solid #879b65'
               } }}
               alt={blog.username}
               src={blog.avatar}
@@ -113,15 +113,17 @@ const BlogListItem = (props) => {
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
           <Button size="small">Read More</Button>
-          {blog.mushrooms.map((mushroom, index) => (
-            <div key={index}>
-              <img
-                style={{ width: "22px" }}
-                src={`images/${mushroom.mushroom_icon}`}
-                alt={mushroom.mushroom_name}
-              />
-            </div>
-          ))}
+          <div>
+            {blog.mushrooms.map((mushroom, index) => (
+                <img
+                  key={index}
+                  style={{ width: "22px" }}
+                  src={`images/${mushroom.mushroom_icon}`}
+                  alt={mushroom.mushroom_name}
+                />
+              
+            ))}
+          </div>
         </CardActions>
       </section>
     </Card>

@@ -79,7 +79,7 @@ function App() {
           setSelectedRoute={setSelectedRoute}
         />
       ) : selectedRoute === "MUSHROOMDETAILS" ? (
-        <MushroomDetails mushroomSelected={mushroomSelected} />
+        <MushroomDetails mushroomSelected={mushroomSelected} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue} />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal
           email={userData.email}

@@ -145,23 +145,32 @@ const FieldDetails = (props) => {
             }}
           >
             <CardHeader
-              avatar={<Avatar alt={blog.username} src={blog.avatar} />}
-              action={
-                <IconButton>
-                  <BookmarkButton
-                    blog={blog}
-                    onBookmarkClick={onBookmarkClick}
-                    bookmarkSelect={bookmarkSelect ? true : false}
-                    user_id={user_id}
-                    userData={userData}
-                  />
-                </IconButton>
-              }
-              title={<h1>{blog.title}</h1>}
-              subheader={`By: ${blog.username} published: ${dateFormatter(
-                blog.date
-              )}`}
+        avatar={
+          <Avatar
+            sx={{ width: 90, height: 90 }}
+            alt={blog.username}
+            src={blog.avatar}
+          />
+        }
+        action={
+          <IconButton sx={{ transform: "translate(25%,-31.5%)" }}>
+            <BookmarkButton
+              blog={blog}
+              onBookmarkClick={onBookmarkClick}
+              bookmarkSelect={bookmarkSelect ? true : false}
+              user_id={user_id}
+              userData={userData}
             />
+          </IconButton>
+        }
+        title={<h2>{blog.title}</h2>}
+        subheader={
+          <div>
+            <div>By: {blog.username}</div>{" "}
+            <div>Published: {dateFormatter(blog.date)}</div>
+          </div>
+        }
+      />
             <CardActions
               sx={{ display: "flex", justifyContent: "space-between" }}
             >

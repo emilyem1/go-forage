@@ -60,9 +60,15 @@ const FieldJournalItem = (props) => {
       }}
     >
       <CardHeader
-        avatar={<Avatar alt={blog.username} src={blog.avatar} />}
+        avatar={
+          <Avatar
+            sx={{ width: 90, height: 90 }}
+            alt={blog.username}
+            src={blog.avatar}
+          />
+        }
         action={
-          <IconButton>
+          <IconButton sx={{ transform: "translate(25%,-31.5%)" }}>
             <BookmarkButton
               blog={blog}
               onBookmarkClick={onBookmarkClick}
@@ -72,10 +78,13 @@ const FieldJournalItem = (props) => {
             />
           </IconButton>
         }
-        title={blog.title}
-        subheader={`By: ${blog.username} published: ${dateFormatter(
-          blog.date
-        )}`}
+        title={<h2>{blog.title}</h2>}
+        subheader={
+          <div>
+            <div>By: {blog.username}</div>{" "}
+            <div>Published: {dateFormatter(blog.date)}</div>
+          </div>
+        }
       />
       <section onClick={handleClick}>
         <CardMedia>

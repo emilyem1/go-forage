@@ -4,7 +4,7 @@ const MushroomListItem = (props) => {
   const { mushroom, setMushroomSelected, setSelectedRoute } = props;
 
   const handleClick = () => {
-    setMushroomSelected({mushroom})
+    setMushroomSelected(mushroom)
     setSelectedRoute("MUSHROOMDETAILS");
   };
 

@@ -27,6 +27,7 @@ const MushroomResult = (props) => {
       className="mushroom-result-item"
       sx={{
         width: 345,
+        height: 345,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',

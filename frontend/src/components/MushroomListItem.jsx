@@ -3,10 +3,15 @@ import { useState } from "react";
 import { Box, Tooltip, tooltipClasses, styled, Card } from "@mui/material";
 
 const MushroomListItem = (props) => {
-  const { mushroom } = props;
+  const { mushroom, setMushroomSelected, setSelectedRoute } = props;
   const [checked, setChecked] = useState(false);
   const handleChange = () => {
     setChecked((prev) => !prev);
+  };
+  // will implement this in a 'read more'
+  const handleClick = () => {
+    setMushroomSelected(mushroom)
+    setSelectedRoute("MUSHROOMDETAILS");
   };
   const CustomTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 
 const MushroomResult = (props) => {
-  const { mushroom, setSelectedRoute, setValue } = props;
+  const { mushroom, setSelectedRoute, setValue, setMushroomSelected } = props;
 
   const shortenedInfo =
     mushroom.info.length > 100
@@ -17,7 +17,8 @@ const MushroomResult = (props) => {
 
 
   const handleClick = () => {
-    setSelectedRoute("MUSHROOMS");
+    setMushroomSelected(mushroom)
+    setSelectedRoute("MUSHROOMDETAILS");
     setValue(2);
   };
 
@@ -26,6 +27,10 @@ const MushroomResult = (props) => {
       className="mushroom-result-item"
       sx={{
         width: 345,
+        height: 345,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         boxShadow: 3,
         borderRadius: 3,
         transition: "box-shadow 0.3s ease",

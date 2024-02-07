@@ -1,6 +1,6 @@
 import Collapse from '@mui/material/Collapse';
 import { useState } from "react";
-import { Box, Tooltip, tooltipClasses, styled, Card } from "@mui/material";
+import { Box, Tooltip, tooltipClasses, styled, Card, Button } from "@mui/material";
 
 const MushroomListItem = (props) => {
   const { mushroom, setMushroomSelected, setSelectedRoute } = props;
@@ -8,7 +8,6 @@ const MushroomListItem = (props) => {
   const handleChange = () => {
     setChecked((prev) => !prev);
   };
-  // will implement this in a 'read more'
   const handleClick = () => {
     setMushroomSelected(mushroom)
     setSelectedRoute("MUSHROOMDETAILS");
@@ -54,15 +53,15 @@ const MushroomListItem = (props) => {
             />
           </CustomTooltip>
           <Card sx={{}}>
-            <h1 style={{ backgroundColor: '#4D6A66', padding:'1%', color:'#e6e6dd', marginTop:'0', fontFamily: "DM Sans"}}>{mushroom.name}</h1>
-            <div style={{fontFamily: "DM Sans", fontSize: '1em', padding: '0 5%'}}>
-              <p>{mushroom.info}</p>
-              <p>Edible: {mushroom.edible ? "Yes" : "No"}</p>
-              <img
+            <h1 style={{ backgroundColor: '#4D6A66', padding:'1%', color:'#e6e6dd', marginTop:'0', fontFamily: "DM Sans"}}>{mushroom.name}               <img
                 style={{ width: '22px' }}
                 className="mushroom-list__image"
                 src={`images/${mushroom.icon}`}
-              />
+              /></h1>
+            <div style={{fontFamily: "DM Sans", fontSize: '1em', padding: '0 5%'}}>
+              <p>{mushroom.info}</p>
+              <p>Edible: {mushroom.edible ? "Yes" : "No"}</p>
+              <Button size="small" variant="filled" onClick={handleClick}> Read more</Button>
             </div>
           </Card>
          </div>

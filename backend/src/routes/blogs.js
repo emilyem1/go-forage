@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Client } = require('pg');
+const { Client } = require("pg");
 
 module.exports = (db) => {
   router.get("/blogs", (request, response) => {
@@ -8,6 +8,8 @@ module.exports = (db) => {
       SELECT
       BLOG.ID AS id,
       BLOG.TITLE AS title,
+      USER_ACCOUNT.ID AS user_id,
+      USER_ACCOUNT.EMAIL AS user_email,
       USER_ACCOUNT.FULLNAME AS username,
       USER_ACCOUNT.PHOTO_URL AS avatar,
       BLOG.PUBLICATION_DATE AS date,
@@ -26,7 +28,7 @@ module.exports = (db) => {
   LEFT JOIN MUSHROOM_POST ON BLOG.ID = MUSHROOM_POST.BLOG_ID
   LEFT JOIN MUSHROOM ON MUSHROOM_POST.MUSHROOM_ID = MUSHROOM.ID
   GROUP BY
-      BLOG.ID, BLOG.TITLE, USER_ACCOUNT.FULLNAME, USER_ACCOUNT.PHOTO_URL,BLOG.PUBLICATION_DATE,
+      BLOG.ID, BLOG.TITLE, USER_ACCOUNT.ID, USER_ACCOUNT.EMAIL, USER_ACCOUNT.FULLNAME, USER_ACCOUNT.PHOTO_URL,BLOG.PUBLICATION_DATE,
       BLOG.CONTENT, BLOG.LATITUDE, BLOG.LONGITUDE
       ORDER BY
       BLOG.ID DESC
@@ -38,7 +40,8 @@ module.exports = (db) => {
 
   router.post("/blogs", async (request, response) => {
     console.log("Received POST request to /blogs");
-    const { title, content, latitude, longitude, user_id, privacy} = request.body;
+    const { title, content, latitude, longitude, user_id, privacy } =
+      request.body;
     db.query(
       `
       INSERT INTO BLOG (TITLE, CONTENT, LATITUDE, LONGITUDE, USER_ID, PRIVACY)
@@ -53,7 +56,7 @@ module.exports = (db) => {
 
   router.post("/mushroom-posts", async (request, response) => {
     console.log("Received POST request to /mushroom-posts");
-    const { blog_id, mushroom_id} = request.body;
+    const { blog_id, mushroom_id } = request.body;
     db.query(
       `
       INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID)
@@ -69,9 +72,18 @@ module.exports = (db) => {
   router.put("/blogs/:id", async (request, response) => {
     console.log("Received PUT request to /blogs/:id");
     const blogId = request.params.id;
-    const { title, content, latitude, longitude, user_id, mushrooms, privacy } = request.body;
-    console.log("Received data:", { title, content, latitude, longitude, user_id, mushrooms, privacy });
-  
+    const { title, content, latitude, longitude, user_id, mushrooms, privacy } =
+      request.body;
+    console.log("Received data:", {
+      title,
+      content,
+      latitude,
+      longitude,
+      user_id,
+      mushrooms,
+      privacy,
+    });
+
     const client = new Client();
     try {
       await client.connect();
@@ -91,18 +103,25 @@ module.exports = (db) => {
         return;
       }
       // Delete old mushrooms
-      await client.query("DELETE FROM MUSHROOM_POST WHERE BLOG_ID = $1", [blogId]);
+      await client.query("DELETE FROM MUSHROOM_POST WHERE BLOG_ID = $1", [
+        blogId,
+      ]);
       console.log("Deleted old mushrooms");
-  
+
       // Insert new mushrooms
       if (mushrooms && mushrooms.length > 0) {
-        const mushroomValues = mushrooms.map((mushroom) => [blogId, mushroom.mushroom_id]);
-        const placeholders = mushroomValues.map((_, index) => `($${2 * index + 1}, $${2 * index + 2})`).join(', ');
+        const mushroomValues = mushrooms.map((mushroom) => [
+          blogId,
+          mushroom.mushroom_id,
+        ]);
+        const placeholders = mushroomValues
+          .map((_, index) => `($${2 * index + 1}, $${2 * index + 2})`)
+          .join(", ");
         const insertQuery = `INSERT INTO MUSHROOM_POST (BLOG_ID, MUSHROOM_ID) VALUES ${placeholders}`;
         await client.query(insertQuery, mushroomValues.flat());
         console.log("Inserted new mushrooms:", mushroomValues);
       }
-  
+
       await client.query("COMMIT");
       response.json(updateBlogResponse.rows[0]);
     } catch (error) {
@@ -117,7 +136,10 @@ module.exports = (db) => {
     console.log("Received DELETE request to /blogs/:id");
     const blogId = request.params.id;
     try {
-      const deleteBlogResponse = await db.query('DELETE FROM BLOG WHERE ID = $1 RETURNING *', [blogId]);
+      const deleteBlogResponse = await db.query(
+        "DELETE FROM BLOG WHERE ID = $1 RETURNING *",
+        [blogId]
+      );
 
       if (deleteBlogResponse.rows.length === 0) {
         response.status(404).json({ error: "Blog not found" });

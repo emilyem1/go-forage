@@ -13,6 +13,7 @@ import BlogDetails from "./components/BlogDetails";
 import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 import MushroomDetails from "./components/MushroomDetails";
+import UserBlogs from "./components/UserBlogs";
 
 function App() {
   const {
@@ -21,6 +22,7 @@ function App() {
     setBlogUpdate,
     updateBookmarkedBlogs,
     updateComments,
+    setUserSelected,
   } = useApplicationData();
   const {
     blogData,
@@ -29,6 +31,7 @@ function App() {
     userData,
     commentData,
     bookmarkedBlogs,
+    userSelected,
   } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   const [mushroomSelected, setMushroomSelected] = useState(null);
@@ -55,6 +58,7 @@ function App() {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
+          setUserSelected={setUserSelected}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -108,14 +112,26 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
         />
-      ) : (
+      ) : selectedRoute === "USERBLOGS" ? (
+        <UserBlogs
+        blogs={blogData}
+        setBlogSelected={setBlogSelected}
+        setSelectedRoute={setSelectedRoute}
+        bookmarkedBlogs={bookmarkedBlogs}
+        userData={userData}
+        onBookmarkClick={updateBookmarkedBlogs}
+        userSelected={userSelected}
+        setUserSelected={setUserSelected}
+        />
+      ):(
         <SearchResults
           searchTerm={searchTerm}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
-        />
+          setUserSelected={setUserSelected}
+          />
       )}
     </div>
   );

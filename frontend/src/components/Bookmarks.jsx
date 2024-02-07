@@ -10,9 +10,10 @@ const Bookmarks = (props) => {
     bookmarkedBlogs,
     userData,
     onBookmarkClick,
+    setUserSelected
   } = props;
   const { user_id } = userData;
-  console.log(user_id);
+
   return (
     <main>
       <div>
@@ -39,6 +40,7 @@ const Bookmarks = (props) => {
                   bookmarkedBlogs={bookmarkedBlogs}
                   userData={userData}
                   onBookmarkClick={onBookmarkClick}
+                  setUserSelected={setUserSelected}
                 />
               ))
           ) : (

@@ -1,21 +1,32 @@
-import React from 'react';
-import { Card, Box, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import React from "react";
+import {
+  Card,
+  Box,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from "@mui/material";
 
 const UserResult = (props) => {
-  const { user } = props;
+  const { user, setUserSelected, setSelectedRoute } = props;
+  const handleClick = () => {
+    setUserSelected(user);
+    setSelectedRoute("USERBLOGS");
+  };
 
   return (
     <Card
       sx={{
         width: 350,
         height: 100,
-        display: 'flex',
-        justifyContent: 'space',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "space",
+        alignItems: "center",
         boxShadow: 3,
         borderRadius: 3,
-        transition: 'box-shadow 0.3s ease',
-        '&:hover': {
+        transition: "box-shadow 0.3s ease",
+        "&:hover": {
           boxShadow: 5,
         },
       }}
@@ -26,7 +37,7 @@ const UserResult = (props) => {
         height="100"
         width="100"
         src={`${user.photo_url}`}
-        sx={{ objectFit: 'cover' }}
+        sx={{ objectFit: "cover" }}
       />
 
       <CardContent
@@ -45,13 +56,15 @@ const UserResult = (props) => {
 
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Button size="small">Blogs</Button>
+        <div onClick={handleClick}>
+          <Button size="small">Blogs</Button>
+        </div>
         <Button size="small">Follow</Button>
       </Box>
     </Card>

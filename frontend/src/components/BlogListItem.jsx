@@ -22,6 +22,7 @@ const BlogListItem = (props) => {
     onBookmarkClick,
     bookmarkedBlogs,
     userData,
+    setUserSelected,
   } = props;
   const { user_id } = userData;
 
@@ -61,11 +62,26 @@ const BlogListItem = (props) => {
     >
       <CardHeader
         avatar={
-          <Avatar
-            sx={{ width: 90, height: 90 }}
-            alt={blog.username}
-            src={blog.avatar}
-          />
+          <div
+            onClick={() => {
+              setUserSelected({
+                id: blog.user_id,
+                fullname: blog.username,
+                email: blog.user_email,
+                password: "asd",
+                photo_url: blog.avatar,
+              });
+              setSelectedRoute("USERBLOGS");
+            }}
+          >
+            <Avatar
+              sx={{ width: 90, height: 90,'&:hover': {
+                border: '4px solid lightgreen',
+              } }}
+              alt={blog.username}
+              src={blog.avatar}
+            />
+          </div>
         }
         action={
           <IconButton sx={{ transform: "translate(25%,-31.5%)" }}>

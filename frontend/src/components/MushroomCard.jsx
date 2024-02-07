@@ -26,7 +26,7 @@ const MushroomCard = (props) => {
     <CardActionArea>
       <CardMedia
             component="img"
-            height="140"
+            height="90"
             image={profilePhoto}
             alt="profile photo"
       />

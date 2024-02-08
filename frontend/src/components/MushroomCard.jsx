@@ -22,23 +22,21 @@ const MushroomCard = (props) => {
   }, [email]);
 
   return (
-    <Card>
+  <Card sx={{ display: "inline-block" , padding: "1%", backgroundColor: '#4D6A66'}}>
     <CardActionArea>
       <CardMedia
-            component="img"
-            height="90"
-            image={profilePhoto}
-            alt="profile photo"
+        component="img"
+        height="210"
+        image={profilePhoto}
+        alt="profile photo"
       />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {fullname}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <ul>
+      <CardContent style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding:'5% 0 0 0'}}>
+        <p style={{ fontFamily: 'Roboto', fontWeight: '600', fontSize: '2.4em', margin: '0', color: 'white'}}>STAMPS</p>
+        <Typography variant="body2" color="text.secondary" style={{ padding: '1%', width: '80%' }}>
+          <ul style={{ paddingLeft: "0"}}>
             {icons.map((icon) => (
               <img
-              style={{ width: '22px' }}
+              style={{ width:"2em", backgroundColor:"white", marginLeft:"3%", padding:"5%", borderRadius:"35%" }}
               src={`images/${icon.icon}`}
               />
             ))}

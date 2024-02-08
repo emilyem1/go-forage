@@ -164,6 +164,7 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
           userSelected={userSelected}
           setUserSelected={setUserSelected}
+          friendData={friendData}
         />
       ) : (
         <SearchResults

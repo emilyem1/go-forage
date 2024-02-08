@@ -20,6 +20,7 @@ const UserBlogs = (props) => {
     onBookmarkClick,
     userSelected,
     setUserSelected,
+    friendData,
   } = props;
 
   const [icons, setIcons] = useState([]);
@@ -93,6 +94,7 @@ const UserBlogs = (props) => {
                 userData={userData}
                 onBookmarkClick={onBookmarkClick}
                 setUserSelected={setUserSelected}
+                friendData={friendData}
               />
             ))}
         </Box>

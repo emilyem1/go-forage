@@ -13,6 +13,7 @@ import {
 
 import BlogListMap from "./BlogListMap";
 import BookmarkButton from "./BookmarkButton";
+import FollowButton from "./FollowButton";
 
 const BlogListItem = (props) => {
   const {
@@ -62,19 +63,18 @@ const BlogListItem = (props) => {
     >
       <CardHeader
         avatar={
-          <div
-            onClick={() => {
-              setUserSelected({
-                id: blog.user_id,
-                fullname: blog.username,
-                email: blog.user_email,
-                password: "asd",
-                photo_url: blog.avatar,
-              });
-              setSelectedRoute("USERBLOGS");
-            }}
-          >
+          <div>
             <Avatar
+              onClick={() => {
+                setUserSelected({
+                  id: blog.user_id,
+                  fullname: blog.username,
+                  email: blog.user_email,
+                  password: "asd",
+                  photo_url: blog.avatar,
+                });
+                setSelectedRoute("USERBLOGS");
+              }}
               sx={{
                 width: 90,
                 height: 90,
@@ -86,6 +86,11 @@ const BlogListItem = (props) => {
               alt={blog.username}
               src={blog.avatar}
             />
+            <div style={{
+                paddingTop:".5em"
+              }}>
+              <FollowButton />
+            </div>
           </div>
         }
         action={

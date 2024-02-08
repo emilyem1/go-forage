@@ -45,31 +45,33 @@ const Account = (props) => {
             width: "44vw",
           }}
         >
-          <CardContent>
-            {friendData
-              .filter((user) => user_id === user.user_id)
-              .map((user) =>
-                user.friends.map((friend) => (
-                  <div
-                    key={friend.user_id}
+          {friendData
+            .filter((user) => user_id === user.user_id)
+            .map((user) =>
+              user.friends.map((friend) => (
+                <CardContent
+                  key={friend.user_id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    paddingLeft: "2em",
+                    "&:hover": {
+                      border: "4px solid #879b65",
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  <img
                     style={{
-                      display: "flex",
-                      alignItems: "center",
-                      paddingLeft: "2em",
+                      width: "5em",
+                      padding: "5%",
                     }}
-                  >
-                    <img
-                      style={{
-                        width: "5em",
-                        padding: "5%",
-                      }}
-                      src={friend.avatar}
-                    />
-                    <div> {friend.user_name}</div>
-                  </div>
-                ))
-              )}
-          </CardContent>
+                    src={friend.avatar}
+                  />
+                  <div> {friend.user_name}</div>
+                </CardContent>
+              ))
+            )}
         </Card>
       </section>
     </main>

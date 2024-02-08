@@ -75,9 +75,14 @@ const BlogListItem = (props) => {
             }}
           >
             <Avatar
-              sx={{ width: 90, height: 90,'&:hover': {
-                border: '4px solid #879b65'
-              } }}
+              sx={{
+                width: 90,
+                height: 90,
+                "&:hover": {
+                  border: "4px solid #879b65",
+                  cursor: "pointer",
+                },
+              }}
               alt={blog.username}
               src={blog.avatar}
             />
@@ -115,13 +120,12 @@ const BlogListItem = (props) => {
           <Button size="small">Read More</Button>
           <div>
             {blog.mushrooms.map((mushroom, index) => (
-                <img
-                  key={index}
-                  style={{ width: "22px" }}
-                  src={`images/${mushroom.mushroom_icon}`}
-                  alt={mushroom.mushroom_name}
-                />
-              
+              <img
+                key={index}
+                style={{ width: "22px" }}
+                src={`images/${mushroom.mushroom_icon}`}
+                alt={mushroom.mushroom_name}
+              />
             ))}
           </div>
         </CardActions>

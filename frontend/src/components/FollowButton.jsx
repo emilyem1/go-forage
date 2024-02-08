@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, Modal } from "@mui/material";
 
 function FollowButton(props) {
@@ -7,7 +7,7 @@ function FollowButton(props) {
   const filteredFriends = friendData.filter((user) => user_id === user.user_id);
   const friendsIdList = filteredFriends[0].friends;
   const friendsIDs = friendsIdList.map((friend) => friend.user_id);
-
+  const [isHovered, setIsHovered] = useState(false);
   // const handleLikeClick = async () => {
   //   if (userData.isLoggedIn) {
   //     if (bookmarkSelect) {
@@ -88,8 +88,10 @@ function FollowButton(props) {
               }}
               variant="contained"
               color="primary"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
             >
-              Unfollow
+              {isHovered ? "Unfollow" : "Following"}
             </Button>
           )}
         </div>

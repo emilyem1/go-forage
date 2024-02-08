@@ -2,7 +2,7 @@ import MushroomCard from "./MushroomCard";
 import { Card, CardContent } from "@mui/material";
 
 const Account = (props) => {
-  const { users, friendData } = props;
+  const { users, friendData, setSelectedRoute, setUserSelected } = props;
   const user_id = parseInt(users.user_id);
   return (
     <main
@@ -50,6 +50,16 @@ const Account = (props) => {
             .map((user) =>
               user.friends.map((friend) => (
                 <CardContent
+                  onClick={() => {
+                    setUserSelected({
+                      id: friend.user_id,
+                      fullname: friend.user_name,
+                      email: friend.email,
+                      password: "asd",
+                      photo_url: friend.avatar,
+                    });
+                    setSelectedRoute("USERBLOGS");
+                  }}
                   key={friend.user_id}
                   sx={{
                     display: "flex",

@@ -11,7 +11,8 @@ module.exports = (db) => {
           json_build_object(
             'user_id', USER_ACCOUNT.ID, 
             'user_name', USER_ACCOUNT.FULLNAME, 
-            'avatar', USER_ACCOUNT.PHOTO_URL
+            'avatar', USER_ACCOUNT.PHOTO_URL,
+            'email', USER_ACCOUNT.EMAIL
           )
         ) AS friends
       FROM

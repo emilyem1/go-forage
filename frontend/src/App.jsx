@@ -33,6 +33,7 @@ function App() {
     commentData,
     bookmarkedBlogs,
     userSelected,
+    friendData,
   } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   const [mushroomSelected, setMushroomSelected] = useState(null);
@@ -127,7 +128,7 @@ function App() {
           theme={theme}
         />
       ) : selectedRoute === "ACCOUNT" ? (
-        <Account users={userData} />
+        <Account users={userData} friendData={friendData}/>
       ) : selectedRoute === "LOGINSIGNUP" ? (
         <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
       ) : selectedRoute === "FIELDDETAILS" ? (

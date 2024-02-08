@@ -12,6 +12,7 @@ export const ACTIONS = {
   BLOG_BOOKMARK_ADDED: "FAV_PHOTO_ADDED",
   COMMENT_ADDED: "COMMENT_ADDED",
   SELECT_USER: "SELECT_USER",
+  SET_FRIEND_DATA: "SET_FRIEND_DATA",
 };
 
 function reducer(state, action) {
@@ -80,6 +81,9 @@ function reducer(state, action) {
     case ACTIONS.SELECT_USER:
       return { ...state, userSelected: action.payload };
 
+    case ACTIONS.SET_FRIEND_DATA:
+      return { ...state, friendData: action.payload };
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -104,7 +108,8 @@ const useApplicationData = () => {
     blogUpdate: false,
     bookmarkedBlogs: {},
     commentUpdate: false,
-    userSelected:false,
+    userSelected: false,
+    friendData:[],
   });
 
   useEffect(() => {
@@ -151,7 +156,18 @@ const useApplicationData = () => {
         dispatch({ type: ACTIONS.SET_BOOKMARKED_BLOGS, payload: data })
       )
       .catch((error) => {
-        console.error("Error fetching favourites:", error);
+        console.error("Error fetching bookmarks:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8001/api/friends")
+      .then((response) => response.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_FRIEND_DATA, payload: data })
+      )
+      .catch((error) => {
+        console.error("Error fetching friends:", error);
       });
   }, []);
 

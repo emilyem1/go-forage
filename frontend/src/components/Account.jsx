@@ -1,38 +1,60 @@
 import MushroomCard from "./MushroomCard";
-import {
-  Card,
-  CardContent,
-} from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 
 const Account = (props) => {
-  const { users } = props;
+  const { users, friendData } = props;
+  const user_id = parseInt(users.user_id);
   return (
-    <main style={{ display:'flex', justifyContent:'center', alignItems:'center', flexDirection:'column' }}>
+    <main
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+      }}
+    >
       <Card
         sx={{
-          width: '60vw',
-          margin: '2% 0 0 0',
-          backgroundColor: '#4D6A66',
-          color: 'white'
+          width: "60vw",
+          margin: "2% 0 0 0",
+          backgroundColor: "#4D6A66",
+          color: "white",
         }}
       >
         <CardContent>
-        <h1 style={{fontFamily: 'Roboto', marginLeft: '30%'}}>Forager Account</h1>
+          <h1 style={{ fontFamily: "Roboto", marginLeft: "30%" }}>
+            Forager Account
+          </h1>
         </CardContent>
       </Card>
-      <section style={{ display:'flex', width:'60vw', marginBottom:'3%', marginTop:'-1%'}}>
-        <MushroomCard 
-          fullname={users.fullname} 
-          email={users.email} 
+      <section
+        style={{
+          display: "flex",
+          width: "60vw",
+          marginBottom: "3%",
+          marginTop: "-1%",
+        }}
+      >
+        <MushroomCard
+          fullname={users.fullname}
+          email={users.email}
           profilePhoto={users.profilePhoto}
         />
         <Card
           sx={{
-            width:'44vw'
+            width: "44vw",
           }}
         >
           <CardContent>
-            Following will go here ~
+            {friendData
+              .filter((friend) => user_id === friend.user_id)
+              .map((friend) =>
+                friend.friend_ids.map((friendId) => (
+                  <div key={friendId}>
+                    <div> {friendId}</div>
+                  </div>
+                ))
+              )}
           </CardContent>
         </Card>
       </section>

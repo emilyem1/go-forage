@@ -71,15 +71,24 @@ const UserBlogs = (props) => {
                   src={userSelected.photo_url}
                 />
               }
-              subheader={<h2>{userSelected.fullname}'s blogs</h2>}
+              subheader={
+                <div>
+                  <h2>{userSelected.fullname}</h2>
+                  <h3>
+                    {`${
+                      blogs.filter((blog) => blog.user_id === userSelected.id)
+                        .length
+                    } Blogs`}
+                  </h3>
+                  {icons.map((icon) => (
+                    <img
+                      style={{ width: "22px" }}
+                      src={`images/${icon.icon}`}
+                    />
+                  ))}
+                </div>
+              }
             />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {icons.map((icon) => (
-                  <img style={{ width: "22px" }} src={`images/${icon.icon}`} />
-                ))}
-              </Typography>
-            </CardContent>
           </Card>
           {blogs
             .filter((blog) => blog.user_id === userSelected.id)

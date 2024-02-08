@@ -4,11 +4,10 @@ import BlogListItem from "./BlogListItem";
 import { Box } from "@mui/material";
 import {
   Card,
-  CardContent,
-  Typography,
   Avatar,
   CardHeader,
 } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles'; 
 
 const UserBlogs = (props) => {
   const {
@@ -21,6 +20,7 @@ const UserBlogs = (props) => {
     userSelected,
     setUserSelected,
     friendData,
+    theme
   } = props;
 
   const [icons, setIcons] = useState([]);
@@ -41,74 +41,76 @@ const UserBlogs = (props) => {
   }, [userSelected.email]);
 
   return (
-    <main>
-      <div>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignContent: "center",
-            flexWrap: "wrap",
-            padding: "10px",
-            gap: "2rem",
-          }}
-        >
-          <Card
+    <ThemeProvider theme={theme}>
+      <main>
+        <div>
+          <Box
             sx={{
-              boxShadow: 3,
-              borderRadius: 3,
+              display: "flex",
+              flexDirection: "column",
+              alignContent: "center",
+              flexWrap: "wrap",
+              padding: "10px",
+              gap: "2rem",
             }}
           >
-            <CardHeader
+            <Card
               sx={{
-                display: "flex",
-                flexDirection: "column",
+                boxShadow: 3,
+                borderRadius: 3,
               }}
-              avatar={
-                <Avatar
-                  sx={{ width: 90, height: 90 }}
-                  alt={userSelected.fullname}
-                  src={userSelected.photo_url}
-                />
-              }
-              subheader={
-                <div>
-                  <h2>{userSelected.fullname}</h2>
-                  <h3>
-                    {`${
-                      blogs.filter((blog) => blog.user_id === userSelected.id)
-                        .length
-                    } Blogs`}
-                  </h3>
-                  {icons.map((icon) => (
-                    <img
-                      style={{ width: "22px" }}
-                      src={`images/${icon.icon}`}
-                    />
-                  ))}
-                </div>
-              }
-            />
-          </Card>
-          {blogs
-            .filter((blog) => blog.user_id === userSelected.id)
-            .map((blog) => (
-              <BlogListItem
-                className="mushroom-list"
-                key={blog.id}
-                blog={blog}
-                setBlogSelected={setBlogSelected}
-                setSelectedRoute={setSelectedRoute}
-                bookmarkedBlogs={bookmarkedBlogs}
-                userData={userData}
-                onBookmarkClick={onBookmarkClick}
-                setUserSelected={setUserSelected}
-                friendData={friendData}
+            >
+              <CardHeader
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+                avatar={
+                  <Avatar
+                    sx={{ width: 90, height: 90 }}
+                    alt={userSelected.fullname}
+                    src={userSelected.photo_url}
+                  />
+                }
+                subheader={
+                  <div>
+                    <h2>{userSelected.fullname}</h2>
+                    <h3>
+                      {`${
+                        blogs.filter((blog) => blog.user_id === userSelected.id)
+                          .length
+                      } Blogs`}
+                    </h3>
+                    {icons.map((icon) => (
+                      <img
+                        style={{ width: "22px" }}
+                        src={`images/${icon.icon}`}
+                      />
+                    ))}
+                  </div>
+                }
               />
-            ))}
-        </Box>
-      </div>
-    </main>
+            </Card>
+            {blogs
+              .filter((blog) => blog.user_id === userSelected.id)
+              .map((blog) => (
+                <BlogListItem
+                  className="mushroom-list"
+                  key={blog.id}
+                  blog={blog}
+                  setBlogSelected={setBlogSelected}
+                  setSelectedRoute={setSelectedRoute}
+                  bookmarkedBlogs={bookmarkedBlogs}
+                  userData={userData}
+                  onBookmarkClick={onBookmarkClick}
+                  setUserSelected={setUserSelected}
+                  friendData={friendData}
+                />
+              ))}
+          </Box>
+        </div>
+      </main>
+    </ThemeProvider>
   );
 };
 

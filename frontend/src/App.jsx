@@ -165,6 +165,7 @@ function App() {
           userSelected={userSelected}
           setUserSelected={setUserSelected}
           friendData={friendData}
+          theme={theme}
         />
       ) : (
         <SearchResults
@@ -174,6 +175,7 @@ function App() {
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
           setUserSelected={setUserSelected}
+          theme={theme}
         />
       )}
     </div>

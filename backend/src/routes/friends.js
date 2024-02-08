@@ -7,7 +7,13 @@ module.exports = (db) => {
       `
       SELECT
         USER_ID,
-        ARRAY_AGG(json_build_object('user_name', USER_ACCOUNT.FULLNAME, 'avatar', USER_ACCOUNT.PHOTO_URL)) AS friends
+        ARRAY_AGG(
+          json_build_object(
+            'user_id', USER_ACCOUNT.ID, 
+            'user_name', USER_ACCOUNT.FULLNAME, 
+            'avatar', USER_ACCOUNT.PHOTO_URL
+          )
+        ) AS friends
       FROM
         FRIENDS
       JOIN USER_ACCOUNT ON FRIENDS.FRIEND_USER_ID = USER_ACCOUNT.ID

@@ -47,11 +47,11 @@ const Account = (props) => {
         >
           <CardContent>
             {friendData
-              .filter((friend) => user_id === friend.user_id)
-              .map((friend) =>
-                friend.friend_ids.map((friendId) => (
-                  <div key={friendId}>
-                    <div> {friendId}</div>
+              .filter((user) => user_id === user.user_id)
+              .map((user) =>
+                user.friends.map((friend) => (
+                  <div key={friend.user_name}>
+                    <div> {friend.user_name}</div>
                   </div>
                 ))
               )}

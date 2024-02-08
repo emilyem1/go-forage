@@ -7,10 +7,10 @@ module.exports = (db) => {
       `
       SELECT
         USER_ID,
-        ARRAY_AGG(FRIEND_USER_ID) AS friend_ids
+        ARRAY_AGG(json_build_object('user_name', USER_ACCOUNT.FULLNAME, 'avatar', USER_ACCOUNT.PHOTO_URL)) AS friends
       FROM
         FRIENDS
-      JOIN USER_ACCOUNT ON FRIENDS.USER_ID = USER_ACCOUNT.ID
+      JOIN USER_ACCOUNT ON FRIENDS.FRIEND_USER_ID = USER_ACCOUNT.ID
       GROUP BY USER_ID
       `
     ).then(({ rows: blogs }) => {

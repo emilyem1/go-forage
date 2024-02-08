@@ -50,7 +50,21 @@ const Account = (props) => {
               .filter((user) => user_id === user.user_id)
               .map((user) =>
                 user.friends.map((friend) => (
-                  <div key={friend.user_name}>
+                  <div
+                    key={friend.user_id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingLeft: "2em",
+                    }}
+                  >
+                    <img
+                      style={{
+                        width: "5em",
+                        padding: "5%",
+                      }}
+                      src={friend.avatar}
+                    />
                     <div> {friend.user_name}</div>
                   </div>
                 ))

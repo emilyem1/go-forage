@@ -86,6 +86,7 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
           setUserSelected={setUserSelected}
           theme={theme}
+          friendData={friendData}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap

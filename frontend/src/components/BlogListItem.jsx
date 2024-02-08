@@ -24,6 +24,7 @@ const BlogListItem = (props) => {
     bookmarkedBlogs,
     userData,
     setUserSelected,
+    friendData,
   } = props;
   const { user_id } = userData;
 
@@ -86,10 +87,12 @@ const BlogListItem = (props) => {
               alt={blog.username}
               src={blog.avatar}
             />
-            <div style={{
-                paddingTop:".5em"
-              }}>
-              <FollowButton />
+            <div
+              style={{
+                paddingTop: ".5em",
+              }}
+            >
+              <FollowButton userData={userData} blog={blog} friendData={friendData}/>
             </div>
           </div>
         }

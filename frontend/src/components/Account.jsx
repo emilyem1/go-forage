@@ -4,6 +4,11 @@ import { Card, CardContent } from "@mui/material";
 const Account = (props) => {
   const { users, friendData, setSelectedRoute, setUserSelected } = props;
   const user_id = parseInt(users.user_id);
+  const numberOfFollows = friendData.filter(
+    (user) => user_id === user.user_id
+  )[0].friends.length;
+
+
   return (
     <main
       style={{
@@ -39,6 +44,7 @@ const Account = (props) => {
           fullname={users.fullname}
           email={users.email}
           profilePhoto={users.profilePhoto}
+          numberOfFollows={numberOfFollows}
         />
         <Card
           sx={{

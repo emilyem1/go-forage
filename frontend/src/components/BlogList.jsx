@@ -24,6 +24,7 @@ const BlogList = (props) => {
     onBookmarkClick,
     setUserSelected,
     theme,
+    friendData,
   } = props;
   const [feed, setFeed] = useState("HOME");
 
@@ -114,6 +115,7 @@ const BlogList = (props) => {
                   userData={userData}
                   onBookmarkClick={onBookmarkClick}
                   setUserSelected={setUserSelected}
+                  friendData={friendData}
                 />
               ))}
             </Box>
@@ -128,6 +130,7 @@ const BlogList = (props) => {
             userData={userData}
             onBookmarkClick={onBookmarkClick}
             setUserSelected={setUserSelected}
+            friendData={friendData}
           />
         )}
       </main>

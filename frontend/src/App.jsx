@@ -14,7 +14,7 @@ import SearchResults from "./components/SearchResults";
 import FieldDetails from "./components/FieldDetails";
 import MushroomDetails from "./components/MushroomDetails";
 import UserBlogs from "./components/UserBlogs";
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from "@mui/material/styles";
 
 function App() {
   const {
@@ -33,6 +33,7 @@ function App() {
     commentData,
     bookmarkedBlogs,
     userSelected,
+    friendData,
   } = state;
   const [blogSelected, setBlogSelected] = useState(null);
   const [mushroomSelected, setMushroomSelected] = useState(null);
@@ -43,24 +44,24 @@ function App() {
   // Pass down theme, then use color="primary" etc to access
   const custom = {
     green: {
-      main: '#4D6A66',
+      main: "#4D6A66",
     },
     red: {
-      main: '#c74343',
+      main: "#c74343",
     },
     offwhite: {
-      main: '#e6e6dd',
+      main: "#e6e6dd",
     },
     yellow: {
-      main: '#d6cfa3',
-    }
+      main: "#d6cfa3",
+    },
   };
   const theme = createTheme({
     palette: {
       primary: custom.green,
       secondary: custom.offwhite,
       error: custom.red,
-      success: custom.yellow
+      success: custom.yellow,
     },
   });
 
@@ -85,6 +86,7 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
           setUserSelected={setUserSelected}
           theme={theme}
+          friendData={friendData}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -112,7 +114,12 @@ function App() {
           users={userData}
         />
       ) : selectedRoute === "MUSHROOMDETAILS" ? (
-        <MushroomDetails mushroomSelected={mushroomSelected} setBlogSelected={setBlogSelected} setSelectedRoute={setSelectedRoute} setValue={setValue} />
+        <MushroomDetails
+          mushroomSelected={mushroomSelected}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          setValue={setValue}
+        />
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal
           email={userData.email}
@@ -127,7 +134,12 @@ function App() {
           theme={theme}
         />
       ) : selectedRoute === "ACCOUNT" ? (
-        <Account users={userData} />
+        <Account
+          users={userData}
+          friendData={friendData}
+          setSelectedRoute={setSelectedRoute}
+          setUserSelected={setUserSelected}
+        />
       ) : selectedRoute === "LOGINSIGNUP" ? (
         <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
       ) : selectedRoute === "FIELDDETAILS" ? (
@@ -144,16 +156,17 @@ function App() {
         />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs
-        blogs={blogData}
-        setBlogSelected={setBlogSelected}
-        setSelectedRoute={setSelectedRoute}
-        bookmarkedBlogs={bookmarkedBlogs}
-        userData={userData}
-        onBookmarkClick={updateBookmarkedBlogs}
-        userSelected={userSelected}
-        setUserSelected={setUserSelected}
+          blogs={blogData}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
+          userSelected={userSelected}
+          setUserSelected={setUserSelected}
+          friendData={friendData}
         />
-      ):(
+      ) : (
         <SearchResults
           searchTerm={searchTerm}
           setBlogSelected={setBlogSelected}
@@ -161,7 +174,7 @@ function App() {
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
           setUserSelected={setUserSelected}
-          />
+        />
       )}
     </div>
   );

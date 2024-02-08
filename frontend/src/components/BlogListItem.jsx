@@ -13,6 +13,7 @@ import {
 
 import BlogListMap from "./BlogListMap";
 import BookmarkButton from "./BookmarkButton";
+import FollowButton from "./FollowButton";
 
 const BlogListItem = (props) => {
   const {
@@ -23,6 +24,7 @@ const BlogListItem = (props) => {
     bookmarkedBlogs,
     userData,
     setUserSelected,
+    friendData,
   } = props;
   const { user_id } = userData;
 
@@ -62,25 +64,36 @@ const BlogListItem = (props) => {
     >
       <CardHeader
         avatar={
-          <div
-            onClick={() => {
-              setUserSelected({
-                id: blog.user_id,
-                fullname: blog.username,
-                email: blog.user_email,
-                password: "asd",
-                photo_url: blog.avatar,
-              });
-              setSelectedRoute("USERBLOGS");
-            }}
-          >
+          <div>
             <Avatar
-              sx={{ width: 90, height: 90,'&:hover': {
-                border: '4px solid #879b65'
-              } }}
+              onClick={() => {
+                setUserSelected({
+                  id: blog.user_id,
+                  fullname: blog.username,
+                  email: blog.user_email,
+                  password: "asd",
+                  photo_url: blog.avatar,
+                });
+                setSelectedRoute("USERBLOGS");
+              }}
+              sx={{
+                width: 90,
+                height: 90,
+                "&:hover": {
+                  border: "4px solid #879b65",
+                  cursor: "pointer",
+                },
+              }}
               alt={blog.username}
               src={blog.avatar}
             />
+            <div
+              style={{
+                paddingTop: ".5em",
+              }}
+            >
+              <FollowButton userData={userData} blog={blog} friendData={friendData}/>
+            </div>
           </div>
         }
         action={
@@ -115,13 +128,12 @@ const BlogListItem = (props) => {
           <Button size="small">Read More</Button>
           <div>
             {blog.mushrooms.map((mushroom, index) => (
-                <img
-                  key={index}
-                  style={{ width: "22px" }}
-                  src={`images/${mushroom.mushroom_icon}`}
-                  alt={mushroom.mushroom_name}
-                />
-              
+              <img
+                key={index}
+                style={{ width: "22px" }}
+                src={`images/${mushroom.mushroom_icon}`}
+                alt={mushroom.mushroom_name}
+              />
             ))}
           </div>
         </CardActions>

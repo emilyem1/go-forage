@@ -57,17 +57,25 @@ INSERT INTO BLOG (TITLE, content, publication_date, latitude, longitude, USER_ID
   ('Exploring the Mysterious Lobster Mushroom', 'Today, I embarked on a journey to unravel the mysteries of the Lobster Mushroom. With its distinctive red caps and tough gills, this enigmatic fungus is a puzzle waiting to be solved. Lobster Mushrooms are notoriously short-lived. I carefully harvested a few specimens, marveling at their tough gills and orange/red caps. The resulting dish was a savory delight that showcased the unique flavor and texture of the Lobster Mushroom. It''s amazing how something so mysterious can also be so delicious. That with some Inky Cap mushrooms I found, it really hit the spot.', '2024-02-15', 51.1611, -117.3230, 1, true);
 
 -- 10 Inserts for FRIENDS table
-INSERT INTO FRIENDS (USER_ID, FRIEND_USER_ID, FRIENDSHIP_STATUS) VALUES
-  (1, 2, true),
-  (1, 3, true),
-  (2, 4, true),
-  (3, 5, false),
-  (4, 6, true),
-  (5, 7, false),
-  (6, 8, true),
-  (7, 9, true),
-  (8, 10, false),
-  (9, 1, true);
+INSERT INTO FRIENDS (USER_ID, FRIEND_USER_ID) VALUES
+  (1, 2),
+  (1, 3),
+  (2, 4),
+  (3, 5),
+  (4, 6),
+  (5, 7),
+  (6, 8),
+  (7, 9),
+  (8, 10),
+  (1, 10),
+  (2, 9),
+  (3, 7),
+  (4, 9),
+  (5, 1),
+  (6, 3),
+  (7, 10),
+  (8, 2),
+  (9, 10);
 
 -- 10 Inserts for FAVOURITES table
 INSERT INTO FAVOURITES (USER_ID, BLOG_ID) VALUES

@@ -1,9 +1,11 @@
 import BlogFormMap from "./BlogFormMap";
 import "../styles/BlogForm.scss";
 import { useState } from "react";
+import { ThemeProvider } from '@mui/material/styles';
+import { TextField, Button, MenuItem, Select, InputLabel, FormControl } from "@mui/material";
 
 const BlogForm = (props) => {
-  const { mushrooms, setBlogUpdate, handleClose } = props;
+  const { mushrooms, setBlogUpdate, handleClose, theme } = props;
   const [disableAddMushroom, setDisableAddMushroom] = useState(true);
 
   const [formData, setFormData] = useState({
@@ -112,64 +114,94 @@ const BlogForm = (props) => {
     }
     handleClose()
   };
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 900,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    maxHeight: '90%',
+  };
 
   return (
-    <form className="blog-form">
-      <div className="form-content">
-        <section className="form-input">
-          <input
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              placeholder="Enter Blog Title"
-            />
-
-          {formData.mushrooms.map((mushroom, index) => (
-            <div key={index}>
-              <select
-                name={`mushroom_id_${index}`}
-                value={mushroom.mushroom_id}
-                onChange={(event) => handleMushroomSelection(event, index)}
-              >
-                <option value="">Select Mushroom</option>
-                {mushrooms.map((mushroomOption) => (
-                  <option key={mushroomOption.id} value={mushroomOption.id}>
-                    {mushroomOption.name}
-                  </option>
+    <ThemeProvider theme={theme}>
+      <form className="blog-form" style={style}>
+        <BlogFormMap setFormData={setFormData} />
+      <div className="form-content" 
+        style={{ display:"flex", justifyContent:"center", padding:"1%"}}
+      >
+        <section id="small-inputs" style={{width:"28%", marginTop:"1%"}}>
+          <TextField
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter Blog Title"
+            variant="filled"
+            fullWidth
+            sx={{marginBottom:"3%"}}
+          />
+            <FormControl fullWidth variant="filled">
+              <InputLabel id="select-label">Select Privacy</InputLabel>
+                <Select
+                  name="privacy"
+                  value={formData.privacy}
+                  onChange={handleChange}
+                  sx={{marginBottom:"3%"}}
+                >
+                  <MenuItem value={true}>Public</MenuItem>
+                  <MenuItem value={false}>Private</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl fullWidth variant="filled">
+              <InputLabel id="select-label">Select Mushroom</InputLabel>
+                {formData.mushrooms.map((mushroom, index) => (
+                  <Select
+                    key={index}
+                    name={`mushroom_id_${index}`}
+                    value={mushroom.mushroom_id}
+                    label="Age"
+                    onChange={(event) => handleMushroomSelection(event, index)}
+                      sx={{marginBottom:"3%"}}
+                  >
+                    {mushrooms.map((mushroomOption) => (
+                      <MenuItem key={mushroomOption.id} value={mushroomOption.id}>
+                        {mushroomOption.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 ))}
-              </select>
-            </div>
-          ))}
-          {formData.mushrooms.length < 4 && (
-            <button type="button" onClick={handleAddMushroom} disabled={disableAddMushroom}>
-              Add Mushroom
-            </button>
-          )}
-          <input
+                {formData.mushrooms.length < 4 && (
+                  <Button type="button" onClick={handleAddMushroom} disabled={disableAddMushroom}>
+                    Add Mushroom
+                  </Button>
+                )}
+          </FormControl>
+        </section>
+        <section id="content" style={{width:"70%", margin:"1%"}}>
+          <TextField
             type="text"
             name="content"
             value={formData.content}
             onChange={handleChange}
             placeholder="Enter Blog Content"
+            variant="filled"
+            fullWidth
+            multiline
+            rows={6.5}
+            inputProps={{ style: { width: '60%' } }}
           />
-          <select
-            name="privacy"
-            value={formData.privacy}
-            onChange={handleChange}
-          >
-            <option value={true}>Public</option>
-            <option value={false}>Private</option>
-          </select>
-        </section>
-        <section className="map">
-          <BlogFormMap setFormData={setFormData} />
         </section>
       </div>
-      <button type="button" onClick={handleSubmit} >
-        Submit
-      </button>
+      <Button color="primary" variant="contained" onClick={handleSubmit} sx={{margin:"1% 40%"}} >
+          Submit
+      </Button>
     </form>
+  </ThemeProvider>
   );
 };
 

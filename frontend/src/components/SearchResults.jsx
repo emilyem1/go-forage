@@ -5,6 +5,7 @@ import Carousel from "react-material-ui-carousel";
 import MushroomResult from "./SearchResultComponents/MushroomResult";
 import UserResult from "./SearchResultComponents/UserResult";
 import BlogResult from "./SearchResultComponents/BlogResult";
+import { ThemeProvider } from '@mui/material/styles'; 
 
 // ... (previous imports)
 
@@ -16,6 +17,7 @@ const SearchResults = (props) => {
     setValue,
     setMushroomSelected,
     setUserSelected,
+    theme
   } = props;
   const [searchResults, setSearchResults] = useState(null);
   const itemsPerPage = 3; // Set the number of results per page
@@ -53,160 +55,162 @@ const SearchResults = (props) => {
   }, [searchTerm]);
 
   return (
-    <main>
-      <h2>Search Results</h2>
-      <p>Search term: {searchTerm}</p>
-      {searchResults && (
-        <div>
-          {/* Display user results */}
-          {searchResults.users && (
-            <section
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <h3>User Results</h3>
-              <Carousel
-                navButtonsAlwaysVisible={true}
-                autoPlay={false}
-                animation={"slide"}
-                duration={750}
-                sx={{
+    <ThemeProvider theme={theme}>
+      <main>
+        <h2>Search Results</h2>
+        <p>Search term: {searchTerm}</p>
+        {searchResults && (
+          <div>
+            {/* Display user results */}
+            {searchResults.users && (
+              <section
+                style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
-                  width: "90%",
+                  alignItems: "center",
                 }}
               >
-                {pagination(searchResults.users.rows, itemsPerPage).map(
-                  (page, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: "2rem",
-                        padding: "0rem 4rem",
-                      }}
-                    >
-                      {page.map((user) => (
-                        <UserResult
-                          key={user.id}
-                          user={user}
-                          setUserSelected={setUserSelected}
-                          setSelectedRoute={setSelectedRoute}
-                        ></UserResult>
-                      ))}
-                    </div>
-                  )
-                )}
-              </Carousel>
-            </section>
-          )}
+                <h3>User Results</h3>
+                <Carousel
+                  navButtonsAlwaysVisible={true}
+                  autoPlay={false}
+                  animation={"slide"}
+                  duration={750}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    width: "90%",
+                  }}
+                >
+                  {pagination(searchResults.users.rows, itemsPerPage).map(
+                    (page, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "2rem",
+                          padding: "0rem 4rem",
+                        }}
+                      >
+                        {page.map((user) => (
+                          <UserResult
+                            key={user.id}
+                            user={user}
+                            setUserSelected={setUserSelected}
+                            setSelectedRoute={setSelectedRoute}
+                          ></UserResult>
+                        ))}
+                      </div>
+                    )
+                  )}
+                </Carousel>
+              </section>
+            )}
 
-          {/* Display mushroom results */}
-          {searchResults.mushrooms && (
-            <section
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <h3>Mushroom Results</h3>
-              <Carousel
-                navButtonsAlwaysVisible={true}
-                autoPlay={false}
-                animation={"slide"}
-                duration={750}
-                sx={{
+            {/* Display mushroom results */}
+            {searchResults.mushrooms && (
+              <section
+                style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
-                  width: "80%",
+                  alignItems: "center",
                 }}
               >
-                {pagination(searchResults.mushrooms.rows, itemsPerPage).map(
-                  (page, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: "2rem",
-                      }}
-                    >
-                      {page.map((mushroom) => (
-                        <MushroomResult
-                          key={mushroom.id}
-                          mushroom={mushroom}
-                          setSelectedRoute={setSelectedRoute}
-                          setValue={setValue}
-                          setMushroomSelected={setMushroomSelected}
-                        ></MushroomResult>
-                      ))}
-                    </div>
-                  )
-                )}
-              </Carousel>
-            </section>
-          )}
+                <h3>Mushroom Results</h3>
+                <Carousel
+                  navButtonsAlwaysVisible={true}
+                  autoPlay={false}
+                  animation={"slide"}
+                  duration={750}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    width: "80%",
+                  }}
+                >
+                  {pagination(searchResults.mushrooms.rows, itemsPerPage).map(
+                    (page, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "2rem",
+                        }}
+                      >
+                        {page.map((mushroom) => (
+                          <MushroomResult
+                            key={mushroom.id}
+                            mushroom={mushroom}
+                            setSelectedRoute={setSelectedRoute}
+                            setValue={setValue}
+                            setMushroomSelected={setMushroomSelected}
+                          ></MushroomResult>
+                        ))}
+                      </div>
+                    )
+                  )}
+                </Carousel>
+              </section>
+            )}
 
-          {/* Display blog results */}
-          {searchResults.blogs && (
-            <section
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <h3>Blog Results</h3>
-              <Carousel
-                navButtonsAlwaysVisible={true}
-                autoPlay={false}
-                animation={"slide"}
-                duration={750}
-                sx={{
+            {/* Display blog results */}
+            {searchResults.blogs && (
+              <section
+                style={{
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
-                  width: "80%",
+                  alignItems: "center",
                 }}
               >
-                {pagination(searchResults.blogs.rows, itemsPerPage).map(
-                  (page, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        gap: "2rem",
-                      }}
-                    >
-                      {page.map((blog) => (
-                        <BlogResult
-                          key={blog.id}
-                          blog={blog}
-                          setBlogSelected={setBlogSelected}
-                          setSelectedRoute={setSelectedRoute}
-                          setValue={setValue}
-                        ></BlogResult>
-                      ))}
-                    </div>
-                  )
-                )}
-              </Carousel>
-            </section>
-          )}
-        </div>
-      )}
-    </main>
+                <h3>Blog Results</h3>
+                <Carousel
+                  navButtonsAlwaysVisible={true}
+                  autoPlay={false}
+                  animation={"slide"}
+                  duration={750}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    width: "80%",
+                  }}
+                >
+                  {pagination(searchResults.blogs.rows, itemsPerPage).map(
+                    (page, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          gap: "2rem",
+                        }}
+                      >
+                        {page.map((blog) => (
+                          <BlogResult
+                            key={blog.id}
+                            blog={blog}
+                            setBlogSelected={setBlogSelected}
+                            setSelectedRoute={setSelectedRoute}
+                            setValue={setValue}
+                          ></BlogResult>
+                        ))}
+                      </div>
+                    )
+                  )}
+                </Carousel>
+              </section>
+            )}
+          </div>
+        )}
+      </main>
+    </ThemeProvider>
   );
 };
 

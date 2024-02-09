@@ -7,7 +7,16 @@ const Account = (props) => {
   const numberOfFollows = friendData.filter(
     (user) => user_id === user.user_id
   )[0].friends.length;
-
+  const numberOfFollowers = friendData.reduce((count, user) => {
+    const friends = user.friends.map(friend => friend.user_id);
+    if (friends.includes(user_id)) {
+      count++;
+    }
+    return count;
+  }, 0);
+  const handleClick = () => {
+    setSelectedRoute("BOOKMARKS")
+  }
 
   return (
     <main
@@ -20,22 +29,22 @@ const Account = (props) => {
     >
       <Card
         sx={{
-          width: "60vw",
+          width: "50vw",
           margin: "2% 0 0 0",
           backgroundColor: "#4D6A66",
           color: "white",
         }}
       >
-        <CardContent>
-          <h1 style={{ fontFamily: "Roboto", marginLeft: "30%" }}>
-            Forager Account
-          </h1>
+        <CardContent sx={{ fontFamily: "Roboto", display:"flex", justifyContent:'center', marginLeft:"38%"}}>
+          <h5 onClick={handleClick} style={{backgroundColor:'#c74343', padding:'1.5%', marginRight:'2%', color:'white', border:'2px solid white', cursor: "pointer" }}>BOOKMARKS</h5>
+          <h5 style={{border:'2px solid white', padding:'1.5%' }}> FOLLOWING: {numberOfFollows}</h5>
+          <h5 style={{border:'2px solid white', padding:'1.5%', marginLeft:'2%' }}>FOLLOWERS: {numberOfFollowers}</h5>
         </CardContent>
       </Card>
       <section
         style={{
           display: "flex",
-          width: "60vw",
+          width: "50vw",
           marginBottom: "3%",
           marginTop: "-1%",
         }}
@@ -44,11 +53,11 @@ const Account = (props) => {
           fullname={users.fullname}
           email={users.email}
           profilePhoto={users.profilePhoto}
-          numberOfFollows={numberOfFollows}
         />
         <Card
           sx={{
-            width: "44vw",
+            width: "50vw",
+            borderRadius:"0"
           }}
         >
           {friendData

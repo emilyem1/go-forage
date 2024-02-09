@@ -195,7 +195,7 @@ const BlogForm = (props) => {
             fullWidth
             multiline
             rows={6.5}
-            inputProps={{ style: { width: '60%' } }}
+            inputProps={{ style: { width: '100%' } }}
           />
         </section>
       </div>

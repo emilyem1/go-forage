@@ -1,6 +1,7 @@
 import BlogListItem from "./BlogListItem";
 // import "../styles/MushroomList.scss";
 import { Box } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles'; 
 
 const Bookmarks = (props) => {
   const {
@@ -11,11 +12,13 @@ const Bookmarks = (props) => {
     userData,
     onBookmarkClick,
     setUserSelected,
-    friendData
+    friendData,
+    theme
   } = props;
   const { user_id } = userData;
 
   return (
+    <ThemeProvider theme={theme}>
     <main>
       <div>
         <Box
@@ -51,6 +54,7 @@ const Bookmarks = (props) => {
         </Box>
       </div>
     </main>
+    </ThemeProvider>
   );
 };
 

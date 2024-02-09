@@ -14,8 +14,8 @@ import { mapStyles } from "../styles/Map";
 const libraries = ["places"];
 
 const mapContainerStyle = {
-  width: "100%",
-  height: "50vh",
+  width: "97.7%",
+  height: "35vh",
   borderRadius: "15px",
 };
 
@@ -117,9 +117,6 @@ const BlogFormMap = (props) => {
 
   return (
     <div className="map-container">
-      <div className="locate">
-        <Locate panTo={panTo} />
-      </div>
       <section className="search">
         <div className="search-bar">
           <Autocomplete
@@ -130,12 +127,12 @@ const BlogFormMap = (props) => {
             onLoad={onSearchBarLoad}
           >
             <TextField
-              sx={{ width: "60vw" }}
+              sx={{ width: "20vw" }}
               label="Lets Go Forage!"
               type="text"
               placeholder="Search Your Location"
               ref={searchInputRef}
-              color="success"
+              color="primary"
               focused
             />
           </Autocomplete>
@@ -148,10 +145,13 @@ const BlogFormMap = (props) => {
             type="button"
             aria-label="search"
           >
-            <SearchIcon />
+          <SearchIcon />
           </IconButton>
         </div>
       </section>
+      <div className="locate" style={{marginRight:"2%"}}>
+        <Locate panTo={panTo} />
+      </div>
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}

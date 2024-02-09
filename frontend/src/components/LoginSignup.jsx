@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { TextField, Button, Box, Tabs, Tab, Paper } from "@mui/material";
 import "../styles/LoginSignup.scss";
+import { ThemeProvider } from "@mui/material/styles";
 
 const LoginSignup = (props) => {
-  const setSelectedRoute = props.setSelectedRoute;
-  const setValue = props.setValue;
+  const { setSelectedRoute, setValue, theme } = props;
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -82,101 +82,113 @@ const LoginSignup = (props) => {
 
   return (
     <main>
-      <Box
-        container
-        justifyContent="center"
-        alignItems="center"
-        className="formContainer"
-        sx={{ display: "flex", margin: "auto" }}
-      >
-        <Paper sx={{ width: "400px" }}>
-          <Tabs value={tabValue} onChange={handleTabChange} centered>
-            <Tab label="Login" value="login" />
-            <Tab label="Sign Up" value="signup" />
-          </Tabs>
-          <Box sx={{ p: 2 }}>
-            {tabValue === "login" && (
-              <form
-                onSubmit={(e) => handleFormSubmit("login", e)}
-                id="login-form"
-                className="form"
-                style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-              >
-                <TextField
-                  onChange={(e) => handleInputChange("login", e)}
-                  type="email"
-                  label="E-mail Address"
-                  name="email"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  onChange={(e) => handleInputChange("login", e)}
-                  type="password"
-                  label="Password"
-                  name="password"
-                  variant="outlined"
-                  required
-                />
-                <Button type="submit" variant="contained" color="primary">
-                  Login
-                </Button>
-                <p>
-                  Don't have an account?{" "}
-                  <Button onClick={() => setTabValue("signup")}>Sign Up</Button>
-                </p>
-              </form>
-            )}
-            {tabValue === "signup" && (
-              <form
-                onSubmit={(e) => handleFormSubmit("signup", e)}
-                id="signup-form"
-                className="form"
-                style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-              >
-                <TextField
-                  onChange={(e) => handleInputChange("signup", e)}
-                  type="email"
-                  label="E-mail Address"
-                  name="email"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  onChange={(e) => handleInputChange("signup", e)}
-                  type="text"
-                  label="Full Name"
-                  name="fullname"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  onChange={(e) => handleInputChange("signup", e)}
-                  type="password"
-                  label="Password"
-                  name="password"
-                  variant="outlined"
-                  required
-                />
-                <TextField
-                  onChange={(e) => handleInputChange("signup", e)}
-                  type="text"
-                  label="Profile Photo (Optional)"
-                  name="profilePhoto"
-                  variant="outlined"
-                />
-                <Button type="submit" variant="contained" color="primary">
-                  Sign Up
-                </Button>
-                <p>
-                  Already have an account?{" "}
-                  <Button onClick={() => setTabValue("login")}>Log In</Button>
-                </p>
-              </form>
-            )}
-          </Box>
-        </Paper>
-      </Box>
+      <ThemeProvider theme={theme}>
+        <Box
+          container
+          justifyContent="center"
+          alignItems="center"
+          className="formContainer"
+          sx={{ display: "flex", margin: "auto" }}
+        >
+          <Paper sx={{ width: "400px" }}>
+            <Tabs value={tabValue} onChange={handleTabChange} centered>
+              <Tab label="Login" value="login" />
+              <Tab label="Sign Up" value="signup" />
+            </Tabs>
+            <Box sx={{ p: 2 }}>
+              {tabValue === "login" && (
+                <form
+                  onSubmit={(e) => handleFormSubmit("login", e)}
+                  id="login-form"
+                  className="form"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                  }}
+                >
+                  <TextField
+                    onChange={(e) => handleInputChange("login", e)}
+                    type="email"
+                    label="E-mail Address"
+                    name="email"
+                    variant="outlined"
+                    required
+                  />
+                  <TextField
+                    onChange={(e) => handleInputChange("login", e)}
+                    type="password"
+                    label="Password"
+                    name="password"
+                    variant="outlined"
+                    required
+                  />
+                  <Button type="submit" variant="contained" color="primary">
+                    Login
+                  </Button>
+                  <p>
+                    Don't have an account?{" "}
+                    <Button onClick={() => setTabValue("signup")}>
+                      Sign Up
+                    </Button>
+                  </p>
+                </form>
+              )}
+              {tabValue === "signup" && (
+                <form
+                  onSubmit={(e) => handleFormSubmit("signup", e)}
+                  id="signup-form"
+                  className="form"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1rem",
+                  }}
+                >
+                  <TextField
+                    onChange={(e) => handleInputChange("signup", e)}
+                    type="email"
+                    label="E-mail Address"
+                    name="email"
+                    variant="outlined"
+                    required
+                  />
+                  <TextField
+                    onChange={(e) => handleInputChange("signup", e)}
+                    type="text"
+                    label="Full Name"
+                    name="fullname"
+                    variant="outlined"
+                    required
+                  />
+                  <TextField
+                    onChange={(e) => handleInputChange("signup", e)}
+                    type="password"
+                    label="Password"
+                    name="password"
+                    variant="outlined"
+                    required
+                  />
+                  <TextField
+                    onChange={(e) => handleInputChange("signup", e)}
+                    type="text"
+                    label="Profile Photo (Optional)"
+                    name="profilePhoto"
+                    variant="outlined"
+                  />
+                  <Button type="submit" variant="contained" color="primary">
+                    Sign Up
+                  </Button>
+                  <p>
+                    Already have an account?{" "}
+                    <Button onClick={() => setTabValue("login")}>Log In</Button>
+                  </p>
+                </form>
+              )}
+            </Box>
+          </Paper>
+        </Box>
+      </ThemeProvider>
     </main>
   );
 };

@@ -6,7 +6,7 @@ function FollowButton(props) {
   const user_id = parseInt(userData.user_id);
   const filteredFriends = friendData.filter((user) => user_id === user.user_id);
   const friendsIdList = filteredFriends[0].friends;
-  const friendsIDs = friendsIdList.map((friend) => friend.user_id);
+  const friendsIDs = friendsIdList ? friendsIdList.map((friend) => friend.user_id): [];
   const [isHovered, setIsHovered] = useState(false);
   // const handleLikeClick = async () => {
   //   if (userData.isLoggedIn) {

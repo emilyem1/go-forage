@@ -56,26 +56,39 @@ INSERT INTO BLOG (TITLE, content, publication_date, latitude, longitude, USER_ID
   ('Apricot Jelly Mushroom: A Sweet Surprise', 'Found a delightful surprise in the forest today, which was the Apricot Jelly Mushroom. With its translucent orange caps and gelatinous texture, this unique fungus is a true treasure to discover. Hidden beneath a canopy of ferns, I spotted them: clusters of Apricot Jelly Mushroom mushrooms growing amidst the fallen leaves. The Apricot Jelly Mushroom is surprisingly resilient. I carefully harvested a few specimens, marveling at their translucent caps and sweet aroma.', '2024-02-14', 50.6942, -120.4415, 2, true),
   ('Exploring the Mysterious Lobster Mushroom', 'Today, I embarked on a journey to unravel the mysteries of the Lobster Mushroom. With its distinctive red caps and tough gills, this enigmatic fungus is a puzzle waiting to be solved. Lobster Mushrooms are notoriously short-lived. I carefully harvested a few specimens, marveling at their tough gills and orange/red caps. The resulting dish was a savory delight that showcased the unique flavor and texture of the Lobster Mushroom. It''s amazing how something so mysterious can also be so delicious. That with some Inky Cap mushrooms I found, it really hit the spot.', '2024-02-15', 51.1611, -117.3230, 1, true);
 
--- 10 Inserts for FRIENDS table
+-- John Doe is following 3 and has 6 followers
 INSERT INTO FRIENDS (USER_ID, FRIEND_USER_ID) VALUES
   (1, 2),
+  (2, 1),
   (1, 3),
   (2, 4),
+  (4, 2),
   (3, 5),
+  (5, 3),
   (4, 6),
+  (6, 4),
+  (6, 1),
   (5, 7),
+  (7, 5),
   (6, 8),
+  (8, 6),
   (7, 9),
+  (9, 7),
   (8, 10),
-  (1, 10),
+  (10, 8),
+  (10, 1),
   (2, 9),
+  (9, 1),
   (3, 7),
+  (7, 3),
   (4, 9),
+  (9, 4),
   (5, 1),
+  (1, 5),
   (6, 3),
-  (7, 10),
-  (8, 2),
-  (9, 10);
+  (3, 6),
+  (7, 1),
+  (10, 7);
 
 -- 10 Inserts for FAVOURITES table
 INSERT INTO FAVOURITES (USER_ID, BLOG_ID) VALUES

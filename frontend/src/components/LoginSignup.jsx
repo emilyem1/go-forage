@@ -88,7 +88,7 @@ const LoginSignup = (props) => {
           justifyContent="center"
           alignItems="center"
           className="formContainer"
-          sx={{ display: "flex", margin: "auto" }}
+          sx={{ display: "flex", margin: "auto", padding:"3% 0" }}
         >
           <Paper sx={{ width: "400px" }}>
             <Tabs value={tabValue} onChange={handleTabChange} centered>

@@ -55,7 +55,7 @@ const MushroomDetails = (props) => {
   }, [mushroomSelected]);
 
   return (
-    <main>
+    <main style={{margin:"2% 5% 5% 5%"}}>
       <Card>
         <Grid container spacing={2}>
           {/* Left side: Image */}

@@ -23,6 +23,7 @@ import {
   Typography,
   IconButton,
   CardHeader,
+  Modal
 } from "@mui/material";
 
 const FieldDetails = (props) => {
@@ -38,8 +39,10 @@ const FieldDetails = (props) => {
     updateComments,
     theme,
   } = props;
-  const [editMode, setEditMode] = useState(false);
   const { user_id } = userData;
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const bookmarkSelect =
     userData.isLoggedIn &&
@@ -93,10 +96,6 @@ const FieldDetails = (props) => {
     }
   };
 
-  const handleEditClick = () => {
-    setEditMode(true);
-  };
-
   const handleDeleteClick = async (event) => {
     event.preventDefault();
     try {
@@ -122,16 +121,21 @@ const FieldDetails = (props) => {
   return (
     <ThemeProvider theme={theme}>
     <main>
-      {editMode ? (
-        <BlogEdit
-          setEditMode={setEditMode}
-          mushrooms={mushrooms}
-          existingBlog={blog}
-          setBlogUpdate={setBlogUpdate}
-          setSelectedRoute={setSelectedRoute}
-        />
-      ) : (
-        <main>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <BlogEdit
+            mushrooms={mushrooms}
+            existingBlog={blog}
+            setBlogUpdate={setBlogUpdate}
+            setSelectedRoute={setSelectedRoute}
+            theme={theme}
+            handleClose={handleClose} setOpen={setOpen}
+          />
+        </Modal>
           <Card
             sx={{
               display: "flex",
@@ -208,7 +212,7 @@ const FieldDetails = (props) => {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleEditClick}
+              onClick={handleOpen}
             >
               Edit
             </Button>
@@ -279,8 +283,6 @@ const FieldDetails = (props) => {
                 ))}
             </div>
           </List>
-        </main>
-      )}
     </main>
     </ThemeProvider>
   );

@@ -87,7 +87,7 @@ const BlogList = (props) => {
             }}
             variant="contained"
           >
-             Favourite Blogs
+             Following
           </Button>
         </Box>
         
@@ -121,17 +121,8 @@ const BlogList = (props) => {
             </Box>
           </div>
         )}
-        {feed === "FAVOURITES" && (
-          <Bookmarks
-            blogs={blogs}
-            setBlogSelected={setBlogSelected}
-            setSelectedRoute={setSelectedRoute}
-            bookmarkedBlogs={bookmarkedBlogs}
-            userData={userData}
-            onBookmarkClick={onBookmarkClick}
-            setUserSelected={setUserSelected}
-            friendData={friendData}
-          />
+        {feed === "FOLLOWING" && (
+          {/* Following component will go here */}
         )}
       </main>
     </ThemeProvider>

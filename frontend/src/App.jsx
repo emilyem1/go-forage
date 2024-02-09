@@ -15,6 +15,7 @@ import FieldDetails from "./components/FieldDetails";
 import MushroomDetails from "./components/MushroomDetails";
 import UserBlogs from "./components/UserBlogs";
 import { createTheme } from "@mui/material/styles";
+import Bookmarks from "./components/Bookmarks";
 
 function App() {
   const {
@@ -154,6 +155,20 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
           theme={theme}
         />
+      ) : selectedRoute === "BOOKMARKS" ? (
+        <Bookmarks
+        blogs={blogData}
+        setBlogSelected={setBlogSelected}
+        setSelectedRoute={setSelectedRoute}
+        mushrooms={mushroomData}
+        setBlogUpdate={setBlogUpdate}
+        bookmarkedBlogs={bookmarkedBlogs}
+        userData={userData}
+        onBookmarkClick={updateBookmarkedBlogs}
+        setUserSelected={setUserSelected}
+        theme={theme}
+        friendData={friendData}
+        />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs
           blogs={blogData}
@@ -165,6 +180,7 @@ function App() {
           userSelected={userSelected}
           setUserSelected={setUserSelected}
           friendData={friendData}
+          theme={theme}
         />
       ) : (
         <SearchResults
@@ -174,6 +190,7 @@ function App() {
           setValue={setValue}
           setMushroomSelected={setMushroomSelected}
           setUserSelected={setUserSelected}
+          theme={theme}
         />
       )}
     </div>

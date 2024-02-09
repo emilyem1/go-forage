@@ -1,5 +1,6 @@
+import React, { useState } from "react";
+import { TextField, Button, Grid } from "@mui/material";
 import "../styles/LoginSignup.scss";
-import { useState } from "react";
 
 const LoginSignup = (props) => {
   const setSelectedRoute = props.setSelectedRoute;
@@ -75,92 +76,88 @@ const LoginSignup = (props) => {
 
   return (
     <main>
-      <div className="formContainer">
+      <Grid container justifyContent="center" alignItems="center" className="formContainer">
         {/* Login Form */}
-        <form
-          onSubmit={(e) => handleFormSubmit("login", e)}
-          id="login-form"
-          className="form"
-        >
-          <h2>Login</h2>
-          <label htmlFor="email">E-mail Address:</label>
-          <input
-            onChange={(e) => handleInputChange("login", e)}
-            type="email"
-            className="input-field"
-            placeholder="E-mail Address"
-            name="email"
-            required
-          />
-          <label htmlFor="email">Password:</label>
-          <input
-            onChange={(e) => handleInputChange("login", e)}
-            type="password"
-            className="input-field"
-            placeholder="Enter Password"
-            name="password"
-            required
-          />
-          <input type="hidden" name="action" value="login" />
-          <button type="submit" className="submit-btn">
-            Login
-          </button>
-          <p>
-            Don't have an account? <button>Sign Up</button>
-          </p>
-        </form>
+        <Grid item xs={12} sm={6}>
+          <form
+            onSubmit={(e) => handleFormSubmit("login", e)}
+            id="login-form"
+            className="form"
+          >
+            <h2>Login</h2>
+            <TextField
+              onChange={(e) => handleInputChange("login", e)}
+              type="email"
+              label="E-mail Address"
+              name="email"
+              variant="outlined"
+              required
+            />
+            <TextField
+              onChange={(e) => handleInputChange("login", e)}
+              type="password"
+              label="Password"
+              name="password"
+              variant="outlined"
+              required
+            />
+            <Button type="submit" variant="contained" color="primary">
+              Login
+            </Button>
+            <p>
+              Don't have an account? <Button>Sign Up</Button>
+            </p>
+          </form>
+        </Grid>
 
         {/* Signup Form */}
-        <form
-          onSubmit={(e) => handleFormSubmit("signup", e)}
-          id="signup-form"
-          className="form"
-        >
-          <h2>Sign Up</h2>
-          <label htmlFor="email">E-mail Address:</label>
-          <input
-            onChange={(e) => handleInputChange("signup", e)}
-            type="email"
-            className="input-field"
-            placeholder="E-mail Address"
-            name="email"
-            required
-          />
-          <label htmlFor="fullname">Full Name:</label>
-          <input
-            onChange={(e) => handleInputChange("signup", e)}
-            type="text"
-            className="input-field"
-            placeholder="Enter Name"
-            name="fullname"
-            required
-          />
-          <label htmlFor="password">Password:</label>
-          <input
-            onChange={(e) => handleInputChange("signup", e)}
-            type="password"
-            className="input-field"
-            placeholder="Enter Password"
-            name="password"
-            required
-          />
-          <label htmlFor="profilePhoto">Profile Photo: (Optional)</label>
-          <input
-            onChange={(e) => handleInputChange("signup", e)}
-            type="text"
-            className="input-field"
-            placeholder="Link..."
-            name="profilePhoto"
-          />
-          <input type="hidden" name="action" value="signup" />
-          <button type="submit" className="submit-btn">
-            Sign Up
-          </button>
-          <p>
-            Already have an account? <button>Log In</button>
-          </p>
-        </form>
-      </div>
+        <Grid item xs={12} sm={6}>
+          <form
+            onSubmit={(e) => handleFormSubmit("signup", e)}
+            id="signup-form"
+            className="form"
+          >
+            <h2>Sign Up</h2>
+            <TextField
+              onChange={(e) => handleInputChange("signup", e)}
+              type="email"
+              label="E-mail Address"
+              name="email"
+              variant="outlined"
+              required
+            />
+            <TextField
+              onChange={(e) => handleInputChange("signup", e)}
+              type="text"
+              label="Full Name"
+              name="fullname"
+              variant="outlined"
+              required
+            />
+            <TextField
+              onChange={(e) => handleInputChange("signup", e)}
+              type="password"
+              label="Password"
+              name="password"
+              variant="outlined"
+              required
+            />
+            <TextField
+              onChange={(e) => handleInputChange("signup", e)}
+              type="text"
+              label="Profile Photo (Optional)"
+              name="profilePhoto"
+              variant="outlined"
+            />
+            <Button type="submit" variant="contained" color="primary">
+              Sign Up
+            </Button>
+            <p>
+              Already have an account? <Button>Log In</Button>
+            </p>
+          </form>
+        </Grid>
+      </Grid>
     </main>
   );
 };

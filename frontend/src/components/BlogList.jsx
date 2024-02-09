@@ -1,5 +1,4 @@
 import BlogListItem from "./BlogListItem";
-import Bookmarks from "./Bookmarks";
 
 import EditIcon from '@mui/icons-material/Edit';
 import SpeedDial from '@mui/material/SpeedDial';
@@ -31,17 +30,6 @@ const BlogList = (props) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 1000,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -60,9 +48,7 @@ const BlogList = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <BlogForm mushrooms={mushrooms} setBlogUpdate={setBlogUpdate} handleClose={handleClose} setOpen={setOpen} />
-        </Box>
+        <BlogForm mushrooms={mushrooms} setBlogUpdate={setBlogUpdate} handleClose={handleClose} setOpen={setOpen} theme={theme} />
       </Modal>
         <Box
           sx={{

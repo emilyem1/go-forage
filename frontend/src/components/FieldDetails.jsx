@@ -39,6 +39,7 @@ const FieldDetails = (props) => {
     updateComments,
     theme,
   } = props;
+  const [editMode, setEditMode] = useState(false);
   const { user_id } = userData;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -128,6 +129,7 @@ const FieldDetails = (props) => {
           aria-describedby="modal-modal-description"
         >
           <BlogEdit
+            setEditMode={setEditMode}
             mushrooms={mushrooms}
             existingBlog={blog}
             setBlogUpdate={setBlogUpdate}

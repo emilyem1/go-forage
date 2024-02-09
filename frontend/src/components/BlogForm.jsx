@@ -125,6 +125,8 @@ const BlogForm = (props) => {
     boxShadow: 24,
     p: 4,
     maxHeight: '90%',
+    overflowY: 'scroll',
+    overflowX: 'hidden'
   };
 
   return (

@@ -142,7 +142,7 @@ function App() {
           setUserSelected={setUserSelected}
         />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} />
+        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} theme={theme}/>
       ) : selectedRoute === "FIELDDETAILS" ? (
         <FieldDetails
           blog={blogSelected}

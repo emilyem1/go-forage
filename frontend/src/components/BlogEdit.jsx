@@ -77,7 +77,8 @@ const BlogEdit = (props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const mushroomIds = formData.mushrooms.map((mushroom) => mushroom.mushroom_id);
+    const filteredMushrooms = formData.mushrooms.filter(mushroom => mushroom.mushroom_id);
+    const mushroomIds = filteredMushrooms.map((mushroom) => mushroom.mushroom_id);
     try {
       // Put request to update the existing blog
       const blogResponse = await fetch(`http://localhost:8001/api/blogs/${existingBlog.id}`, {
@@ -121,7 +122,6 @@ const BlogEdit = (props) => {
       console.error("Error when updating:", error.message);
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <form className="blog-form" style={style}>
@@ -161,7 +161,7 @@ const BlogEdit = (props) => {
                     value={mushroom.mushroom_id}
                     label="Age"
                     onChange={(event) => handleMushroomSelection(event, index)}
-                      sx={{marginBottom:"3%"}}
+                    sx={{marginBottom:"3%"}}
                   >
                     {mushrooms.map((mushroomOption) => (
                       <MenuItem key={mushroomOption.id} value={mushroomOption.id}>

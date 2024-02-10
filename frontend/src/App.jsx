@@ -188,6 +188,7 @@ function App() {
           setUserSelected={setUserSelected}
           friendData={friendData}
           theme={theme}
+          updatefriendData={updatefriendData}
         />
       ) : (
         <SearchResults

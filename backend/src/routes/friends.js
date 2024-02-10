@@ -50,8 +50,8 @@ module.exports = (db) => {
     const { user_id, FRIEND_USER_ID } = request.body;
     db.query(
       `
-      DELETE FROM FAVOURITES
-      WHERE USER_ID = $1 AND BLOG_ID = $2
+      DELETE FROM FRIENDS
+      WHERE USER_ID = $1 AND FRIEND_USER_ID = $2
       RETURNING *
     `,
       [user_id, FRIEND_USER_ID]

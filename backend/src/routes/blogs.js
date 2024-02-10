@@ -71,9 +71,9 @@ module.exports = (db) => {
 
   router.put("/blogs/:id", async (request, response) => {
     console.log("Received PUT request to /blogs/:id");
+    console.log("Request Body:", request.body);
     const blogId = request.params.id;
-    const { title, content, latitude, longitude, user_id, mushrooms, privacy } =
-      request.body;
+    const { title, content, latitude, longitude, user_id, mushrooms, privacy } = request.body;
     console.log("Received data:", {
       title,
       content,
@@ -83,7 +83,6 @@ module.exports = (db) => {
       mushrooms,
       privacy,
     });
-
     const client = new Client();
     try {
       await client.connect();
@@ -107,13 +106,9 @@ module.exports = (db) => {
         blogId,
       ]);
       console.log("Deleted old mushrooms");
-
       // Insert new mushrooms
       if (mushrooms && mushrooms.length > 0) {
-        const mushroomValues = mushrooms.map((mushroom) => [
-          blogId,
-          mushroom.mushroom_id,
-        ]);
+        const mushroomValues = mushrooms.map(mushroomId => [blogId, mushroomId]);
         const placeholders = mushroomValues
           .map((_, index) => `($${2 * index + 1}, $${2 * index + 2})`)
           .join(", ");
@@ -121,7 +116,6 @@ module.exports = (db) => {
         await client.query(insertQuery, mushroomValues.flat());
         console.log("Inserted new mushrooms:", mushroomValues);
       }
-
       await client.query("COMMIT");
       response.json(updateBlogResponse.rows[0]);
     } catch (error) {
@@ -131,7 +125,8 @@ module.exports = (db) => {
     } finally {
       await client.end();
     }
-  });
+  });  
+  
   router.delete("/blogs/:id", async (request, response) => {
     console.log("Received DELETE request to /blogs/:id");
     const blogId = request.params.id;

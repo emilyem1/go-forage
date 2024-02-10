@@ -25,6 +25,7 @@ const BlogListItem = (props) => {
     userData,
     setUserSelected,
     friendData,
+    updatefriendData,
   } = props;
   const { user_id } = userData;
 
@@ -92,7 +93,12 @@ const BlogListItem = (props) => {
                 paddingTop: ".5em",
               }}
             >
-              <FollowButton userData={userData} blog={blog} friendData={friendData}/>
+              <FollowButton
+                userData={userData}
+                blog={blog}
+                friendData={friendData}
+                updatefriendData={updatefriendData}
+              />
             </div>
           </div>
         }

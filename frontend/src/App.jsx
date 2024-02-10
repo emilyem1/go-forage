@@ -25,7 +25,9 @@ function App() {
     updateBookmarkedBlogs,
     updateComments,
     setUserSelected,
+    updatefriendData,
   } = useApplicationData();
+
   const {
     blogData,
     selectedRoute,
@@ -88,6 +90,7 @@ function App() {
           setUserSelected={setUserSelected}
           theme={theme}
           friendData={friendData}
+          updatefriendData={updatefriendData}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -142,7 +145,11 @@ function App() {
           setUserSelected={setUserSelected}
         />
       ) : selectedRoute === "LOGINSIGNUP" ? (
-        <LoginSignup setSelectedRoute={setSelectedRoute} setValue={setValue} theme={theme}/>
+        <LoginSignup
+          setSelectedRoute={setSelectedRoute}
+          setValue={setValue}
+          theme={theme}
+        />
       ) : selectedRoute === "FIELDDETAILS" ? (
         <FieldDetails
           blog={blogSelected}
@@ -157,17 +164,17 @@ function App() {
         />
       ) : selectedRoute === "BOOKMARKS" ? (
         <Bookmarks
-        blogs={blogData}
-        setBlogSelected={setBlogSelected}
-        setSelectedRoute={setSelectedRoute}
-        mushrooms={mushroomData}
-        setBlogUpdate={setBlogUpdate}
-        bookmarkedBlogs={bookmarkedBlogs}
-        userData={userData}
-        onBookmarkClick={updateBookmarkedBlogs}
-        setUserSelected={setUserSelected}
-        theme={theme}
-        friendData={friendData}
+          blogs={blogData}
+          setBlogSelected={setBlogSelected}
+          setSelectedRoute={setSelectedRoute}
+          mushrooms={mushroomData}
+          setBlogUpdate={setBlogUpdate}
+          bookmarkedBlogs={bookmarkedBlogs}
+          userData={userData}
+          onBookmarkClick={updateBookmarkedBlogs}
+          setUserSelected={setUserSelected}
+          theme={theme}
+          friendData={friendData}
         />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs

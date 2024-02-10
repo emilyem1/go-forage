@@ -76,6 +76,7 @@ function reducer(state, action) {
           },
         };
       }
+
     case ACTIONS.COMMENT_ADDED:
       return { ...state, commentUpdate: action.payload };
 
@@ -86,8 +87,38 @@ function reducer(state, action) {
       return { ...state, friendData: action.payload };
 
     case ACTIONS.FRIEND_ADDED:
-      return { ...state, friendData: action.payload };
-      
+      const userId = state.userData.user_id;
+      const friend = action.payload;
+      const existingFriends = state.friendData[userId] || [];
+      const existingFriendIndex = existingFriends.findIndex(
+        (f) => f.id === friend.id
+      );
+
+      if (existingFriendIndex !== -1) {
+        // If the friend already exists, remove it (unfollow action)
+        const updatedFriends = [
+          ...existingFriends.slice(0, existingFriendIndex),
+          ...existingFriends.slice(existingFriendIndex + 1),
+        ];
+        return {
+          ...state,
+          friendData: {
+            ...state.friendData,
+            [userId]: updatedFriends,
+          },
+        };
+      } else {
+        // If the friend doesn't exist, add it (follow action)
+        const updatedFriends = [...existingFriends, friend];
+        return {
+          ...state,
+          friendData: {
+            ...state.friendData,
+            [userId]: updatedFriends,
+          },
+        };
+      }
+
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -219,6 +250,10 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SELECT_USER, payload: user });
   };
 
+  const updatefriendData = (friend) => {
+    dispatch({ type: ACTIONS.FRIEND_ADDED, payload: friend });
+  };
+
   return {
     state,
     setBlogSelected,
@@ -227,6 +262,7 @@ const useApplicationData = () => {
     updateBookmarkedBlogs,
     updateComments,
     setUserSelected,
+    updatefriendData,
   };
 };
 

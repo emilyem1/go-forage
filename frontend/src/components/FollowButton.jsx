@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { Box, Button, Modal } from "@mui/material";
 
 function FollowButton(props) {
-  const { blog, userData, friendData } = props;
+  const { blog, userData, friendData, updatefriendData } = props;
   const user_id = parseInt(userData.user_id);
-
-  // const filteredFriends = friendData.filter((user) => user_id === user.user_id);
-  // const friendsIdList = filteredFriends.length > 0 ? filteredFriends[0].friends : [];
-  // const friendsIDs = friendsIdList ? friendsIdList.map((friend) => friend.user_id): [];
 
   const friendsIDs = friendData[user_id]
     ? friendData[user_id].map((friend) => friend.id)
@@ -81,7 +77,20 @@ function FollowButton(props) {
           {!!!friendsIDs.includes(blog.user_id) ? (
             <Button
               onClick={() => {
-                console.log("Follow");
+                console.log(
+                  "Old Friends:",
+                  JSON.stringify(friendData[user_id])
+                );
+                updatefriendData({
+                  id: blog.user_id,
+                  name: blog.username,
+                  avatar: blog.avatar,
+                  email: blog.user_email,
+                });
+                console.log(
+                  "New Friends:",
+                  JSON.stringify(friendData[user_id])
+                );
               }}
               variant="contained"
               color="primary"
@@ -91,7 +100,12 @@ function FollowButton(props) {
           ) : (
             <Button
               onClick={() => {
-                console.log("Unfollow");
+                updatefriendData({
+                  id: blog.user_id,
+                  name: blog.username,
+                  avatar: blog.avatar,
+                  email: blog.user_email,
+                });
               }}
               variant="contained"
               color="primary"

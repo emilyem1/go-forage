@@ -19,7 +19,7 @@ const Bookmarks = (props) => {
 
   return (
     <ThemeProvider theme={theme}>
-    <main>
+    <main style={{ marginTop:'2%'}}>
       <div>
         <Box
           sx={{

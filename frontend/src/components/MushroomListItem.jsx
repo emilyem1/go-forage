@@ -16,10 +16,10 @@ const MushroomListItem = (props) => {
     <Tooltip {...props} classes={{ popper: className }} />
   ))(({ theme }) => ({
     [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: "#4D6A66",
-      color: "#e6e6dd",
+      backgroundColor: "#e6e6dd",
+      color: "#4D6A66",
       boxShadow: theme.shadows[1],
-      fontSize: 30,
+      fontSize: 15,
       fontFamily: "DM Sans",
       fontWeight: "bold"
     },
@@ -30,41 +30,43 @@ const MushroomListItem = (props) => {
       sx={{          
         '& > :not(style)': {
         width: 550,
-        marginBottom: 1
+        margin: 2
       },}}
       onClick={handleChange}
     >
       <div>
+        <h1 style={{ backgroundColor: '#4D6A66', padding:'1%', color:'#e6e6dd', margin:'0', fontFamily: "DM Sans"}}>{mushroom.name}               
+          <img
+            style={{ width: '22px', paddingLeft:'2%' }}
+            className="mushroom-list__image"
+            src={`images/${mushroom.icon}`}
+          />
+        </h1>
         <Collapse 
           in={checked} 
-          collapsedSize={250} 
+          collapsedSize={170} 
         >
-          <div>
           <CustomTooltip 
             disableFocusListener 
             disableTouchListener 
-            title={mushroom.name}
+            title="Click to expand"
             placement="right-start"
             >
-            <img
-              style={{width: '100%', height: 'auto', objectFit: 'cover'}}
-              src={`images/${mushroom.image}`}
-              alt={mushroom.name}
-            />
+            <div>
+              <img
+                style={{ width: '100%', height: '50%'}}
+                src={`images/${mushroom.image}`}
+                alt={mushroom.name}
+              />
+            </div>
           </CustomTooltip>
-          <Card sx={{}}>
-            <h1 style={{ backgroundColor: '#4D6A66', padding:'1%', color:'#e6e6dd', marginTop:'0', fontFamily: "DM Sans"}}>{mushroom.name}               <img
-                style={{ width: '22px' }}
-                className="mushroom-list__image"
-                src={`images/${mushroom.icon}`}
-              /></h1>
+          <Card>
             <div style={{fontFamily: "DM Sans", fontSize: '1em', padding: '0 5%'}}>
               <p>{mushroom.info}</p>
               <p>Edible: {mushroom.edible ? "Yes" : "No"}</p>
               <Button size="small" variant="filled" onClick={handleClick}> Read more</Button>
             </div>
           </Card>
-         </div>
         </Collapse>
       </div>
     </Box>

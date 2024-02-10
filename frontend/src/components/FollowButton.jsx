@@ -19,7 +19,10 @@ function FollowButton(props) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ user_id: user_id, FRIEND_USER_ID: blog.user_id }),
+          body: JSON.stringify({
+            user_id: user_id,
+            FRIEND_USER_ID: blog.user_id,
+          }),
         });
 
         if (!response.ok) {
@@ -43,38 +46,43 @@ function FollowButton(props) {
     }
   };
 
-  // const onUnfollowClick = async () => {
-  //   if (userData.isLoggedIn) {
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:8001/api/bookmarks/delete",
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({ user_id: user_id, blog_id: blog.id }),
-  //         }
-  //       );
+  const onUnfollowClick = async () => {
+    if (userData.isLoggedIn) {
+      try {
+        const response = await fetch(
+          "http://localhost:8001/api/friends/delete",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: user_id, FRIEND_USER_ID: blog.user_id }),
+          }
+        );
 
-  //       if (!response.ok) {
-  //         throw new Error(
-  //           `Failed to post bookmark/delete. Status: ${response.status}`
-  //         );
-  //       }
+        if (!response.ok) {
+          throw new Error(
+            `Failed to post friends/delete. Status: ${response.status}`
+          );
+        }
 
-  //       const responseData = await response.json();
-  //       console.log("Bookmark deleted:", responseData);
+        const responseData = await response.json();
+        console.log("Friend deleted:", responseData);
 
-  //       // Reset the comment box values after submission
-  //       onBookmarkClick(blog);
-  //     } catch (error) {
-  //       console.error("Error when posting:", error.message);
-  //     }
-  //   } else {
-  //     console.log("log in to use bookmarks!");
-  //   }
-  // };
+        updatefriendData({
+          id: blog.user_id,
+          name: blog.username,
+          avatar: blog.avatar,
+          email: blog.user_email,
+        });
+
+      } catch (error) {
+        console.error("Error when posting:", error.message);
+      }
+    } else {
+      console.log("log in to use follow friends!");
+    }
+  };
 
   return (
     <div>
@@ -86,14 +94,7 @@ function FollowButton(props) {
             </Button>
           ) : (
             <Button
-              onClick={() => {
-                updatefriendData({
-                  id: blog.user_id,
-                  name: blog.username,
-                  avatar: blog.avatar,
-                  email: blog.user_email,
-                });
-              }}
+              onClick={onUnfollowClick}
               variant="contained"
               color={isHovered ? "error" : "primary"}
               onMouseEnter={() => setIsHovered(true)}

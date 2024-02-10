@@ -45,5 +45,31 @@ module.exports = (db) => {
     });
   });
 
+  router.post("/friends/delete", async (request, response) => {
+    console.log("Received POST request to /friends/delete");
+    const { user_id, FRIEND_USER_ID } = request.body;
+    db.query(
+      `
+      DELETE FROM FAVOURITES
+      WHERE USER_ID = $1 AND BLOG_ID = $2
+      RETURNING *
+    `,
+      [user_id, FRIEND_USER_ID]
+    )
+      .then(({ rows }) => {
+        if (rows.length === 0) {
+          // No matching entry found
+          response.status(404).json({ message: "Friend not found" });
+        } else {
+          // Entry deleted successfully
+          response.json({ message: "Friend deleted successfully" });
+        }
+      })
+      .catch((error) => {
+        console.error("Error when deleting:", error.message);
+        response.status(500).json({ message: "Internal Server Error" });
+      });
+  });
+
   return router;
 };

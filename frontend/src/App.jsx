@@ -109,6 +109,8 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
           updateComments={updateComments}
           theme={theme}
+          friendData={friendData}
+          updatefriendData={updatefriendData}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList

@@ -7,7 +7,7 @@ const MushroomList = (props) => {
   const { mushrooms, users, setSelectedRoute, setMushroomSelected } = props;
   return (
     <main>
-      <div class='card'style={{ display: 'inline-block', marginLeft: '-70%', marginTop: '3%', position: 'sticky', top: '0', width: '50%'}}>
+      <div class='card'style={{ display: 'inline-block', marginLeft: '-70%', marginTop: '3%', position: 'sticky', top: '0', width: '20%'}}>
       <MushroomCard 
         fullname={users.fullname} 
         email={users.email} 
@@ -19,7 +19,7 @@ const MushroomList = (props) => {
         direction="column"
         justifyContent="center"
         alignItems="center"
-        marginTop="-29.5%"
+        marginTop="-30.1%"
       >
         {mushrooms.map((mushroom) => (
           <MushroomListItem className="mushroom-list" key={mushroom.id} mushroom={mushroom} setSelectedRoute={setSelectedRoute} setMushroomSelected={setMushroomSelected} />

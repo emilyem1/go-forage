@@ -8,6 +8,7 @@ import {
   CardMedia,
   Button,
   Typography,
+  Avatar,
 } from "@mui/material";
 
 const UserResult = (props) => {
@@ -27,6 +28,7 @@ const UserResult = (props) => {
   return (
     <Card
       sx={{
+        paddingInline: "10px",
         width: 350,
         height: 100,
         display: "flex",
@@ -40,27 +42,22 @@ const UserResult = (props) => {
         },
       }}
     >
-      <CardMedia
-        component="img"
+      <Avatar
         alt={user.fullname}
-        height="100"
-        width="100"
         src={`${user.photo_url}`}
-        sx={{ objectFit: "cover" }}
+        sx={{ width: 90, height: 90 }}
       />
 
       <CardContent
         sx={{
           flex: 1,
-          padding: 2,
+          padding: 1,
         }}
       >
         <Typography gutterBottom variant="h6">
           {user.fullname}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {user.email}
-        </Typography>
+        
       </CardContent>
 
       <Box

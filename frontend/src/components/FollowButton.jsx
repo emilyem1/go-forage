@@ -108,7 +108,7 @@ function FollowButton(props) {
                 });
               }}
               variant="contained"
-              color="primary"
+              color={isHovered ? "error" : "primary"}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >

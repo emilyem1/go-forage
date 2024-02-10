@@ -111,6 +111,8 @@ function App() {
           theme={theme}
           friendData={friendData}
           updatefriendData={updatefriendData}
+          setSelectedRoute={setSelectedRoute}
+          setUserSelected={setUserSelected}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList

@@ -42,6 +42,7 @@ const BlogDetails = (props) => {
     theme,
     friendData,
     updatefriendData,
+
   } = props;
   const { user_id } = userData;
 
@@ -125,11 +126,33 @@ const BlogDetails = (props) => {
         >
           <CardHeader
             avatar={
-              <Avatar
-                sx={{ width: 90, height: 90 }}
-                alt={blog.username}
-                src={blog.avatar}
-              />
+              <div>
+                <Avatar
+
+                  sx={{
+                    width: 90,
+                    height: 90,
+                    "&:hover": {
+                      border: "4px solid #879b65",
+                      cursor: "pointer",
+                    },
+                  }}
+                  alt={blog.username}
+                  src={blog.avatar}
+                />
+                <div
+                  style={{
+                    paddingTop: ".5em",
+                  }}
+                >
+                  <FollowButton
+                    userData={userData}
+                    blog={blog}
+                    friendData={friendData}
+                    updatefriendData={updatefriendData}
+                  />
+                </div>
+              </div>
             }
             action={
               <IconButton sx={{ transform: "translate(25%,-31.5%)" }}>

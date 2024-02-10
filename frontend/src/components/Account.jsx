@@ -5,20 +5,21 @@ const Account = (props) => {
   const { users, friendData, setSelectedRoute, setUserSelected } = props;
 
   const user_id = parseInt(users.user_id);
+  friendData[user_id] && console.log(friendData[user_id][0].name);
+  // const filteredUserData = friendData.filter(
+  //   (user) => user_id === user.user_id
+  // );
+  // const numberOfFollows =
+  //   filteredUserData.length > 0 ? filteredUserData[0].friends.length : 0;
 
-  const filteredUserData = friendData.filter(
-    (user) => user_id === user.user_id
-  );
-  const numberOfFollows =
-    filteredUserData.length > 0 ? filteredUserData[0].friends.length : 0;
+  // const numberOfFollowers = friendData.reduce((count, user) => {
+  //   const friends = user.friends.map((friend) => friend.user_id);
+  //   if (friends.includes(user_id)) {
+  //     count++;
+  //   }
+  //   return count;
+  // }, 0);
 
-  const numberOfFollowers = friendData.reduce((count, user) => {
-    const friends = user.friends.map((friend) => friend.user_id);
-    if (friends.includes(user_id)) {
-      count++;
-    }
-    return count;
-  }, 0);
   const handleClick = () => {
     setSelectedRoute("BOOKMARKS");
   };
@@ -63,7 +64,7 @@ const Account = (props) => {
           </h5>
           <h5 style={{ border: "2px solid white", padding: "1.5%" }}>
             {" "}
-            FOLLOWING: {numberOfFollows}
+            FOLLOWING: {"numberOfFollows"}
           </h5>
           <h5
             style={{
@@ -72,7 +73,7 @@ const Account = (props) => {
               marginLeft: "2%",
             }}
           >
-            FOLLOWERS: {numberOfFollowers}
+            FOLLOWERS: {"numberOfFollowers"}
           </h5>
         </CardContent>
       </Card>
@@ -95,7 +96,47 @@ const Account = (props) => {
             borderRadius: "0",
           }}
         >
-          {friendData
+          {friendData[user_id] ? (
+            friendData[user_id].map((friend) => {
+              return (
+                <CardContent
+                  onClick={() => {
+                    setUserSelected({
+                      id: friend.id,
+                      fullname: friend.name,
+                      email: friend.email,
+                      password: "asd",
+                      photo_url: friend.avatar,
+                    });
+                    setSelectedRoute("USERBLOGS");
+                  }}
+                  key={friend.id}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    paddingLeft: "2em",
+                    "&:hover": {
+                      border: "4px solid #879b65",
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "5em",
+                      padding: "5%",
+                    }}
+                    src={friend.avatar}
+                  />
+                  <div> {friend.name}</div>
+                </CardContent>
+              );
+            })
+          ) : (
+            <div>Not following any foragers yet!</div>
+          )}
+
+          {/* {friendData
             .filter((user) => user_id === user.user_id)
             .map((user) =>
               user.friends.map((friend) => (
@@ -131,7 +172,7 @@ const Account = (props) => {
                   <div> {friend.user_name}</div>
                 </CardContent>
               ))
-            )}
+            )} */}
         </Card>
       </section>
     </main>

@@ -5,23 +5,28 @@ module.exports = (db) => {
   router.get("/friends", (request, response) => {
     db.query(
       `
-      SELECT
-        USER_ID,
+      SELECT 
+        FRIENDS.USER_ID as user_id,
         ARRAY_AGG(
           json_build_object(
-            'user_id', USER_ACCOUNT.ID, 
-            'user_name', USER_ACCOUNT.FULLNAME, 
+            'id', USER_ACCOUNT.ID, 
+            'name', USER_ACCOUNT.FULLNAME, 
             'avatar', USER_ACCOUNT.PHOTO_URL,
             'email', USER_ACCOUNT.EMAIL
           )
-        ) AS friends
-      FROM
-        FRIENDS
-      JOIN USER_ACCOUNT ON FRIENDS.FRIEND_USER_ID = USER_ACCOUNT.ID
-      GROUP BY USER_ID
+        ) AS friend
+      FROM FRIENDS
+      JOIN USER_ACCOUNT ON FRIENDS.FRIEND_USER_ID = USER_ACCOUNT.id
+      GROUP BY user_id
       `
-    ).then(({ rows: blogs }) => {
-      response.json(blogs);
+    ).then(({ rows: friends }) => {
+      const result = {};
+      
+      friends.forEach((friend) => {
+        result[friend.user_id] = friend.friend;
+      });
+  
+      response.json(result);
     });
   });
 

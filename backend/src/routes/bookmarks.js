@@ -13,7 +13,6 @@ module.exports = (db) => {
       GROUP BY USER_ACCOUNT.ID
       `
     ).then(({ rows: bookmarks }) => {
-      // Transform the result to the desired format
       const result = {};
       
       bookmarks.forEach((bookmark) => {

@@ -13,6 +13,7 @@ export const ACTIONS = {
   COMMENT_ADDED: "COMMENT_ADDED",
   SELECT_USER: "SELECT_USER",
   SET_FRIEND_DATA: "SET_FRIEND_DATA",
+  FRIEND_ADDED: "FRIEND_ADDED",
 };
 
 function reducer(state, action) {
@@ -84,6 +85,9 @@ function reducer(state, action) {
     case ACTIONS.SET_FRIEND_DATA:
       return { ...state, friendData: action.payload };
 
+    case ACTIONS.FRIEND_ADDED:
+      return { ...state, friendData: action.payload };
+      
     default:
       throw new Error(
         `Tried to reduce with unsupported action type: ${action.type}`
@@ -95,7 +99,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     selectedBlog: false,
     blogData: [],
-    selectedRoute: "BLOGLIST",
+    selectedRoute: "ACCOUNT",
     mushroomData: [],
     userData: {
       user_id: null,
@@ -109,7 +113,7 @@ const useApplicationData = () => {
     bookmarkedBlogs: {},
     commentUpdate: false,
     userSelected: false,
-    friendData:[],
+    friendData: {},
   });
 
   useEffect(() => {

@@ -1,4 +1,6 @@
 import React from "react";
+import FollowButton from "../FollowButton";
+
 import {
   Card,
   Box,
@@ -6,18 +8,27 @@ import {
   CardMedia,
   Button,
   Typography,
+  Avatar,
 } from "@mui/material";
 
 const UserResult = (props) => {
-  const { user, setUserSelected, setSelectedRoute } = props;
+  const {
+    user,
+    setUserSelected,
+    setSelectedRoute,
+    updatefriendData,
+    friendData,
+    userData,
+  } = props;
   const handleClick = () => {
     setUserSelected(user);
     setSelectedRoute("USERBLOGS");
   };
-
+  // console.log (typeof user.id)
   return (
     <Card
       sx={{
+        paddingInline: "10px",
         width: 350,
         height: 100,
         display: "flex",
@@ -31,27 +42,22 @@ const UserResult = (props) => {
         },
       }}
     >
-      <CardMedia
-        component="img"
+      <Avatar
         alt={user.fullname}
-        height="100"
-        width="100"
         src={`${user.photo_url}`}
-        sx={{ objectFit: "cover" }}
+        sx={{ width: 90, height: 90 }}
       />
 
       <CardContent
         sx={{
           flex: 1,
-          padding: 2,
+          padding: 1,
         }}
       >
         <Typography gutterBottom variant="h6">
           {user.fullname}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {user.email}
-        </Typography>
+        
       </CardContent>
 
       <Box
@@ -65,7 +71,17 @@ const UserResult = (props) => {
         <div onClick={handleClick}>
           <Button size="small">Blogs</Button>
         </div>
-        <Button size="small">Follow</Button>
+        <FollowButton
+          userData={userData}
+          blog={{
+            user_id: user.id,
+            username: user.fullname,
+            avatar: user.photo_url,
+            user_email: user.email,
+          }}
+          friendData={friendData}
+          updatefriendData={updatefriendData}
+        />
       </Box>
     </Card>
   );

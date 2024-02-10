@@ -2,92 +2,100 @@ import React, { useState } from "react";
 import { Box, Button, Modal } from "@mui/material";
 
 function FollowButton(props) {
-  const { blog, userData, friendData } = props;
+  const { blog, userData, friendData, updatefriendData } = props;
   const user_id = parseInt(userData.user_id);
-  const filteredFriends = friendData.filter((user) => user_id === user.user_id);
-  const friendsIdList = filteredFriends.length > 0 ? filteredFriends[0].friends : [];
-  const friendsIDs = friendsIdList ? friendsIdList.map((friend) => friend.user_id): [];
+  const friendsIDs = friendData[user_id]
+    ? friendData[user_id].map((friend) => friend.id)
+    : [];
+
   const [isHovered, setIsHovered] = useState(false);
-  // const handleLikeClick = async () => {
-  //   if (userData.isLoggedIn) {
-  //     if (bookmarkSelect) {
-  //       try {
-  //         const response = await fetch(
-  //           "http://localhost:8001/api/bookmarks/delete",
-  //           {
-  //             method: "POST",
-  //             headers: {
-  //               "Content-Type": "application/json",
-  //             },
-  //             body: JSON.stringify({ user_id: user_id, blog_id: blog.id }),
-  //           }
-  //         );
 
-  //         if (!response.ok) {
-  //           throw new Error(
-  //             `Failed to post bookmark/delete. Status: ${response.status}`
-  //           );
-  //         }
+  const onFollowClick = async () => {
+    if (userData.isLoggedIn) {
+      try {
+        const response = await fetch("http://localhost:8001/api/friends", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: user_id,
+            FRIEND_USER_ID: blog.user_id,
+          }),
+        });
 
-  //         const responseData = await response.json();
-  //         console.log("Bookmark deleted:", responseData);
+        if (!response.ok) {
+          throw new Error(`Failed to add friend. Status: ${response.status}`);
+        }
 
-  //         // Reset the comment box values after submission
-  //         onBookmarkClick(blog);
-  //       } catch (error) {
-  //         console.error("Error when posting:", error.message);
-  //       }
-  //     } else {
-  //       try {
-  //         const response = await fetch("http://localhost:8001/api/bookmarks", {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({ user_id: user_id, blog_id: blog.id }),
-  //         });
+        const responseData = await response.json();
+        console.log("Friend added:", responseData);
 
-  //         if (!response.ok) {
-  //           throw new Error(
-  //             `Failed to post bookmark. Status: ${response.status}`
-  //           );
-  //         }
+        updatefriendData({
+          id: blog.user_id,
+          name: blog.username,
+          avatar: blog.avatar,
+          email: blog.user_email,
+        });
+      } catch (error) {
+        console.error("Error when posting:", error.message);
+      }
+    } else {
+      console.log("log in to follow friends!");
+    }
+  };
 
-  //         const responseData = await response.json();
-  //         console.log("Bookmark posted:", responseData);
+  const onUnfollowClick = async () => {
+    if (userData.isLoggedIn) {
+      try {
+        const response = await fetch(
+          "http://localhost:8001/api/friends/delete",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: user_id, FRIEND_USER_ID: blog.user_id }),
+          }
+        );
 
-  //         // Reset the comment box values after submission
-  //         onBookmarkClick(blog);
-  //       } catch (error) {
-  //         console.error("Error when posting:", error.message);
-  //       }
-  //     }
-  //   } else {
-  //     console.log("log in to use bookmarks!");
-  //   }
-  // };
+        if (!response.ok) {
+          throw new Error(
+            `Failed to post friends/delete. Status: ${response.status}`
+          );
+        }
+
+        const responseData = await response.json();
+        console.log("Friend deleted:", responseData);
+
+        updatefriendData({
+          id: blog.user_id,
+          name: blog.username,
+          avatar: blog.avatar,
+          email: blog.user_email,
+        });
+
+      } catch (error) {
+        console.error("Error when posting:", error.message);
+      }
+    } else {
+      console.log("log in to use follow friends!");
+    }
+  };
 
   return (
     <div>
       {blog.user_id !== user_id && (
         <div>
           {!!!friendsIDs.includes(blog.user_id) ? (
-            <Button
-              onClick={() => {
-                console.log("Follow");
-              }}
-              variant="contained"
-              color="primary"
-            >
+            <Button onClick={onFollowClick} variant="contained" color="primary">
               Follow
             </Button>
           ) : (
             <Button
-              onClick={() => {
-                console.log("Unfollow");
-              }}
+              onClick={onUnfollowClick}
               variant="contained"
-              color="primary"
+              color={isHovered ? "error" : "primary"}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >

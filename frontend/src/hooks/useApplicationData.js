@@ -13,6 +13,7 @@ export const ACTIONS = {
   COMMENT_ADDED: "COMMENT_ADDED",
   SELECT_USER: "SELECT_USER",
   SET_FRIEND_DATA: "SET_FRIEND_DATA",
+  FRIEND_ADDED: "FRIEND_ADDED",
 };
 
 function reducer(state, action) {
@@ -75,6 +76,7 @@ function reducer(state, action) {
           },
         };
       }
+
     case ACTIONS.COMMENT_ADDED:
       return { ...state, commentUpdate: action.payload };
 
@@ -83,6 +85,39 @@ function reducer(state, action) {
 
     case ACTIONS.SET_FRIEND_DATA:
       return { ...state, friendData: action.payload };
+
+    case ACTIONS.FRIEND_ADDED:
+      const userId = state.userData.user_id;
+      const friend = action.payload;
+      const existingFriends = state.friendData[userId] || [];
+      const existingFriendIndex = existingFriends.findIndex(
+        (f) => f.id === friend.id
+      );
+
+      if (existingFriendIndex !== -1) {
+        // If the friend already exists, remove it (unfollow action)
+        const updatedFriends = [
+          ...existingFriends.slice(0, existingFriendIndex),
+          ...existingFriends.slice(existingFriendIndex + 1),
+        ];
+        return {
+          ...state,
+          friendData: {
+            ...state.friendData,
+            [userId]: updatedFriends,
+          },
+        };
+      } else {
+        // If the friend doesn't exist, add it (follow action)
+        const updatedFriends = [...existingFriends, friend];
+        return {
+          ...state,
+          friendData: {
+            ...state.friendData,
+            [userId]: updatedFriends,
+          },
+        };
+      }
 
     default:
       throw new Error(
@@ -109,7 +144,7 @@ const useApplicationData = () => {
     bookmarkedBlogs: {},
     commentUpdate: false,
     userSelected: false,
-    friendData:[],
+    friendData: {},
   });
 
   useEffect(() => {
@@ -215,6 +250,10 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.SELECT_USER, payload: user });
   };
 
+  const updatefriendData = (friend) => {
+    dispatch({ type: ACTIONS.FRIEND_ADDED, payload: friend });
+  };
+
   return {
     state,
     setBlogSelected,
@@ -223,6 +262,7 @@ const useApplicationData = () => {
     updateBookmarkedBlogs,
     updateComments,
     setUserSelected,
+    updatefriendData,
   };
 };
 

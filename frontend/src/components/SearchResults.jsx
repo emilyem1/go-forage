@@ -5,7 +5,7 @@ import Carousel from "react-material-ui-carousel";
 import MushroomResult from "./SearchResultComponents/MushroomResult";
 import UserResult from "./SearchResultComponents/UserResult";
 import BlogResult from "./SearchResultComponents/BlogResult";
-import { ThemeProvider } from '@mui/material/styles'; 
+import { ThemeProvider } from "@mui/material/styles";
 
 // ... (previous imports)
 
@@ -17,7 +17,10 @@ const SearchResults = (props) => {
     setValue,
     setMushroomSelected,
     setUserSelected,
-    theme
+    theme,
+    userData,
+    friendData,
+    updatefriendData,
   } = props;
   const [searchResults, setSearchResults] = useState(null);
   const itemsPerPage = 3; // Set the number of results per page
@@ -101,6 +104,9 @@ const SearchResults = (props) => {
                             user={user}
                             setUserSelected={setUserSelected}
                             setSelectedRoute={setSelectedRoute}
+                            userData={userData}
+                            friendData={friendData}
+                            updatefriendData={updatefriendData}
                           ></UserResult>
                         ))}
                       </div>

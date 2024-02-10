@@ -13,7 +13,8 @@ const Bookmarks = (props) => {
     onBookmarkClick,
     setUserSelected,
     friendData,
-    theme
+    theme,
+    updatefriendData
   } = props;
   const { user_id } = userData;
 
@@ -46,10 +47,11 @@ const Bookmarks = (props) => {
                   onBookmarkClick={onBookmarkClick}
                   setUserSelected={setUserSelected}
                   friendData={friendData}
+                  updatefriendData={updatefriendData}
                 />
               ))
           ) : (
-            <p>No Favs</p>
+            <p>Looks like your mushroom basket is as empty as a forest before the rain! 🍄 But fear not, adventurous forager! Just like finding hidden treasures in the woods, your journey to discovering delightful blogs begins now. Start bookmarking your favorite mushroom-related reads and let your collection flourish like a lush fungi patch after a spring shower! Happy foraging! 🌿🍄</p>
           )}
         </Box>
       </div>

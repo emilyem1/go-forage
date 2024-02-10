@@ -175,6 +175,7 @@ function App() {
           setUserSelected={setUserSelected}
           theme={theme}
           friendData={friendData}
+          updatefriendData={updatefriendData}
         />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs

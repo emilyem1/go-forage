@@ -42,7 +42,8 @@ const BlogDetails = (props) => {
     theme,
     friendData,
     updatefriendData,
-
+    setSelectedRoute,
+    setUserSelected,
   } = props;
   const { user_id } = userData;
 
@@ -128,7 +129,16 @@ const BlogDetails = (props) => {
             avatar={
               <div>
                 <Avatar
-
+                  onClick={() => {
+                    setUserSelected({
+                      id: blog.user_id,
+                      fullname: blog.username,
+                      email: blog.user_email,
+                      password: "asd",
+                      photo_url: blog.avatar,
+                    });
+                    setSelectedRoute("USERBLOGS");
+                  }}
                   sx={{
                     width: 90,
                     height: 90,

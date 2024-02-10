@@ -5,20 +5,24 @@ const Account = (props) => {
   const { users, friendData, setSelectedRoute, setUserSelected } = props;
 
   const user_id = parseInt(users.user_id);
-  friendData[user_id] && console.log(friendData[user_id][0].name);
-  // const filteredUserData = friendData.filter(
-  //   (user) => user_id === user.user_id
-  // );
-  // const numberOfFollows =
-  //   filteredUserData.length > 0 ? filteredUserData[0].friends.length : 0;
 
-  // const numberOfFollowers = friendData.reduce((count, user) => {
-  //   const friends = user.friends.map((friend) => friend.user_id);
-  //   if (friends.includes(user_id)) {
-  //     count++;
-  //   }
-  //   return count;
-  // }, 0);
+  const numberOfFollows = friendData[user_id] ? friendData[user_id].length : 0;
+
+  const getNumberOfFollowers = (userId) => {
+    // Iterate over the friendData object using reduce
+    return Object.values(friendData).reduce((count, friendsArray) => {
+      // Check if the friendsArray contains the user with the specified user ID
+      const isFollowing = friendsArray.some((friend) => friend.id === userId);
+      // If the user is found in the friendsArray, increment the count
+      if (isFollowing) {
+        count++;
+      }
+      return count;
+    }, 0); // Initialize count to 0
+  };
+  const numberOfFollowers = friendData[user_id]
+    ? getNumberOfFollowers(user_id)
+    : 0;
 
   const handleClick = () => {
     setSelectedRoute("BOOKMARKS");
@@ -64,7 +68,7 @@ const Account = (props) => {
           </h5>
           <h5 style={{ border: "2px solid white", padding: "1.5%" }}>
             {" "}
-            FOLLOWING: {"numberOfFollows"}
+            FOLLOWING: {numberOfFollows}
           </h5>
           <h5
             style={{
@@ -73,7 +77,7 @@ const Account = (props) => {
               marginLeft: "2%",
             }}
           >
-            FOLLOWERS: {"numberOfFollowers"}
+            FOLLOWERS: {numberOfFollowers}
           </h5>
         </CardContent>
       </Card>

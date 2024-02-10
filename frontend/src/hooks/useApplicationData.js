@@ -99,7 +99,7 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     selectedBlog: false,
     blogData: [],
-    selectedRoute: "ACCOUNT",
+    selectedRoute: "BLOGLIST",
     mushroomData: [],
     userData: {
       user_id: null,

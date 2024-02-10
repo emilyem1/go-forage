@@ -4,10 +4,17 @@ import { Box, Button, Modal } from "@mui/material";
 function FollowButton(props) {
   const { blog, userData, friendData } = props;
   const user_id = parseInt(userData.user_id);
-  const filteredFriends = friendData.filter((user) => user_id === user.user_id);
-  const friendsIdList = filteredFriends.length > 0 ? filteredFriends[0].friends : [];
-  const friendsIDs = friendsIdList ? friendsIdList.map((friend) => friend.user_id): [];
+
+  // const filteredFriends = friendData.filter((user) => user_id === user.user_id);
+  // const friendsIdList = filteredFriends.length > 0 ? filteredFriends[0].friends : [];
+  // const friendsIDs = friendsIdList ? friendsIdList.map((friend) => friend.user_id): [];
+
+  const friendsIDs = friendData[user_id]
+    ? friendData[user_id].map((friend) => friend.id)
+    : [];
+
   const [isHovered, setIsHovered] = useState(false);
+
   // const handleLikeClick = async () => {
   //   if (userData.isLoggedIn) {
   //     if (bookmarkSelect) {

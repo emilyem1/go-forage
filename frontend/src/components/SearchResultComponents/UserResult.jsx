@@ -1,4 +1,6 @@
 import React from "react";
+import FollowButton from "../FollowButton";
+
 import {
   Card,
   Box,
@@ -9,12 +11,19 @@ import {
 } from "@mui/material";
 
 const UserResult = (props) => {
-  const { user, setUserSelected, setSelectedRoute } = props;
+  const {
+    user,
+    setUserSelected,
+    setSelectedRoute,
+    updatefriendData,
+    friendData,
+    userData,
+  } = props;
   const handleClick = () => {
     setUserSelected(user);
     setSelectedRoute("USERBLOGS");
   };
-
+  // console.log (typeof user.id)
   return (
     <Card
       sx={{
@@ -65,7 +74,17 @@ const UserResult = (props) => {
         <div onClick={handleClick}>
           <Button size="small">Blogs</Button>
         </div>
-        <Button size="small">Follow</Button>
+        <FollowButton
+          userData={userData}
+          blog={{
+            user_id: user.id,
+            username: user.fullname,
+            avatar: user.photo_url,
+            user_email: user.email,
+          }}
+          friendData={friendData}
+          updatefriendData={updatefriendData}
+        />
       </Box>
     </Card>
   );

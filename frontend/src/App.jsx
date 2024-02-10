@@ -200,6 +200,9 @@ function App() {
           setMushroomSelected={setMushroomSelected}
           setUserSelected={setUserSelected}
           theme={theme}
+          userData={userData}
+          friendData={friendData}
+          updatefriendData={updatefriendData}
         />
       )}
     </div>

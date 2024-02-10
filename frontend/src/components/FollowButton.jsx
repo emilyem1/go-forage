@@ -4,7 +4,6 @@ import { Box, Button, Modal } from "@mui/material";
 function FollowButton(props) {
   const { blog, userData, friendData, updatefriendData } = props;
   const user_id = parseInt(userData.user_id);
-
   const friendsIDs = friendData[user_id]
     ? friendData[user_id].map((friend) => friend.id)
     : [];

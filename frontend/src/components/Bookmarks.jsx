@@ -14,7 +14,9 @@ const Bookmarks = (props) => {
     setUserSelected,
     friendData,
     theme,
-    updatefriendData
+    updatefriendData,
+    setShowDirections,
+    showDirections,
   } = props;
   const { user_id } = userData;
 
@@ -48,6 +50,8 @@ const Bookmarks = (props) => {
                   setUserSelected={setUserSelected}
                   friendData={friendData}
                   updatefriendData={updatefriendData}
+                  showDirections={showDirections}
+                  setShowDirections={setShowDirections}
                 />
               ))
           ) : (

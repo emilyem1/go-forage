@@ -2,12 +2,8 @@ import { useState, useEffect } from "react";
 import BlogListItem from "./BlogListItem";
 // import "../styles/MushroomList.scss";
 import { Box } from "@mui/material";
-import {
-  Card,
-  Avatar,
-  CardHeader,
-} from "@mui/material";
-import { ThemeProvider } from '@mui/material/styles'; 
+import { Card, Avatar, CardHeader } from "@mui/material";
+import { ThemeProvider } from "@mui/material/styles";
 
 const UserBlogs = (props) => {
   const {
@@ -21,7 +17,9 @@ const UserBlogs = (props) => {
     setUserSelected,
     friendData,
     theme,
-    updatefriendData
+    updatefriendData,
+    setShowDirections,
+    showDirections,
   } = props;
 
   const [icons, setIcons] = useState([]);
@@ -107,6 +105,8 @@ const UserBlogs = (props) => {
                   setUserSelected={setUserSelected}
                   friendData={friendData}
                   updatefriendData={updatefriendData}
+                  showDirections={showDirections}
+                  setShowDirections={setShowDirections}
                 />
               ))}
           </Box>

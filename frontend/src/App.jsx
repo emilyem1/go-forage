@@ -187,6 +187,8 @@ function App() {
           theme={theme}
           friendData={friendData}
           updatefriendData={updatefriendData}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs
@@ -201,6 +203,8 @@ function App() {
           friendData={friendData}
           theme={theme}
           updatefriendData={updatefriendData}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : (
         <SearchResults

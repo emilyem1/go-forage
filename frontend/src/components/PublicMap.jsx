@@ -205,7 +205,7 @@ const PublicMap = (props) => {
                 key={blog.id}
                 position={{ lat: blog.lat, lng: blog.long }}
                 icon={{
-                  url: "./assets/mushroom_marker.svg",
+                  url: blog.mushrooms.length>1?"./assets/mushroom_marker.svg":"./assets/many_mushrooms_marker.svg",
                   scaledSize: new window.google.maps.Size(30, 30),
                   origin: new window.google.maps.Point(0, 0),
                   anchor: new window.google.maps.Point(15, 15),

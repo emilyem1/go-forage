@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl, } from "@mui/material";
 
 const BlogEdit = (props) => {
-  const { mushrooms, setBlogUpdate, existingBlog, setEditMode, setSelectedRoute, theme } = props;
+  const { mushrooms, setBlogUpdate, existingBlog, setEditMode, setSelectedRoute, theme, handleClose, selectedRoute } = props;
   const [disableAddMushroom, setDisableAddMushroom] = useState(true);
 
   const style = {
@@ -117,10 +117,12 @@ const BlogEdit = (props) => {
   
       setBlogUpdate(true);
       setEditMode(false); // Exit edit mode after submitting
-      setSelectedRoute("FIELDJOURNAL");
+      window.location.reload();
+      setSelectedRoute("FIELDJOUNRAL");
     } catch (error) {
       console.error("Error when updating:", error.message);
     }
+    handleClose()
   };
   return (
     <ThemeProvider theme={theme}>

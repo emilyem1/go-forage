@@ -112,14 +112,28 @@ const BlogListMap = (props) => {
         )}
       </GoogleMap>
       <div>
-        {
+        {directionsResponse ? (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="body2" color="text.secondary">
+              Distance: {distance}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Duration: {duration}
+            </Typography>
+          </Box>
+        ) : (
           map !== null &&
           showDirections === true && (
             <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
               Calculate Route
             </Button>
           )
-        }
+        )}
       </div>
     </div>
   );

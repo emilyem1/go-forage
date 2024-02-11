@@ -1,5 +1,7 @@
 import BlogListMap from "./BlogListMap";
 import BookmarkButton from "./BookmarkButton";
+import BlogEdit from "./BlogEdit";
+import React, { useState } from "react";
 import {
   Card,
   CardActions,
@@ -10,6 +12,7 @@ import {
   Avatar,
   IconButton,
   CardHeader,
+  Modal
 } from "@mui/material";
 
 const FieldJournalItem = (props) => {
@@ -20,9 +23,18 @@ const FieldJournalItem = (props) => {
     onBookmarkClick,
     bookmarkedBlogs,
     userData,
+    mushrooms,
+    setBlogUpdate,
+    theme,
+    selectedRoute
   } = props;
 
+  const [editMode, setEditMode] = useState(false);
   const { user_id } = userData;
+  const [open, setOpen] = useState(false);
+  
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const bookmarkSelect =
     userData.isLoggedIn &&
@@ -46,7 +58,48 @@ const FieldJournalItem = (props) => {
     setSelectedRoute("FIELDDETAILS");
   };
 
+  const handleDeleteClick = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:8001/api/blogs/${blog.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to delete blog. Status: ${response.status}`);
+      }
+      window.location.reload();
+      console.log("Blog Deleted Successfully");
+    } catch (error) {
+      console.error("Error deleting blog:", error.message);
+    }
+  };
+
   return (
+    <main>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <BlogEdit
+          setEditMode={setEditMode}
+          mushrooms={mushrooms}
+          existingBlog={blog}
+          setBlogUpdate={setBlogUpdate}
+          setSelectedRoute={setSelectedRoute}
+          theme={theme}
+          handleClose={handleClose} 
+          setOpen={setOpen}
+          selectedRoute={selectedRoute}
+        />
+      </Modal>
     <Card
       sx={{
         display: "flex",
@@ -87,6 +140,25 @@ const FieldJournalItem = (props) => {
           </div>
         }
       />
+      <div style={{display:'flex', justifyContent:'space-between'}}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleOpen}
+          sx={{marginLeft:'3.7%', marginBottom:'2%'}}
+        >
+          Edit
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={handleDeleteClick}
+          sx={{marginRight:'3%', marginBottom:'2%'}}
+        >
+          Delete
+        </Button>
+      </div>
+     
       <section onClick={handleClick}>
         <CardMedia>
           <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
@@ -112,6 +184,7 @@ const FieldJournalItem = (props) => {
         </CardActions>
       </section>
     </Card>
+    </main>
   );
 };
 

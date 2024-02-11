@@ -43,6 +43,7 @@ function App() {
   // Currently selected tab = value
   const [value, setValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDirections, setShowDirections] = useState(false);
 
   // Pass down theme, then use color="primary" etc to access
   const custom = {
@@ -91,6 +92,8 @@ function App() {
           theme={theme}
           friendData={friendData}
           updatefriendData={updatefriendData}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -113,6 +116,8 @@ function App() {
           updatefriendData={updatefriendData}
           setSelectedRoute={setSelectedRoute}
           setUserSelected={setUserSelected}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList

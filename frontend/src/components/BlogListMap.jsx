@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   GoogleMap,
   useJsApiLoader,
   MarkerF,
+  DirectionsRenderer,
 } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
+
+import { Button, Box, Typography } from "@mui/material";
 
 const libraries = ["places"];
 
@@ -12,21 +15,42 @@ const mapContainerStyle = {
   width: "100%",
   height: "40vh", //height for blog cards
 };
+const boundsBC = {
+  north: 60,
+  south: 48,
+  west: -139,
+  east: -114,
+};
 
 const options = {
   styles: mapStyles,
   disableDefaultUI: true,
-  draggable: false,
+  // draggable: false,
+  restriction: {
+    latLngBounds: boundsBC,
+    strictBounds: false,
+  },
   draggableCursor: "pointer",
+  minZoom: 5,
 };
 
-const Map = (props) => {
-  const { location } = props;
+const BlogListMap = (props) => {
+  const { location, showDirections } = props;
+  const [map, setMap] = useState(null);
+
+  // Function to handle map load
+  const handleMapLoad = (map) => {
+    setMap(map);
+  };
 
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
+  const [directionsResponse, setDirectionsResponse] = useState(null);
+  const [distance, setDistance] = useState("");
+  const [duration, setDuration] = useState("");
 
   if (loadError) {
     return <div>Error loading maps</div>;
@@ -36,6 +60,34 @@ const Map = (props) => {
     return <div>Loading maps</div>;
   }
 
+  const tempUserLocation = { lat: 50.676109, lng: -120.340836 };
+
+  async function calculateRoute() {
+    if (!map) return;
+    //commented out section is for the user's geo location instead of teh temp location
+    // const position = await new Promise((resolve, reject) => {
+    //   navigator.geolocation.getCurrentPosition(resolve, reject);
+    // });
+
+    // const userLat = position.coords.latitude;
+    // const userLng = position.coords.longitude;
+
+    const directionsService = new window.google.maps.DirectionsService();
+    const results = await directionsService.route({
+      // origin: new window.google.maps.LatLng(userLat, userLng),
+      origin: new window.google.maps.LatLng(
+        tempUserLocation.lat,
+        tempUserLocation.lng
+      ),
+      destination: new window.google.maps.LatLng(location.lat, location.lng),
+      travelMode: window.google.maps.TravelMode.DRIVING,
+    });
+
+    setDirectionsResponse(results);
+    setDistance(results.routes[0].legs[0].distance.text);
+    setDuration(results.routes[0].legs[0].duration.text);
+  }
+
   return (
     <div>
       <GoogleMap
@@ -43,6 +95,7 @@ const Map = (props) => {
         zoom={10}
         center={location}
         options={options}
+        onLoad={handleMapLoad}
       >
         <MarkerF
           key={new Date().toISOString()}
@@ -54,9 +107,22 @@ const Map = (props) => {
             anchor: new window.google.maps.Point(15, 15),
           }}
         />
+        {directionsResponse && (
+          <DirectionsRenderer directions={directionsResponse} />
+        )}
       </GoogleMap>
+      <div>
+        {
+          map !== null &&
+          showDirections === true && (
+            <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
+              Calculate Route
+            </Button>
+          )
+        }
+      </div>
     </div>
   );
 };
 
-export default Map;
+export default BlogListMap;

@@ -1,4 +1,4 @@
-// import "../styles/MushroomListItem.scss";
+import { useState } from "react";
 import {
   Card,
   CardActions,
@@ -26,6 +26,8 @@ const BlogListItem = (props) => {
     setUserSelected,
     friendData,
     updatefriendData,
+    setShowDirections,
+    showDirections,
   } = props;
   const { user_id } = userData;
 
@@ -45,10 +47,14 @@ const BlogListItem = (props) => {
       ? `${blog.content.slice(0, 100)}...`
       : blog.content;
 
+  setShowDirections(false);
+
   const handleClick = () => {
+    setShowDirections(true);
     setBlogSelected(blog);
     setSelectedRoute("BLOGDETAILS");
   };
+
   return (
     <Card
       sx={{
@@ -123,7 +129,10 @@ const BlogListItem = (props) => {
       />
       <section onClick={handleClick}>
         <CardMedia>
-          <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
+          <BlogListMap
+            location={{ lat: blog.lat, lng: blog.long }}
+            showDirections={showDirections}
+          />
         </CardMedia>
         <CardContent>
           <Typography variant="body2" color="text.secondary">

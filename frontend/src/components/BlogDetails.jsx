@@ -44,6 +44,8 @@ const BlogDetails = (props) => {
     updatefriendData,
     setSelectedRoute,
     setUserSelected,
+    setShowDirections,
+    showDirections,
   } = props;
   const { user_id } = userData;
 
@@ -185,7 +187,10 @@ const BlogDetails = (props) => {
           />
 
           <CardMedia>
-            <BlogListMap location={{ lat: blog.lat, lng: blog.long }} />
+            <BlogListMap
+              location={{ lat: blog.lat, lng: blog.long }}
+              showDirections={showDirections}
+            />
           </CardMedia>
           <CardContent>
             <Typography variant="body1" color="text.primary">

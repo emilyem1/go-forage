@@ -1,29 +1,18 @@
 import FieldJournalItem from "./FieldJournalItem";
 import BlogForm from "./BlogForm";
 import { useState, useEffect } from "react";
-import { Box, Modal } from "@mui/material";
+import { Box, Modal, Card } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles'; 
 import EditIcon from '@mui/icons-material/Edit';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 
 const FieldJournal = (props) => {
-  const { email, setBlogSelected, setSelectedRoute, mushrooms, onBookmarkClick, bookmarkedBlogs, userData, setBlogUpdate, theme } = props;
+  const { email, setBlogSelected, setSelectedRoute, mushrooms, onBookmarkClick, bookmarkedBlogs, userData, setBlogUpdate, theme, selectedRoute } = props;
   const [blogs, setBlogs] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 1000,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 
   useEffect(() => {
     console.log('Current email:', email);
@@ -68,6 +57,7 @@ const FieldJournal = (props) => {
           gap: "2rem",
         }}
       >
+        <Card sx={{ marginTop:'2%', padding:'2%', font:'Roboto', fontWeight:'500'}}>Welcome to your Field Journal! Post, edit, and delete your foraging journeys.</Card>
         {blogs.map((blog) => (
           <FieldJournalItem
           mushrooms={mushrooms}
@@ -79,6 +69,9 @@ const FieldJournal = (props) => {
           bookmarkedBlogs={bookmarkedBlogs}
           userData={userData}
           onBookmarkClick={onBookmarkClick}
+          setBlogUpdate={setBlogUpdate}
+          theme={theme}
+          selectedRoute={selectedRoute}
           />
         ))}
       </Box>

@@ -22,8 +22,8 @@ const MushroomCard = (props) => {
   }, [email]);
 
   return (
-  <Card sx={{ display: "inline-block", backgroundColor: '#4D6A66'}}>
-   <p style={{ fontFamily: 'Roboto', fontWeight: '600', fontSize: '2.4em', margin: '0', color: 'white', borderRadius:'0'}}>{fullname}</p>
+  <Card sx={{ display: "inline-block", backgroundColor: '#4D6A66', boxShadow:'none'}}>
+   <p style={{ fontFamily: 'Roboto', fontWeight: '600', fontSize: '2.4em', margin: '0', color: 'white', borderRadius:'0', boxShadow:"none"}}>{fullname}</p>
   <CardActionArea>
     <CardMedia
       component="img"

@@ -39,7 +39,7 @@ const Account = (props) => {
     >
       <Card
         sx={{
-          width: "50vw",
+          width: "70vw",
           margin: "2% 0 0 0",
           backgroundColor: "#4D6A66",
           color: "white",
@@ -50,10 +50,10 @@ const Account = (props) => {
             fontFamily: "Roboto",
             display: "flex",
             justifyContent: "center",
-            marginLeft: "38%",
+            marginLeft: "33%",
           }}
         >
-          <h5
+          <h4
             onClick={handleClick}
             style={{
               backgroundColor: "#c74343",
@@ -65,12 +65,12 @@ const Account = (props) => {
             }}
           >
             BOOKMARKS
-          </h5>
-          <h5 style={{ border: "2px solid white", padding: "1.5%" }}>
+          </h4>
+          <h4 style={{ border: "2px solid white", padding: "1.5%"}}>
             {" "}
             FOLLOWING: {numberOfFollows}
-          </h5>
-          <h5
+          </h4>
+          <h4
             style={{
               border: "2px solid white",
               padding: "1.5%",
@@ -78,22 +78,24 @@ const Account = (props) => {
             }}
           >
             FOLLOWERS: {numberOfFollowers}
-          </h5>
+          </h4>
         </CardContent>
       </Card>
       <section
         style={{
           display: "flex",
-          width: "50vw",
+          width: "70vw",
           marginBottom: "3%",
           marginTop: "-1%",
         }}
       >
-        <MushroomCard
-          fullname={users.fullname}
-          email={users.email}
-          profilePhoto={users.profilePhoto}
-        />
+        <div style={{width:"30%", backgroundColor:"#4D6A66"}}>
+          <MushroomCard
+            fullname={users.fullname}
+            email={users.email}
+            profilePhoto={users.profilePhoto}
+          />
+        </div>
         <Card
           sx={{
             width: "50vw",

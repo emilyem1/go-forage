@@ -43,6 +43,7 @@ function App() {
   // Currently selected tab = value
   const [value, setValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDirections, setShowDirections] = useState(false);
 
   // Pass down theme, then use color="primary" etc to access
   const custom = {
@@ -91,6 +92,8 @@ function App() {
           theme={theme}
           friendData={friendData}
           updatefriendData={updatefriendData}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : selectedRoute === "PUBLIC" ? (
         <PublicMap
@@ -109,6 +112,12 @@ function App() {
           onBookmarkClick={updateBookmarkedBlogs}
           updateComments={updateComments}
           theme={theme}
+          friendData={friendData}
+          updatefriendData={updatefriendData}
+          setSelectedRoute={setSelectedRoute}
+          setUserSelected={setUserSelected}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : selectedRoute === "MUSHROOMS" ? (
         <MushroomList
@@ -136,6 +145,7 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
           theme={theme}
+          selectedRoute={selectedRoute}
         />
       ) : selectedRoute === "ACCOUNT" ? (
         <Account
@@ -161,6 +171,7 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
           theme={theme}
+          selectedRoute={selectedRoute}
         />
       ) : selectedRoute === "BOOKMARKS" ? (
         <Bookmarks
@@ -176,6 +187,8 @@ function App() {
           theme={theme}
           friendData={friendData}
           updatefriendData={updatefriendData}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : selectedRoute === "USERBLOGS" ? (
         <UserBlogs
@@ -190,6 +203,8 @@ function App() {
           friendData={friendData}
           theme={theme}
           updatefriendData={updatefriendData}
+          showDirections={showDirections}
+          setShowDirections={setShowDirections}
         />
       ) : (
         <SearchResults

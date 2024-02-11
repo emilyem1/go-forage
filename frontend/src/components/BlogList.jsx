@@ -25,6 +25,8 @@ const BlogList = (props) => {
     theme,
     friendData,
     updatefriendData,
+    setShowDirections,
+    showDirections
   } = props;
 
   const user_id = parseInt(userData.user_id);
@@ -127,6 +129,8 @@ const BlogList = (props) => {
                   setUserSelected={setUserSelected}
                   friendData={friendData}
                   updatefriendData={updatefriendData}
+                  showDirections={showDirections}
+                  setShowDirections={setShowDirections}
                 />
               ))}
             </Box>
@@ -160,6 +164,8 @@ const BlogList = (props) => {
                       setUserSelected={setUserSelected}
                       friendData={friendData}
                       updatefriendData={updatefriendData}
+                      showDirections={showDirections}
+                      setShowDirections={setShowDirections}
                     />
                   ))
               ) : (

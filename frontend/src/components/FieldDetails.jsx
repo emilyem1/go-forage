@@ -135,7 +135,8 @@ const FieldDetails = (props) => {
             setBlogUpdate={setBlogUpdate}
             setSelectedRoute={setSelectedRoute}
             theme={theme}
-            handleClose={handleClose} setOpen={setOpen}
+            handleClose={handleClose} 
+            setOpen={setOpen}
           />
         </Modal>
           <Card
@@ -152,7 +153,7 @@ const FieldDetails = (props) => {
               },
             }}
           >
-            <CardHeader
+        <CardHeader
         avatar={
           <Avatar
             sx={{ width: 90, height: 90 }}

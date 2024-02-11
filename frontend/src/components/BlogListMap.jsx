@@ -7,7 +7,10 @@ import {
 } from "@react-google-maps/api";
 import { mapStyles } from "../styles/Map";
 
-import { Button, Box, Typography } from "@mui/material";
+import { Button, Box, Typography, Divider } from "@mui/material";
+import MapIcon from "@mui/icons-material/Map";
+import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import NearMeIcon from "@mui/icons-material/NearMe";
 
 const libraries = ["places"];
 
@@ -116,13 +119,34 @@ const BlogListMap = (props) => {
           <Box
             sx={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "center",
             }}
           >
-            <Typography variant="body2" color="text.secondary">
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: "flex",
+                paddingRight:".5em"
+              }}
+            >
+              <MapIcon />
               Distance: {distance}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Divider
+              orientation="vertical"
+              flexItem
+   
+            />
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{
+                display: "flex",
+                paddingLeft:".5em"
+              }}
+            >
+              <DirectionsCarIcon />
               Duration: {duration}
             </Typography>
           </Box>
@@ -130,7 +154,8 @@ const BlogListMap = (props) => {
           map !== null &&
           showDirections === true && (
             <Button colorScheme="pink" type="submit" onClick={calculateRoute}>
-              Calculate Route
+              <NearMeIcon />
+              Get Directions
             </Button>
           )
         )}

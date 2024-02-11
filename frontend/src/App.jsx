@@ -136,6 +136,7 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
           theme={theme}
+          selectedRoute={selectedRoute}
         />
       ) : selectedRoute === "ACCOUNT" ? (
         <Account
@@ -161,6 +162,7 @@ function App() {
           userData={userData}
           onBookmarkClick={updateBookmarkedBlogs}
           theme={theme}
+          selectedRoute={selectedRoute}
         />
       ) : selectedRoute === "BOOKMARKS" ? (
         <Bookmarks

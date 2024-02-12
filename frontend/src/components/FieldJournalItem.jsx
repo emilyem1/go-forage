@@ -26,7 +26,9 @@ const FieldJournalItem = (props) => {
     mushrooms,
     setBlogUpdate,
     theme,
-    selectedRoute
+    selectedRoute,
+    updateBlogs,
+    currentBlogs
   } = props;
 
   const [editMode, setEditMode] = useState(false);
@@ -73,8 +75,14 @@ const FieldJournalItem = (props) => {
       if (!response.ok) {
         throw new Error(`Failed to delete blog. Status: ${response.status}`);
       }
-      window.location.reload();
-      console.log("Blog Deleted Successfully");
+     const updatedBlogsResponse = await fetch(`http://localhost:8001/api/journal?email=${userData.email}`);
+     if (!updatedBlogsResponse.ok) {
+       throw new Error(`Failed to fetch updated blogs. Status: ${updatedBlogsResponse.status}`);
+     }
+     const updatedBlogsData = await updatedBlogsResponse.json();
+     const filteredBlogs = updatedBlogsData.filter(blog => blog.user_id === userData.id);
+     updateBlogs(filteredBlogs);
+     console.log("Blog Deleted Successfully");
     } catch (error) {
       console.error("Error deleting blog:", error.message);
     }

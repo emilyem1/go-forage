@@ -24,6 +24,8 @@ const centerBC = {
   lng: -127.6476,
 };
 
+const tempUserLocation = { lat: 50.676109, lng: -120.340836 };
+
 const boundsBC = {
   north: 60,
   south: 48,
@@ -183,15 +185,16 @@ function Locate({ panTo }) {
     <button
       type="button"
       onClick={() => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            panTo({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-          },
-          () => null
-        );
+        panTo(tempUserLocation)
+        // navigator.geolocation.getCurrentPosition(
+        //   (position) => {
+        //     panTo({
+        //       lat: position.coords.latitude,
+        //       lng: position.coords.longitude,
+        //     });
+        //   },
+        //   () => null
+        // );
       }}
     >
       <img src="./assets/compass.svg" alt="Locate Me" />

@@ -136,7 +136,7 @@ function App() {
       ) : selectedRoute === "FIELDJOURNAL" ? (
         <FieldJournal
           email={userData.email}
-          blogs={blogData}
+          currentBlogs={blogData}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
           mushrooms={mushroomData}

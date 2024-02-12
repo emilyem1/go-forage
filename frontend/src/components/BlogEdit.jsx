@@ -117,8 +117,7 @@ const BlogEdit = (props) => {
   
       setBlogUpdate(true);
       setEditMode(false); // Exit edit mode after submitting
-      window.location.reload();
-      setSelectedRoute("FIELDJOUNRAL");
+      setSelectedRoute("FIELDJOURNAL");
     } catch (error) {
       console.error("Error when updating:", error.message);
     }

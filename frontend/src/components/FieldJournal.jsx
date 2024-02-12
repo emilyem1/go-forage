@@ -8,11 +8,15 @@ import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 
 const FieldJournal = (props) => {
-  const { email, setBlogSelected, setSelectedRoute, mushrooms, onBookmarkClick, bookmarkedBlogs, userData, setBlogUpdate, theme, selectedRoute } = props;
+  const { email, setBlogSelected, setSelectedRoute, mushrooms, onBookmarkClick, bookmarkedBlogs, userData, setBlogUpdate, theme, selectedRoute, currentBlogs } = props;
   const [blogs, setBlogs] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const updateBlogs = (updatedBlogs) => {
+    setBlogs(updatedBlogs);
+  };
 
   useEffect(() => {
     console.log('Current email:', email);
@@ -64,6 +68,8 @@ const FieldJournal = (props) => {
           className="mushroom-list"
           key={blog.id}
           blog={blog}
+          currentBlogs={currentBlogs}
+          updateBlogs={updateBlogs}
           setBlogSelected={setBlogSelected}
           setSelectedRoute={setSelectedRoute}
           bookmarkedBlogs={bookmarkedBlogs}
@@ -76,7 +82,7 @@ const FieldJournal = (props) => {
         ))}
       </Box>
     </main>
-    </ThemeProvider>
+    </ThemeProvider> 
   );
 };
 

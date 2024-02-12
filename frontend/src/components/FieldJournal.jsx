@@ -82,7 +82,7 @@ const FieldJournal = (props) => {
         ))}
       </Box>
     </main>
-    </ThemeProvider>
+    </ThemeProvider> 
   );
 };
 

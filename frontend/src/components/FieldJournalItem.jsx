@@ -12,7 +12,7 @@ import {
   Avatar,
   IconButton,
   CardHeader,
-  Modal
+  Modal,
 } from "@mui/material";
 
 const FieldJournalItem = (props) => {

@@ -34,6 +34,8 @@ const centerBC = {
   lng: -127.6476,
 };
 
+const tempUserLocation = { lat: 50.676109, lng: -120.340836 };
+
 const boundsBC = {
   north: 60,
   south: 48,
@@ -205,7 +207,10 @@ const PublicMap = (props) => {
                 key={blog.id}
                 position={{ lat: blog.lat, lng: blog.long }}
                 icon={{
-                  url: blog.mushrooms.length>1?"./assets/mushroom_marker.svg":"./assets/many_mushrooms_marker.svg",
+                  url:
+                    blog.mushrooms.length > 1
+                      ? "./assets/many_mushrooms_marker.svg"
+                      : "./assets/mushroom_marker.svg",
                   scaledSize: new window.google.maps.Size(30, 30),
                   origin: new window.google.maps.Point(0, 0),
                   anchor: new window.google.maps.Point(15, 15),
@@ -282,15 +287,17 @@ function Locate({ panTo }) {
     <button
       type="button"
       onClick={() => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            panTo({
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            });
-          },
-          () => null
-        );
+        panTo(tempUserLocation);
+        //commented out section is for actual user geo loc
+        // navigator.geolocation.getCurrentPosition(
+        //   (position) => {
+        //     panTo({
+        //       lat: position.coords.latitude,
+        //       lng: position.coords.longitude,
+        //     });
+        //   },
+        //   () => null
+        // );
       }}
     >
       <img src="./assets/compass.svg" alt="Locate Me" />

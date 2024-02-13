@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl, } from "@mui/material";
 
 const BlogEdit = (props) => {
-  const { mushrooms, setBlogUpdate, existingBlog, setEditMode, setSelectedRoute, theme, handleClose, selectedRoute } = props;
+  const { mushrooms, setBlogUpdate, existingBlog, setEditMode, setSelectedRoute, theme, handleClose, selectedRoute, userData, updateBlogs } = props;
   const [disableAddMushroom, setDisableAddMushroom] = useState(true);
 
   const style = {
@@ -100,12 +100,9 @@ const BlogEdit = (props) => {
       if (!blogResponse.ok) {
         throw new Error(`Failed to update blog. Status: ${blogResponse.status}`);
       }
-  
       const updatedBlogData = await blogResponse.json();
       console.log("Blog updated:", updatedBlogData);
-  
-      // Reset the form after submission
-      setFormData({
+       setFormData({
         title: "",
         content: "",
         latitude: null,
@@ -114,10 +111,16 @@ const BlogEdit = (props) => {
         mushrooms: [],
         privacy: true,
       });
-  
       setBlogUpdate(true);
-      setEditMode(false); // Exit edit mode after submitting
-      setSelectedRoute("FIELDJOURNAL");
+      setEditMode(false);
+      const updatedBlogsResponse = await fetch(`http://localhost:8001/api/journal?email=${userData.email}`);
+      if (!updatedBlogsResponse.ok) {
+        throw new Error(`Failed to fetch updated blogs. Status: ${updatedBlogsResponse.status}`);
+      }
+      setSelectedRoute('FIELDJOURNAL')
+      const updatedBlogsData = await updatedBlogsResponse.json();
+      const filteredBlogs = updatedBlogsData.filter(blog => blog.user_id === userData.id);
+      updateBlogs(filteredBlogs);
     } catch (error) {
       console.error("Error when updating:", error.message);
     }

@@ -162,4 +162,10 @@ INSERT INTO COMMENTS (BLOG_ID, COMMENTER_ID, MESSAGE) VALUES
   (7, 8, 'Oyster mushrooms are so versatile in cooking.'),
   (8, 9, 'Lions Mane mushrooms are truly fascinating.'),
   (9, 10, 'Porcini risotto must have been delicious!'),
+  (20, 2, 'Your adventure sounds absolutely enchanting! There''s something truly magical about foraging in the forest and discovering nature''s treasures.'),
+  (20, 3, 'I love the reverence you show for the environment by only taking what you need. It''s important to respect the delicate balance of nature.'),
+  (20, 4, 'Oyster mushrooms are one of my favorites! There''s nothing quite like the taste of freshly harvested mushrooms in a dish.'),
+  (20, 5, 'The Hedgehog Mushroom is such a unique find! It''s always exciting to stumble upon its distinctive appearance in the wild.'),
+  (20, 7, 'Your description paints such a vivid picture of the forest and its hidden wonders. Makes me want to go mushroom foraging myself!'),
+  (20, 9, 'Foraging for mushrooms is like embarking on a treasure hunt in nature''s pantry. It''s amazing what you can find when you know where to look!'),
   (10, 1, 'Truffle hounds are incredible at finding treasures.');

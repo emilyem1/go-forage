@@ -106,6 +106,8 @@ const FieldJournalItem = (props) => {
           handleClose={handleClose} 
           setOpen={setOpen}
           selectedRoute={selectedRoute}
+          updateBlogs={updateBlogs}
+          userData={userData}
         />
       </Modal>
     <Card

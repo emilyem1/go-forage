@@ -21,31 +21,29 @@ Go Forage is a comprehensive app designed to demystify mushroom foraging and fos
 
 #### Main Feed
 
-!["Screenshot of home feed"](<public/images/Home-Feed.png>)
+!["Screenshot of home feed"](<frontend/public/images/Home-Feed.png>)
 
 #### Map
 
-!["Screenshot of public map"](<public/images/Public-Map.png>)
+!["Screenshot of public map"](<frontend/public/images/Public-Map.png>)
 
 #### Mushroom Encyclopedia
 
-!["Screenshot of mushroom page"](<public/images/Mushroom-Page.png>)
-
-!["Screenshot of expanded mushroom details"](<public/images/Mushroom-Card-Expanded.png>)
+!["Screenshot of mushroom page"](<frontend/public/images/Mushroom-Page.png>)
 
 #### Field Journal
 
-!["Screenshot of field journal"](<public/images/Field-Journal.png>)
+!["Screenshot of field journal"](<frontend/public/images/Field-Journal.png>)
 
-!["Screenshot of edit feature"](<public/images/Edit.png>)
+!["Screenshot of edit feature"](<frontend/public/images/Edit.png>)
 
 #### User Account
 
-!["Screenshot of user account"](<public/images/Account.png>)
+!["Screenshot of user account"](<frontend/public/images/Account.png>)
 
 #### Search
 
-!["Screenshot of search feature"](<public/images/Search.png>)
+!["Screenshot of search feature"](<frontend/public/images/Search.png>)
 
 ## Getting Started
 
